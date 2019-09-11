@@ -1,7 +1,9 @@
 package com.loconav.locodriver.application
 
 import android.app.Application
+import androidx.room.Room
 import com.apollographql.apollo.ApolloClient
+import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.Constants
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.network.Constants.Companion.AUTH_TOKEN
@@ -13,9 +15,14 @@ class LocoDriverApplication : Application() {
 
     val apolloClient = setupApollo()
 
+
     override fun onCreate() {
         super.onCreate()
         instance = this
+//        Room.databaseBuilder(
+//            applicationContext,
+//            AppDatabase::class.java, "locodriver.db"
+//        ).build()
     }
 
 

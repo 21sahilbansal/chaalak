@@ -1,0 +1,15 @@
+query agentProfile{
+    agent:self
+    {
+        id
+        firstName
+        lastName
+        state
+        city
+        employeeCode
+        designation
+        token:authenticationToken
+        email
+        primaryPhone
+    }
+}

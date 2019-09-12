@@ -2,12 +2,19 @@ package com.loconav.locodriver
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.View
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.loconav.locodriver.application.LocoDriverApplication
+import com.loconav.locodriver.db.room.AppDatabase
+import com.loconav.locodriver.driver.CurrentCoordinate
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
 
     }
 }

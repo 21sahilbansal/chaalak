@@ -6,7 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.loconav.locodriver.driver.CurrentCoordinate
 
-@Database(entities = arrayOf(CurrentCoordinate::class), version = 1)
+
+/**
+ * This class is used for accessing lacal db, if db won't be exist then it will initialise db with the following tables mentioned as entities
+ */
+@Database(entities = [CurrentCoordinate::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun currentCoordinateDao(): CurrentCoordinateDao

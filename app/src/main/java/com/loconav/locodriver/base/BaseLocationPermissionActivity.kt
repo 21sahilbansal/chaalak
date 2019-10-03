@@ -44,7 +44,7 @@ abstract class BaseLocationPermissionActivity : AppCompatActivity() {
     companion object {
         const val LOCATION_WORK_TAG = "LOCATION_WORK_TAG"
         private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
-        private val TAG = this.javaClass.simpleName
+        private val TAG : String = this::class.java.name
     }
 
 

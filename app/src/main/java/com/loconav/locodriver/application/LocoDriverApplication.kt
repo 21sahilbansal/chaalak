@@ -1,21 +1,32 @@
 package com.loconav.locodriver.application
 
 import android.app.Application
+import androidx.room.Room
 import com.apollographql.apollo.ApolloClient
+import com.facebook.stetho.Stetho
+import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.Constants
-import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.network.Constants.Companion.AUTH_TOKEN
 import com.loconav.locodriver.network.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 
 class LocoDriverApplication : Application() {
 
 
-    val apolloClient = setupApollo()
+    val apolloClient get() = setupApollo()
+
 
     override fun onCreate() {
         super.onCreate()
         instance = this
+        initStetho()
+    }
+
+    private fun initStetho() {
+        Stetho.initialize(Stetho.newInitializerBuilder(getApplicationContext())
+        //fetch shared pref using cmd line
+        .enableDumpapp(Stetho.defaultDumperPluginsProvider(getApplicationContext()))
+        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(getApplicationContext()))
+        .build());
     }
 
 

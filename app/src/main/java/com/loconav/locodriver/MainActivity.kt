@@ -8,6 +8,7 @@ import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.exception.ApolloException
 import com.loconav.locodriver.application.LocoDriverApplication
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,5 +16,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Timber.d("inside MainActivity")
     }
 }

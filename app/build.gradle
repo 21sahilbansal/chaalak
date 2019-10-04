@@ -1,11 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'com.apollographql.android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: "kotlin-kapt"
 
 
@@ -20,9 +16,27 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+
+        def KEY_BASE_URL = "base_url"
+        def KEY_USER_AGENT = "user_agent"
+
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            buildConfigField("String", KEY_BASE_URL, STAGE_BASEURL)
+            buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            buildConfigField("String", KEY_BASE_URL, PROD_BASEURL)
+            buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
         }
     }
 }
@@ -68,5 +82,7 @@ dependencies {
     //Debug
     debugImplementation 'com.facebook.stetho:stetho:1.5.0'
     debugImplementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    debugImplementation 'com.jakewharton.timber:timber:4.7.1'
+
 
 }

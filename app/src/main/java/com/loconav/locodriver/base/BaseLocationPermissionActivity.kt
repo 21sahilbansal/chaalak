@@ -8,7 +8,7 @@ import androidx.core.app.ActivityCompat
 import com.google.android.material.snackbar.Snackbar
 import com.loconav.locodriver.R
 
-abstract class BaseLocationPermissionActivity : AppCompatActivity() {
+abstract class BaseLocationPermissionActivity : BaseActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         Log.i(TAG, "onRequestPermissionResult")
@@ -16,6 +16,7 @@ abstract class BaseLocationPermissionActivity : AppCompatActivity() {
             if (grantResults.isEmpty()) {
                 // If user interaction was interrupted, the permission request is cancelled and you
                 // receive empty arrays.
+                onPermissionCancelled()
                 Log.i(TAG, "User interaction was cancelled.")
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission was granted.
@@ -116,5 +117,10 @@ abstract class BaseLocationPermissionActivity : AppCompatActivity() {
      * permission already granted and we can start our work directly.
      */
     public abstract fun permissionAlreadyGranted()
+
+    /**
+     *
+     */
+    public abstract fun onPermissionCancelled()
 
 }

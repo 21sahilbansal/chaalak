@@ -1,7 +1,7 @@
 package com.loconav.locodriver.base
 
 
-abstract class PubSubEvent @JvmOverloads constructor(message: String, `object`: Any? = null) {
+abstract class PubSubEvent<T> @JvmOverloads constructor(message: String, `object`: T? = null) {
 
     var message: String
         protected set

@@ -10,20 +10,14 @@ import com.loconav.locodriver.R
 
 abstract class BaseDialogFragment : DialogFragment() {
 
-    interface OnDialogCompletionListener {
-        fun onComplete()
-    }
-
-    protected var onCompletionListener = null
-        set(value) {
-            field = value
-        }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dialog!!.window!!
-            .attributes.windowAnimations = R.style.DialogWindowAnimation
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog?.let { dialog ->
+            dialog.window?.let { window ->
+                window.attributes.windowAnimations = R.style.DialogWindowAnimation
+                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            }
+        }
     }
 
     protected fun isSafe(): Boolean {
@@ -36,5 +30,6 @@ abstract class BaseDialogFragment : DialogFragment() {
     }
 
     abstract fun getScreenName(): String?
+
 
 }

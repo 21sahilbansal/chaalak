@@ -50,16 +50,16 @@ object LocaleHelper : KoinComponent{
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private fun updateResources(context: Context, language: String?): Context {
-        val locale = Locale(language!!)
+    private fun updateResources(context: Context, language: String): Context {
+        val locale = Locale(language)
         Locale.setDefault(locale)
         val configuration = context.resources.configuration
         configuration.setLocale(locale)
         return context.createConfigurationContext(configuration)
     }
 
-    private fun updateResourcesLegacy(context: Context, language: String?): Context {
-        val locale = Locale(language!!)
+    private fun updateResourcesLegacy(context: Context, language: String): Context {
+        val locale = Locale(language)
         Locale.setDefault(locale)
         val resources = context.resources
         val configuration = resources.configuration
@@ -70,9 +70,9 @@ object LocaleHelper : KoinComponent{
 
 
     public fun toggleBetweenHiAndEn(context: Context) {
-        if(getLanguage(context).equals("hi"))
-            changeLanguage(context, context.resources.getStringArray(R.array.local_language_array)[0])
+        if(getLanguage(context).equals(LanguageType.Hindi.languageString))
+            changeLanguage(context, LanguageType.English.languageString)
         else
-            changeLanguage(context, context.resources.getStringArray(R.array.local_language_array)[1])
+            changeLanguage(context, LanguageType.Hindi.languageString)
     }
 }

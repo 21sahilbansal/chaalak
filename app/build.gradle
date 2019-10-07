@@ -10,11 +10,11 @@ apply plugin: "kotlin-kapt"
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.loconav.locodriver"
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -36,7 +36,6 @@ dependencies {
 
 //    for junit test cases
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
@@ -44,14 +43,24 @@ dependencies {
     implementation 'com.apollographql.apollo:apollo-runtime:1.0.0'
     implementation "com.apollographql.apollo:apollo-android-support:0.3.2"
 
-    //Okhttp3
+    //OkHTTP3
     implementation "com.squareup.okhttp3:okhttp:3.12.2"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1"
 
+    implementation "com.google.android.material:material:1.0.0"
+
+    /**
+     * Koin dependency injection dependencies
+     */
+    implementation "org.koin:koin-android:1.0.2"
+    implementation "org.koin:koin-androidx-viewmodel:1.0.0"
     implementation "androidx.room:room-runtime:$room_version"
 
+    /**
+     * Wrapper for local database
+     */
     kapt "androidx.room:room-compiler:$room_version"
 
 

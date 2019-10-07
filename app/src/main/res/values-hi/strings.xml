@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="logout">लॉग आउट</string>
+    <string name="language_string">English</string>
+    <string name="welcome_to_locodrive">लोकोड्राइव में आपका स्वागत है</string>
+</resources>

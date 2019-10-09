@@ -1,6 +1,5 @@
 package com.loconav.locodriver.network
 
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.HTTP.Companion.DRIVER_OTP_VERIFY
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER
 import com.loconav.locodriver.Constants.HTTP.Companion.NUMBER_LOGIN

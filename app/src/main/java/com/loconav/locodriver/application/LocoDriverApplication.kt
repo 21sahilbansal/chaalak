@@ -1,13 +1,15 @@
 package com.loconav.locodriver.application
 
 import android.app.Application
-import androidx.room.Room
 import com.apollographql.apollo.ApolloClient
 import com.facebook.stetho.Stetho
-import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.Constants
 import com.loconav.locodriver.network.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
+import timber.log.Timber
+import com.loconav.locodriver.BuildConfig
+
+
 
 class LocoDriverApplication : Application() {
 
@@ -19,6 +21,12 @@ class LocoDriverApplication : Application() {
         super.onCreate()
         instance = this
         initStetho()
+        initTimber()
+    }
+
+    private fun initTimber() {
+        if (BuildConfig.DEBUG)
+            Timber.plant(Timber.DebugTree())
     }
 
     private fun initStetho() {

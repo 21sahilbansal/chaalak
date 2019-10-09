@@ -9,6 +9,7 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import org.koin.standalone.KoinComponent
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -52,20 +53,14 @@ class HeaderInterceptor(val sharedPreferenceUtil: SharedPreferenceUtil,
     }
 
     private fun handleError(e: IOException, service: String) {
-        Log.d(TAG, e.toString())
-        Log.d(TAG, "endService error " + service + " : " + Date().time)
+        Timber.d(e.toString())
+        Timber.d( "endService error " + service + " : " + Date().time)
     }
 
     private fun handleSuccess(response: Response) {
         if (response.body() != null) {
             val responseString = response.body()!!.toString()
-            Log.d(
-                "http", "endService "
-                        + response.request().url()
-                        + " : "
-                        + Date().time
-                        + ":"
-                        + responseString
+            Timber.d(" http service endService " + response.request().url() + " : " + Date().time + ":" + responseString
             )
         }
     }

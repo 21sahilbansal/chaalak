@@ -22,15 +22,12 @@ android {
 
         debug {
             applicationIdSuffix ".debug"
-            minifyEnabled false
-            shrinkResources false
             debuggable true
             buildConfigField("String", KEY_BASE_URL, STAGE_BASEURL)
             buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
         }
 
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true
             shrinkResources true

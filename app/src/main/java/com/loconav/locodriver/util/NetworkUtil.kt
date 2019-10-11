@@ -82,10 +82,11 @@ class NetworkUtil {
             return -1
         }
 
+
         // There are following types of mobile networks
-        when (networkType) {
+        return when (networkType) {
             TelephonyManager.NETWORK_TYPE_LTE // ~ 10+ Mbps // API level 11
-            -> return 4
+                -> 4
             TelephonyManager.NETWORK_TYPE_EVDO_0 // ~ 400-1000 kbps
                 , TelephonyManager.NETWORK_TYPE_EVDO_A // ~ 600-1400 kbps
                 , TelephonyManager.NETWORK_TYPE_HSDPA // ~ 2-14 Mbps
@@ -95,15 +96,17 @@ class NetworkUtil {
                 , TelephonyManager.NETWORK_TYPE_HSPAP // ~ 10-20 Mbps // API level 13
                 , TelephonyManager.NETWORK_TYPE_EVDO_B // ~ 5 Mbps // API level 9
                 , TelephonyManager.NETWORK_TYPE_HSUPA // ~ 1-23 Mbps
-            -> return 3
+                -> 3
             TelephonyManager.NETWORK_TYPE_1xRTT // ~ 50-100 kbps
                 , TelephonyManager.NETWORK_TYPE_CDMA // ~ 14-64 kbps
                 , TelephonyManager.NETWORK_TYPE_EDGE // ~ 50-100 kbps
                 , TelephonyManager.NETWORK_TYPE_GPRS // ~ 100 kbps
                 , TelephonyManager.NETWORK_TYPE_IDEN // ~25 kbps // API level 8
-                , NETWORK_TYPE_GSM -> return 2
+                , NETWORK_TYPE_GSM
+                -> 2
             TelephonyManager.NETWORK_TYPE_UNKNOWN -> return 0
-            else -> return 0
+            else
+                -> 0
         }
     }
 

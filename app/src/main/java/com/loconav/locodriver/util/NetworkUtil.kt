@@ -82,11 +82,10 @@ class NetworkUtil {
             return -1
         }
 
-
         // There are following types of mobile networks
-        return when (networkType) {
+        when (networkType) {
             TelephonyManager.NETWORK_TYPE_LTE // ~ 10+ Mbps // API level 11
-                -> 4
+            -> return NetworkType._4G.enumValue
             TelephonyManager.NETWORK_TYPE_EVDO_0 // ~ 400-1000 kbps
                 , TelephonyManager.NETWORK_TYPE_EVDO_A // ~ 600-1400 kbps
                 , TelephonyManager.NETWORK_TYPE_HSDPA // ~ 2-14 Mbps
@@ -96,20 +95,24 @@ class NetworkUtil {
                 , TelephonyManager.NETWORK_TYPE_HSPAP // ~ 10-20 Mbps // API level 13
                 , TelephonyManager.NETWORK_TYPE_EVDO_B // ~ 5 Mbps // API level 9
                 , TelephonyManager.NETWORK_TYPE_HSUPA // ~ 1-23 Mbps
-                -> 3
+            -> return NetworkType._3G.enumValue
             TelephonyManager.NETWORK_TYPE_1xRTT // ~ 50-100 kbps
                 , TelephonyManager.NETWORK_TYPE_CDMA // ~ 14-64 kbps
                 , TelephonyManager.NETWORK_TYPE_EDGE // ~ 50-100 kbps
                 , TelephonyManager.NETWORK_TYPE_GPRS // ~ 100 kbps
                 , TelephonyManager.NETWORK_TYPE_IDEN // ~25 kbps // API level 8
-                , NETWORK_TYPE_GSM
-                -> 2
-            TelephonyManager.NETWORK_TYPE_UNKNOWN -> return 0
-            else
-                -> 0
+                , NETWORK_TYPE_GSM -> return NetworkType._2G.enumValue
+            TelephonyManager.NETWORK_TYPE_UNKNOWN -> return NetworkType._UNKNOWN.enumValue
+            else -> return NetworkType._UNKNOWN.enumValue
         }
     }
 
 
+    enum class NetworkType(val enumValue:Short) {
+        _4G(4),
+        _3G(3),
+        _2G(2),
+        _UNKNOWN(0)
+    }
 
 }

@@ -2,13 +2,6 @@ package com.loconav.locodriver
 
 class Constants {
 
-    companion object{
-        const val BASE_URL = "http://locodrive.com/graphql"
-        const val HAUL_SECRET = ""
-    }
-
-
-
     interface HTTP {
         companion object {
             const val NUMBER_LOGIN = "login/driver"

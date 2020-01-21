@@ -22,7 +22,7 @@ abstract class RetrofitCallback<T> : Callback<T> {
     private val NO_INTERNET = appContext.resources.getString(R.string.no_internet_connection)
 
     override fun onFailure(call: Call<T>, t: Throwable) {
-        if (NetworkUtils.isUserOnline)
+        if (NetworkUtil.isUserOnline)
             handleFailure(call, Throwable(DEFAULT_ERROR_MESSAGE))
         else
             handleFailure(call, Throwable(NO_INTERNET))
@@ -36,15 +36,17 @@ abstract class RetrofitCallback<T> : Callback<T> {
             var error: String
             try {
                 error = JSONObject(response.errorBody()?.string()).getString("message")
-            } catch (e: JSONException) {
-                error = DEFAULT_ERROR_MESSAGE
-                e.printStackTrace()
-            } catch (e: IOException) {
-                error = DEFAULT_ERROR_MESSAGE
-                e.printStackTrace()
-            } catch (e: NullPointerException) {
-                error = DEFAULT_ERROR_MESSAGE
-                e.printStackTrace()
+            } catch (e: Exception) {
+                when(e){
+                    is JSONException, is IOException, is NullPointerException -> {
+                        error = DEFAULT_ERROR_MESSAGE
+                        e.printStackTrace()
+                    }
+                    else -> {
+                        error = DEFAULT_ERROR_MESSAGE
+//                        TODO log on Crashlytics
+                    }
+                }
             }
             handleFailure(call, Throwable(error))
         }

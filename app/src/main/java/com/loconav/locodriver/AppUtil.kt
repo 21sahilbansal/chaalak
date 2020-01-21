@@ -37,21 +37,21 @@ object AppUtils : KoinComponent {
     val macAddr: String
         get() {
             try {
-                val all = Collections.list(NetworkInterface.getNetworkInterfaces())
-                for (nif in all) {
+                val networkInterfaces = Collections.list(NetworkInterface.getNetworkInterfaces())
+                for (nif in networkInterfaces) {
                     if (!nif.name.equals("wlan0", ignoreCase = true)) continue
 
                     val macBytes = nif.hardwareAddress ?: return ""
 
-                    val res1 = StringBuilder()
+                    val macAddress = StringBuilder()
                     for (b in macBytes) {
-                        res1.append(String.format("%02X:", b))
+                        macAddress.append(String.format("%02X:", b))
                     }
 
-                    if (res1.length > 0) {
-                        res1.deleteCharAt(res1.length - 1)
+                    if (macAddress.length > 0) {
+                        macAddress.deleteCharAt(macAddress.length - 1)
                     }
-                    return res1.toString()
+                    return macAddress.toString()
                 }
             } catch (ex: Exception) {}
 

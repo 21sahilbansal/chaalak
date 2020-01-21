@@ -21,6 +21,9 @@
 #-renamesourcefileattribute SourceFile
 
 
+
+
+# For reference GSON proguard -> https://stackoverflow.com/a/15476406
 ##---------------Begin: proguard configuration for Gson ----------
 # Gson uses generic type information stored in a class file when working with
 #fields. Proguard removes such information by default, so configure it to keep

@@ -64,7 +64,7 @@ class HeaderInterceptor(val sharedPreferenceUtil: SharedPreferenceUtil,
 
     private fun handleSuccess(response: Response) {
         response.body()?.let {
-            val responseString = response.body()!!.toString()
+            val responseString = it.toString()
             Log.d(
                 "http", "endService "
                         + response.request().url()

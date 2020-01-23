@@ -12,7 +12,7 @@ class Constants {
 
     interface SHARED_PREFERENCE {
         companion object {
-            const val AUTH_TOKEN = "auth_token"
+            const val AUTH_TOKEN = "X-Auth-Token"
             const val DRIVER_ID = "driver_id"
             const val PHOTO_LINK = "photo_link"
             const val IS_LOGGED_IN = "is_logged_in"

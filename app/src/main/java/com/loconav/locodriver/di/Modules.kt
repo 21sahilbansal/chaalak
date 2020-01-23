@@ -1,6 +1,8 @@
 package com.loconav.locodriver.di
 
+import com.apollographql.apollo.ApolloClient
 import com.loconav.locodriver.BuildConfig
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.network.HeaderInterceptor
@@ -54,7 +56,7 @@ val dataModule = module(override = true) {
  */
 val networkModule = module {
 
-    single {HeaderInterceptor(SharedPreferenceUtil(defaultSharedPfFile), "")}
+    single {HeaderInterceptor(SharedPreferenceUtil(defaultSharedPfFile), BuildConfig.haul_secret)}
 
 
     single<OkHttpClient>{ OkHttpClient.Builder().addInterceptor(get<HeaderInterceptor>()).build() }
@@ -82,6 +84,15 @@ val networkModule = module {
 
 
     single<UserHttpService>{ UserHttpService(get()) }
+
+//TODO :  uncomment below code to get graphQL Client.
+
+//    single<ApolloClient> {
+//        ApolloClient.builder()
+//            .serverUrl(BuildConfig.graphql_base_url)
+//            .okHttpClient(get<OkHttpClient>())
+//            .build()
+//    }
 }
 
 

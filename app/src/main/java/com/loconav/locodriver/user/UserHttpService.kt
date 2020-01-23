@@ -13,10 +13,9 @@ import retrofit2.Response
 
 class UserHttpService(val httpService: HttpApiService) {
 
-    fun requestServerForOTP(phoneNumber : String) : MutableLiveData<DataWrapper<ResponseBody>>{
+    fun requestServerForOTP(phoneNumber: String): MutableLiveData<DataWrapper<ResponseBody>> {
         val dataWrapper = DataWrapper<ResponseBody>()
-        val  apiResponse = MutableLiveData<DataWrapper<ResponseBody>>()
-
+        val apiResponse = MutableLiveData<DataWrapper<ResponseBody>>()
         httpService.getOTPForLogin(phoneNumber).enqueue(object : RetrofitCallback<ResponseBody>() {
             override fun handleSuccess(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val serverResponse = response.body()
@@ -33,31 +32,36 @@ class UserHttpService(val httpService: HttpApiService) {
     }
 
 
-    fun validateOTPFromServer(phoneNumber: String, otp : String) : MutableLiveData<DataWrapper<EnterOTPResponse>>{
+    fun validateOTPFromServer(
+        phoneNumber: String,
+        otp: String
+    ): MutableLiveData<DataWrapper<EnterOTPResponse>> {
         val dataWrapper = DataWrapper<EnterOTPResponse>()
-        val  apiResponse = MutableLiveData<DataWrapper<EnterOTPResponse>>()
+        val apiResponse = MutableLiveData<DataWrapper<EnterOTPResponse>>()
+        httpService.validate(phoneNumber, otp)
+            .enqueue(object : RetrofitCallback<EnterOTPResponse>() {
+                override fun handleSuccess(
+                    call: Call<EnterOTPResponse>,
+                    response: Response<EnterOTPResponse>
+                ) {
+                    val serverResponse = response.body()
+                    dataWrapper.data = serverResponse
+                    apiResponse.postValue(dataWrapper)
+                }
 
-        httpService.validate(phoneNumber, otp).enqueue(object : RetrofitCallback<EnterOTPResponse>() {
-            override fun handleSuccess(call: Call<EnterOTPResponse>, response: Response<EnterOTPResponse>) {
-                val serverResponse = response.body()
-                dataWrapper.data = serverResponse
-                apiResponse.postValue(dataWrapper)
-            }
-
-            override fun handleFailure(call: Call<EnterOTPResponse>, t: Throwable) {
-                dataWrapper.throwable = t
-                apiResponse.postValue(dataWrapper)
-            }
-        })
+                override fun handleFailure(call: Call<EnterOTPResponse>, t: Throwable) {
+                    dataWrapper.throwable = t
+                    apiResponse.postValue(dataWrapper)
+                }
+            })
         return apiResponse
     }
 
 
-    fun getDriverData(driverId : Long) : MutableLiveData<DataWrapper<Driver>>{
+    fun getDriverData(driverId: Long): MutableLiveData<DataWrapper<Driver>> {
         val dataWrapper = DataWrapper<Driver>()
-        val  apiResponse = MutableLiveData<DataWrapper<Driver>>()
-
-        httpService.getProfileData(driverId).enqueue(object : RetrofitCallback<Driver>(){
+        val apiResponse = MutableLiveData<DataWrapper<Driver>>()
+        httpService.getProfileData(driverId).enqueue(object : RetrofitCallback<Driver>() {
             override fun handleSuccess(call: Call<Driver>, response: Response<Driver>) {
                 val serverResponse = response.body()
                 dataWrapper.data = serverResponse
@@ -75,7 +79,5 @@ class UserHttpService(val httpService: HttpApiService) {
     /**
      * this method can be used to save user data into sharedpf
      */
-    fun saveUserData() {
-
-    }
+    fun saveUserData() {}
 }

@@ -9,22 +9,25 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.loconav.locodriver"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        def KEY_USER_AGENT = "user_agent"
+        def KEY_GRAPHQL_BASE_URL = "graphql_base_url"
+        buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
+        buildConfigField("String", KEY_GRAPHQL_BASE_URL, GRAPHQL_BASE_URL)
     }
     buildTypes {
 
         def KEY_BASE_URL = "base_url"
-        def KEY_USER_AGENT = "user_agent"
-
+        def HAUL_SECRET = "haul_secret"
         debug {
             applicationIdSuffix ".debug"
             debuggable true
             buildConfigField("String", KEY_BASE_URL, STAGE_BASEURL)
-            buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
+            buildConfigField("String", HAUL_SECRET, STAGE_HAUL_SECRET)
         }
 
         release {
@@ -33,7 +36,7 @@ android {
             shrinkResources true
             debuggable false
             buildConfigField("String", KEY_BASE_URL, PROD_BASEURL)
-            buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
+            buildConfigField("String", HAUL_SECRET, PROD_HAUL_SECRET)
         }
     }
 }

@@ -4,12 +4,10 @@ import android.app.Activity
 import android.content.SharedPreferences
 import com.loconav.locodriver.application.LocoDriverApplication
 
-object SharedPreferenceUtil {
-
-    private val DEFAULT_PREF_NAME = "locodrive_prefs"
+class SharedPreferenceUtil (val fileName : String){
 
     private val sharedPreferences : SharedPreferences = LocoDriverApplication.instance.applicationContext.getSharedPreferences(
-        DEFAULT_PREF_NAME, Activity.MODE_PRIVATE)
+        fileName, Activity.MODE_PRIVATE)
 
 
     private val editor = sharedPreferences.edit()
@@ -58,10 +56,13 @@ object SharedPreferenceUtil {
         return sharedPreferences.getString(key, defaultValue)?:""
     }
 
+    fun getData(key: String, defaultValue: Boolean): Boolean {
+        return sharedPreferences.getBoolean(key, defaultValue)
+    }
+
     fun deleteAllData() {
         editor.clear()
         editor.apply()
     }
-
 
 }

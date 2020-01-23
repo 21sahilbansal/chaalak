@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.apollographql.android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
 
@@ -53,9 +52,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //apollo grapQl library
-    implementation 'com.apollographql.apollo:apollo-runtime:1.0.0'
-    implementation "com.apollographql.apollo:apollo-android-support:0.3.2"
 
     //OkHTTP3
     implementation "com.squareup.okhttp3:okhttp:3.12.2"

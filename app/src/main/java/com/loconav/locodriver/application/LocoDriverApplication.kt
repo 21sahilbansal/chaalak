@@ -1,7 +1,6 @@
 package com.loconav.locodriver.application
 
 import android.app.Application
-import com.apollographql.apollo.ApolloClient
 import com.facebook.stetho.Stetho
 import com.loconav.locodriver.network.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient

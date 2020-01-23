@@ -1,6 +1,5 @@
 package com.loconav.locodriver.di
 
-import com.apollographql.apollo.ApolloClient
 import com.loconav.locodriver.BuildConfig
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.db.room.AppDatabase
@@ -85,14 +84,6 @@ val networkModule = module {
 
     single<UserHttpService>{ UserHttpService(get()) }
 
-//TODO :  uncomment below code to get graphQL Client.
-
-//    single<ApolloClient> {
-//        ApolloClient.builder()
-//            .serverUrl(BuildConfig.graphql_base_url)
-//            .okHttpClient(get<OkHttpClient>())
-//            .build()
-//    }
 }
 
 

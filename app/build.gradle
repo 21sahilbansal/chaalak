@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.apollographql.android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
 
@@ -9,22 +8,24 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.loconav.locodriver"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        def KEY_USER_AGENT = "user_agent"
+        def KEY_GRAPHQL_BASE_URL = "graphql_base_url"
+        buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
     }
     buildTypes {
 
         def KEY_BASE_URL = "base_url"
-        def KEY_USER_AGENT = "user_agent"
-
+        def HAUL_SECRET = "haul_secret"
         debug {
             applicationIdSuffix ".debug"
             debuggable true
             buildConfigField("String", KEY_BASE_URL, STAGE_BASEURL)
-            buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
+            buildConfigField("String", HAUL_SECRET, STAGE_HAUL_SECRET)
         }
 
         release {
@@ -33,7 +34,7 @@ android {
             shrinkResources true
             debuggable false
             buildConfigField("String", KEY_BASE_URL, PROD_BASEURL)
-            buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
+            buildConfigField("String", HAUL_SECRET, PROD_HAUL_SECRET)
         }
     }
 }
@@ -50,9 +51,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    //apollo grapQl library
-    implementation 'com.apollographql.apollo:apollo-runtime:1.0.0'
-    implementation "com.apollographql.apollo:apollo-android-support:0.3.2"
 
     //OkHTTP3
     implementation "com.squareup.okhttp3:okhttp:3.12.2"
@@ -88,5 +86,7 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

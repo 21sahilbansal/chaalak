@@ -41,3 +41,7 @@
 -keep class com.google.gson.examples.android.model.** { *; }
 
 ##---------------End: proguard configuration for Gson ----------
+
+
+#Picasso
+-dontwarn com.squareup.okhttp.**

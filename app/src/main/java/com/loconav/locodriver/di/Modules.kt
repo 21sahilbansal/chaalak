@@ -81,9 +81,7 @@ val networkModule = module {
         get<Retrofit>().create(HttpApiService::class.java)
     }
 
-
     single<UserHttpService>{ UserHttpService(get()) }
-
 }
 
 

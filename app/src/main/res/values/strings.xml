@@ -47,4 +47,9 @@
     <string name="no_internet_connection">No Internet Connection</string>
 
 
+    <string-array name="local_language_array" translatable="false">
+        <item name="locale_english" translatable="false">en</item>
+        <item name="locale_hindi" translatable="false">hi</item>
+    </string-array>
+
 </resources>

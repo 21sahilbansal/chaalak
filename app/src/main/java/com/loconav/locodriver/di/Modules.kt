@@ -1,5 +1,6 @@
 package com.loconav.locodriver.di
 
+import android.location.Geocoder
 import com.loconav.locodriver.BuildConfig
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.db.room.AppDatabase
@@ -13,8 +14,7 @@ import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
-
-
+import java.util.*
 
 
 const val defaultSharedPfFile = "locodrive_prefs"
@@ -95,6 +95,16 @@ val appModule = module {
      * {usage}: val picasso : Picasso by inject()
      */
     single { Picasso.get() }
+
+
+
+    /**
+     * {usage}: val picasso : Picasso by inject()
+     */
+    single { Geocoder(androidContext(), Locale.getDefault()) }
+
+
+
 }
 
 

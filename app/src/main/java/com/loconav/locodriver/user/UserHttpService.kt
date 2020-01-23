@@ -16,6 +16,7 @@ class UserHttpService(val httpService: HttpApiService) {
     fun requestServerForOTP(phoneNumber: String): MutableLiveData<DataWrapper<ResponseBody>> {
         val dataWrapper = DataWrapper<ResponseBody>()
         val apiResponse = MutableLiveData<DataWrapper<ResponseBody>>()
+
         httpService.getOTPForLogin(phoneNumber).enqueue(object : RetrofitCallback<ResponseBody>() {
             override fun handleSuccess(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val serverResponse = response.body()
@@ -38,6 +39,7 @@ class UserHttpService(val httpService: HttpApiService) {
     ): MutableLiveData<DataWrapper<EnterOTPResponse>> {
         val dataWrapper = DataWrapper<EnterOTPResponse>()
         val apiResponse = MutableLiveData<DataWrapper<EnterOTPResponse>>()
+
         httpService.validate(phoneNumber, otp)
             .enqueue(object : RetrofitCallback<EnterOTPResponse>() {
                 override fun handleSuccess(
@@ -61,6 +63,7 @@ class UserHttpService(val httpService: HttpApiService) {
     fun getDriverData(driverId: Long): MutableLiveData<DataWrapper<Driver>> {
         val dataWrapper = DataWrapper<Driver>()
         val apiResponse = MutableLiveData<DataWrapper<Driver>>()
+
         httpService.getProfileData(driverId).enqueue(object : RetrofitCallback<Driver>() {
             override fun handleSuccess(call: Call<Driver>, response: Response<Driver>) {
                 val serverResponse = response.body()
@@ -79,5 +82,7 @@ class UserHttpService(val httpService: HttpApiService) {
     /**
      * this method can be used to save user data into sharedpf
      */
-    fun saveUserData() {}
+    fun saveUserData() {
+
+    }
 }

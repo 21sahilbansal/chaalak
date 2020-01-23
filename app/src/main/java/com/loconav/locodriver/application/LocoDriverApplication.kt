@@ -1,34 +1,33 @@
 package com.loconav.locodriver.application
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
-import com.loconav.locodriver.network.Constants.Companion.BASE_URL
-import okhttp3.OkHttpClient
-import timber.log.Timber
-import com.loconav.locodriver.BuildConfig
-import com.loconav.locodriver.Constants
+import com.loconav.locodriver.di.applicationModule
+import org.koin.android.ext.android.startKoin
 
 
-class LocoDriverApplication : Application() {
+class LocoDriverApplication : MultiDexApplication() {
+
+
+//    val geocoder get() =  Geocoder(applicationContext, Locale.getDefault())
 
     override fun onCreate() {
         super.onCreate()
         instance = this
         initStetho()
-        initTimber()
+        initKoin()
     }
 
-    private fun initTimber() {
-        if (BuildConfig.DEBUG)
-            Timber.plant(Timber.DebugTree())
+    private fun initKoin() {
+        startKoin(this, applicationModule)
     }
 
     private fun initStetho() {
         Stetho.initialize(Stetho.newInitializerBuilder(getApplicationContext())
-        //fetch shared pref using cmd line
-        .enableDumpapp(Stetho.defaultDumperPluginsProvider(getApplicationContext()))
-        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(getApplicationContext()))
-        .build());
+            //fetch shared pref using cmd line
+            .enableDumpapp(Stetho.defaultDumperPluginsProvider(getApplicationContext()))
+            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(getApplicationContext()))
+            .build())
     }
 
 

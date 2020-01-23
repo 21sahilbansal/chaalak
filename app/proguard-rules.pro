@@ -21,27 +21,38 @@
 #-renamesourcefileattribute SourceFile
 
 
-
-
 # For reference GSON proguard -> https://stackoverflow.com/a/15476406
 ##---------------Begin: proguard configuration for Gson ----------
 # Gson uses generic type information stored in a class file when working with
 #fields. Proguard removes such information by default, so configure it to keep
 #all of it.
 -keepattributes Signature
-
 # For using GSON @Expose annotation
 -keepattributes *Annotation*
-
 # Gson specific classes
 -keep class sun.misc.Unsafe { *; }
 #-keep class com.google.gson.stream.** { *; }
-
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.google.gson.examples.android.model.** { *; }
-
 ##---------------End: proguard configuration for Gson ----------
 
 
-#Picasso
+
+##---------------Start : Picasso---------------<<
 -dontwarn com.squareup.okhttp.**
+##---------------End : Picasso--------------->>
+
+
+
+##---------------Start : EventBus---------------<<
+# http://greenrobot.org/eventbus/documentation/proguard/
+-keepattributes *Annotation*
+        -keepclassmembers class ** {
+@org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+<init>(java.lang.Throwable);
+}
+##---------------End : EventBus--------------->>

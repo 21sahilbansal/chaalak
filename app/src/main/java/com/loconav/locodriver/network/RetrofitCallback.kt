@@ -8,6 +8,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -17,7 +18,6 @@ abstract class RetrofitCallback<T> : Callback<T> {
     private val TAG = javaClass.canonicalName
 
     private val appContext = LocoDriverApplication.instance.applicationContext
-
     private val DEFAULT_ERROR_MESSAGE = appContext.resources.getString(R.string.something_went_wrong)
     private val NO_INTERNET = appContext.resources.getString(R.string.no_internet_connection)
 
@@ -29,7 +29,7 @@ abstract class RetrofitCallback<T> : Callback<T> {
     }
 
     override fun onResponse(call: Call<T>, response: Response<T>) {
-        Log.i("http", "endService " + response.raw().request().url() + " : " + Date().time)
+        Timber.e("endService " + response.raw().request().url() + " : " + Date().time)
         if (response.isSuccessful()) {
             handleSuccess(call, response)
         } else {

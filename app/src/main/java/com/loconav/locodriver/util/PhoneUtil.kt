@@ -57,8 +57,8 @@ class PhoneUtil {
 
         fun isPhoneNumberValid(inputString:String):Boolean {
             val pattern = Pattern.compile("[2-9][0-9]{9}")
-            val m = pattern.matcher(inputString)
-            return m.find() && m.group() == inputString
+            val matcher = pattern.matcher(inputString)
+            return matcher.matches()
         }
     }
 }

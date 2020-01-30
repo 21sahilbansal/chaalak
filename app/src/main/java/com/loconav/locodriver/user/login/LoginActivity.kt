@@ -28,7 +28,7 @@ class LoginActivity : BaseFragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        inflateReplaceFragment(NumberLoginFragment.getInstance(), false, NUMBER_LOGIN_FRAGMENT)
+        openNumberLoginFragment()
     }
 
 

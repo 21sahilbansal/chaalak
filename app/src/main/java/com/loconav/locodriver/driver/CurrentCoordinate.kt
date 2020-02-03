@@ -6,9 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "coordinates")
 data class CurrentCoordinate(
-    @ColumnInfo(name = "lat") var lat: Double,
-    @ColumnInfo(name = "lng") var lng: Double,
-    @ColumnInfo(name = "battery_percentage") var batteryPercentage: Int
+    @ColumnInfo(name = "lat") var lat: Double?,
+    @ColumnInfo(name = "lng") var lng: Double?,
+    @ColumnInfo(name = "battery_percentage") var batteryPercentage: Int,
+    @ColumnInfo(name = "location_availability") var locationAvailability:Boolean
 ){
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

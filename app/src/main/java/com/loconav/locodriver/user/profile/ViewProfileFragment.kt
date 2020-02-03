@@ -70,8 +70,6 @@ class ViewProfileFragment : BaseFragment() {
                 Toast.makeText(context, dataWrapper.throwable?.message, Toast.LENGTH_LONG).show()
             }
         })
-
-
     }
 
     private fun setData(driver : Driver){

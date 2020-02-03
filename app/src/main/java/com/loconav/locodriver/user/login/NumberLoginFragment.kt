@@ -2,6 +2,8 @@ package com.loconav.locodriver.user.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import com.loconav.locodriver.base.BaseFragment
@@ -20,6 +22,7 @@ import com.loconav.locodriver.R
 import com.loconav.locodriver.language.LanguageEventBus
 import com.loconav.locodriver.language.LanguageEventBus.Companion.ON_LANGUAGE_CHANGED_FROM_LOGIN
 import com.loconav.locodriver.util.LocaleHelper
+import com.loconav.locodriver.util.PhoneUtil
 
 
 class NumberLoginFragment : BaseFragment() {
@@ -41,18 +44,33 @@ class NumberLoginFragment : BaseFragment() {
         numberLoginViewModel = ViewModelProviders.of(this).get(NumberLoginViewModel::class.java)
         val pendingIntent = Credentials.getClient(activity!!, options).getHintPickerIntent(hintRequest)
         button_get_otp.setOnClickListener {
-            if(editTextNumber.text.isNullOrEmpty()) {
-                val shake = loadAnimation(context, R.anim.shake)
-                editTextNumber.startAnimation(shake)
-            } else {
-                requestServerForOtp()
-                EventBus.getDefault().post(LoginEvent(OPEN_ENTER_OTP_FRAGMENT, editTextNumber.text.toString()))
+            when {
+                editTextNumber.text.isNullOrEmpty() -> {
+                    displayNumberErrorMessage(R.string.blank_number_error_message)
+                }
+                PhoneUtil.isPhoneNumberValid(editTextNumber.text.toString()) -> {
+                    error_message.visibility=View.INVISIBLE
+                    requestServerForOtp()
+                    EventBus.getDefault().post(LoginEvent(OPEN_ENTER_OTP_FRAGMENT, editTextNumber.text.toString()))
+                }
+                else -> {
+                    displayNumberErrorMessage(R.string.invalid_number_error_message)
+                }
             }
         }
 
+        editTextNumber.addTextChangedListener(object :TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {}
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                error_message.visibility= View.INVISIBLE
+            }
+        })
 
         editTextNumber.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus)
+            if (hasFocus && editTextNumber.text.isNullOrBlank())
                 startIntentSenderForResult(pendingIntent.intentSender, PHONE_REQUEST, null, 0, 0, 0, null)
         }
 
@@ -70,6 +88,13 @@ class NumberLoginFragment : BaseFragment() {
                 Toast.makeText(context, dataWrapper.throwable?.message, Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    private fun displayNumberErrorMessage(stringResId:Int){
+        error_message.visibility=View.VISIBLE
+        error_message.text=getString(stringResId)
+        val shake = loadAnimation(context, R.anim.shake)
+        editTextNumber.startAnimation(shake)
     }
 
     override fun getLayoutId(): Int {
@@ -97,6 +122,4 @@ class NumberLoginFragment : BaseFragment() {
             }
         }
     }
-
-
 }

@@ -90,6 +90,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/error_message"
+            android:layout_height="wrap_content"
+            style="@style/ErrorMessage"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+            tools:text="Invalid"
+            android:visibility="invisible"
+            android:layout_marginLeft="30dp">
+        </TextView>
+
         <Button
             android:id="@+id/button_get_otp"
             android:layout_width="0dp"

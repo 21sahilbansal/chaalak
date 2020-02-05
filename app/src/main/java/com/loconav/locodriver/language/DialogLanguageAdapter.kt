@@ -22,20 +22,15 @@ class DialogLanguageAdapter :
 
     val context: Context by inject()
 
-    private val languageHashMap: HashMap<Int, LanguageDataClass> by inject()
+    private val languageArray: Array<LanguageDataClass> by inject()
 
-    var defaultSelectedLanguage: Int = LanguageType.English.num
+    private var defaultSelectedLanguage: Int?=null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogLanguageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_language_dialog, parent, false)
-
-
-        when (LocaleHelper.getLanguage(parent.context)) {
-            languageHashMap[LanguageType.English.num]!!.shortProperty -> defaultSelectedLanguage = LanguageType.English.num
-            languageHashMap[LanguageType.Hindi.num]!!.shortProperty -> defaultSelectedLanguage = LanguageType.Hindi.num
-        }
+        defaultSelectedLanguage=LocaleHelper.getLanguage(parent.context)
         return DialogLanguageViewHolder(view)
     }
 
@@ -44,7 +39,7 @@ class DialogLanguageAdapter :
     }
 
     private fun setData(holder: DialogLanguageViewHolder, position: Int) {
-        holder.languageTextView.text = languageHashMap[position]!!.longProperty
+        holder.languageTextView.text = languageArray[position].longProperty
 
         if (defaultSelectedLanguage == position)
             holder.tick.visibility = VISIBLE
@@ -55,7 +50,7 @@ class DialogLanguageAdapter :
 
     private fun changeLanguage(holder: DialogLanguageViewHolder, position: Int) {
         holder.tick.visibility = VISIBLE
-        val selectedLanguage = languageHashMap[position]!!.shortProperty
+        val selectedLanguage = languageArray[position].shortProperty
         LocaleHelper.changeLanguage(holder.itemview.context, selectedLanguage)
         EventBus.getDefault()
             .post(LanguageEventBus(LanguageEventBus.ON_LANGUAGE_CHANGED_FROM_PROFILE))
@@ -63,7 +58,7 @@ class DialogLanguageAdapter :
 
 
     override fun getItemCount(): Int {
-        return languageHashMap.size
+        return languageArray.size
     }
 
 

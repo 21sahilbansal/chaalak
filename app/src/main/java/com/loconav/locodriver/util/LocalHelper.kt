@@ -7,7 +7,6 @@ import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.language.LanguageDataClass
-import com.loconav.locodriver.language.LanguageType
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.*
@@ -17,7 +16,7 @@ object LocaleHelper : KoinComponent{
 
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
-    private val languagehashMap:HashMap<Int,LanguageDataClass> by inject()
+    private val languageArray:Array<LanguageDataClass> by inject()
 
     val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
 
@@ -31,8 +30,10 @@ object LocaleHelper : KoinComponent{
         return setLocale(context, lang)
     }
 
-    fun getLanguage(context: Context): String? {
-        return getPersistedData(context, Locale.getDefault().language)
+    fun getLanguage(context: Context): Int {
+        val persistedData = getPersistedData(context, Locale.getDefault().language)
+        return if(persistedData == "hi"){1}
+        else{0}
     }
 
     private fun setLocale(context: Context, language: String): Context {
@@ -73,11 +74,7 @@ object LocaleHelper : KoinComponent{
         return context
     }
 
-
     fun toggleBetweenHiAndEn(context: Context) {
-        if(getLanguage(context).equals("hi"))
-            changeLanguage(context, languagehashMap[LanguageType.English.num]!!.shortProperty)
-        else
-            changeLanguage(context, languagehashMap[LanguageType.Hindi.num]!!.shortProperty)
+        changeLanguage(context, languageArray[1- getLanguage(context)].shortProperty)
     }
 }

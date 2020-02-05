@@ -1,5 +1,8 @@
 package com.loconav.locodriver
 
+import android.util.SparseArray
+import com.loconav.locodriver.language.LanguageDataClass
+
 class Constants {
 
     interface HTTP {
@@ -51,10 +54,10 @@ class Constants {
 
     interface LanguageProperty {
         companion object {
-            const val ENGLISH_SHORT_PROPERTY = "en"
-            const val ENGLISH_LONG_PROPERTY = "English"
-            const val HINDI_SHORT_PROPERTY = "hi"
-            const val HINDI_LONG_PROPERTY = "Hindi"
+            var languageArray = arrayOf(
+                LanguageDataClass( "en", "English"),
+                LanguageDataClass("hi",  "Hindi")
+            )
         }
     }
 }

@@ -3,9 +3,9 @@ package com.loconav.locodriver.di
 import android.location.Geocoder
 import com.loconav.locodriver.BuildConfig
 import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.LanguageProperty.Companion.languageArray
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.language.languageHashMap
 import com.loconav.locodriver.network.HeaderInterceptor
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.user.UserHttpService
@@ -48,7 +48,7 @@ val dataModule = module(override = true) {
      */
     single { AppDatabase(androidContext()) }
 
-    single { languageHashMap }
+    single { languageArray }
 
 }
 

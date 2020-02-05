@@ -12,11 +12,11 @@ import org.koin.standalone.inject
 import java.util.*
 import kotlin.collections.HashMap
 
-object LocaleHelper : KoinComponent{
+object LocaleHelper : KoinComponent {
 
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
-    private val languageArray:Array<LanguageDataClass> by inject()
+    private val languageArray: Array<LanguageDataClass> by inject()
 
     val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
 
@@ -32,8 +32,11 @@ object LocaleHelper : KoinComponent{
 
     fun getLanguage(context: Context): Int {
         val persistedData = getPersistedData(context, Locale.getDefault().language)
-        return if(persistedData == "hi"){1}
-        else{0}
+        return if (persistedData == "hi") {
+            1
+        } else {
+            0
+        }
     }
 
     private fun setLocale(context: Context, language: String): Context {
@@ -47,7 +50,7 @@ object LocaleHelper : KoinComponent{
         return setLocale(context, languageString)
     }
 
-    private fun getPersistedData(context: Context, defaultLanguage: String): String{
+    private fun getPersistedData(context: Context, defaultLanguage: String): String {
         return sharedPreferenceUtil.getData(SELECTED_LANGUAGE, defaultLanguage)
     }
 
@@ -75,6 +78,6 @@ object LocaleHelper : KoinComponent{
     }
 
     fun toggleBetweenHiAndEn(context: Context) {
-        changeLanguage(context, languageArray[1- getLanguage(context)].shortProperty)
+        changeLanguage(context, languageArray[1 - getLanguage(context)].shortProperty)
     }
 }

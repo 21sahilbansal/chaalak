@@ -24,13 +24,13 @@ class DialogLanguageAdapter :
 
     private val languageArray: Array<LanguageDataClass> by inject()
 
-    private var defaultSelectedLanguage: Int?=null
+    private var defaultSelectedLanguage: Int? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogLanguageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.item_language_dialog, parent, false)
-        defaultSelectedLanguage=LocaleHelper.getLanguage(parent.context)
+        defaultSelectedLanguage = LocaleHelper.getLanguage(parent.context)
         return DialogLanguageViewHolder(view)
     }
 

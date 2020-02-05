@@ -8,7 +8,7 @@ class Constants {
     interface HTTP {
         companion object {
             const val NUMBER_LOGIN = "login/driver"
-            const val DRIVER_OTP_VERIFY= "login/driver_otp_verify"
+            const val DRIVER_OTP_VERIFY = "login/driver_otp_verify"
             const val GET_DRIVER = "drivers/{id}"
         }
     }
@@ -55,8 +55,8 @@ class Constants {
     interface LanguageProperty {
         companion object {
             var languageArray = arrayOf(
-                LanguageDataClass( "en", "English"),
-                LanguageDataClass("hi",  "Hindi")
+                LanguageDataClass("en", "English"),
+                LanguageDataClass("hi", "Hindi")
             )
         }
     }

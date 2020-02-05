@@ -3,15 +3,21 @@ package com.loconav.locodriver.util
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
+import com.loconav.locodriver.language.LanguageDataClass
+import com.loconav.locodriver.language.LanguageType
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.*
+import kotlin.collections.HashMap
 
 object LocaleHelper : KoinComponent{
 
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
+
+    private val languagehashMap:HashMap<Int,LanguageDataClass> by inject()
 
     val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
 
@@ -68,10 +74,10 @@ object LocaleHelper : KoinComponent{
     }
 
 
-    public fun toggleBetweenHiAndEn(context: Context) {
+    fun toggleBetweenHiAndEn(context: Context) {
         if(getLanguage(context).equals("hi"))
-            changeLanguage(context, context.resources.getStringArray(R.array.local_language_array)[0])
+            changeLanguage(context, languagehashMap[LanguageType.English.num]!!.shortProperty)
         else
-            changeLanguage(context, context.resources.getStringArray(R.array.local_language_array)[1])
+            changeLanguage(context, languagehashMap[LanguageType.Hindi.num]!!.shortProperty)
     }
 }

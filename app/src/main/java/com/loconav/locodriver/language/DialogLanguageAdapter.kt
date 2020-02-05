@@ -17,14 +17,15 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 
-class DialogLanguageAdapter : RecyclerView.Adapter<DialogLanguageAdapter.DialogLanguageViewHolder>(), KoinComponent {
+class DialogLanguageAdapter :
+    RecyclerView.Adapter<DialogLanguageAdapter.DialogLanguageViewHolder>(), KoinComponent {
 
-    val context : Context by inject()
+    val context: Context by inject()
+
+    private val languageHashMap: HashMap<Int, LanguageDataClass> by inject()
 
     var defaultSelectedLanguage: Int = LanguageType.English.num
 
-
-    val languages = context.resources.getStringArray(R.array.local_language_array);
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogLanguageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -32,22 +33,18 @@ class DialogLanguageAdapter : RecyclerView.Adapter<DialogLanguageAdapter.DialogL
 
 
         when (LocaleHelper.getLanguage(parent.context)) {
-            languages[0] -> defaultSelectedLanguage = LanguageType.English.num
-            languages[1] -> defaultSelectedLanguage = LanguageType.Hindi.num
+            languageHashMap[LanguageType.English.num]!!.shortProperty -> defaultSelectedLanguage = LanguageType.English.num
+            languageHashMap[LanguageType.Hindi.num]!!.shortProperty -> defaultSelectedLanguage = LanguageType.Hindi.num
         }
         return DialogLanguageViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: DialogLanguageViewHolder, position: Int) {
-        holder.itemview.tag = position
         setData(holder, position)
     }
 
     private fun setData(holder: DialogLanguageViewHolder, position: Int) {
-
-        holder.languageTextView.text = languages[position]
-
-
+        holder.languageTextView.text = languageHashMap[position]!!.longProperty
 
         if (defaultSelectedLanguage == position)
             holder.tick.visibility = VISIBLE
@@ -58,14 +55,15 @@ class DialogLanguageAdapter : RecyclerView.Adapter<DialogLanguageAdapter.DialogL
 
     private fun changeLanguage(holder: DialogLanguageViewHolder, position: Int) {
         holder.tick.visibility = VISIBLE
-        val selectedLanguage = holder.itemview.context.resources.getStringArray(R.array.local_language_array)[position]
+        val selectedLanguage = languageHashMap[position]!!.shortProperty
         LocaleHelper.changeLanguage(holder.itemview.context, selectedLanguage)
-        EventBus.getDefault().post(LanguageEventBus(LanguageEventBus.ON_LANGUAGE_CHANGED_FROM_PROFILE))
+        EventBus.getDefault()
+            .post(LanguageEventBus(LanguageEventBus.ON_LANGUAGE_CHANGED_FROM_PROFILE))
     }
 
 
     override fun getItemCount(): Int {
-        return languages.size
+        return languageHashMap.size
     }
 
 
@@ -74,8 +72,6 @@ class DialogLanguageAdapter : RecyclerView.Adapter<DialogLanguageAdapter.DialogL
         val languageTextView = itemView.text_language
 
     }
-
-
 
 
 }

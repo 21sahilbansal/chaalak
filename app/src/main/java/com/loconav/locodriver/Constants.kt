@@ -48,4 +48,13 @@ class Constants {
             const val VALID_PHONE_NUMBER_REGEX = "[2-9][0-9]{9}"
         }
     }
+
+    interface LanguageProperty {
+        companion object {
+            const val ENGLISH_SHORT_PROPERTY = "en"
+            const val ENGLISH_LONG_PROPERTY = "English"
+            const val HINDI_SHORT_PROPERTY = "hi"
+            const val HINDI_LONG_PROPERTY = "Hindi"
+        }
+    }
 }

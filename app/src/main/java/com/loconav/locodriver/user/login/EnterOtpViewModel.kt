@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
 import com.google.android.gms.tasks.Task
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.user.UserHttpService
 import okhttp3.ResponseBody
@@ -17,7 +18,7 @@ import org.koin.standalone.inject
 class EnterOtpViewModel : ViewModel(), KoinComponent {
 
     val userHttpService: UserHttpService by inject()
-    val animator = ValueAnimator.ofFloat(00.60f, 00.00f)
+    val animator = ValueAnimator.ofFloat(Constants.AnimationConstants.VALUEANIMATOR_START_ANIMATION_VALUE,Constants.AnimationConstants.VALUEANIMATOR_END_ANIMATION_VALUE)
 
     fun validateOTP(phoneNumber: String, otp: String): LiveData<DataWrapper<EnterOTPResponse>>? {
         return userHttpService.validateOTPFromServer(phoneNumber, otp)
@@ -32,7 +33,7 @@ class EnterOtpViewModel : ViewModel(), KoinComponent {
         animationListener: Animator.AnimatorListener,
         animatorUpdateListener: ValueAnimator.AnimatorUpdateListener
     ) {
-        animator.duration = 60000
+        animator.duration = Constants.AnimationConstants.ANIMATION_CONSTANT_RESEND_OTP_COUNTER.toLong()
         animator.interpolator = LinearInterpolator()
         animator.addListener(animationListener)
         animator.addUpdateListener(animatorUpdateListener)

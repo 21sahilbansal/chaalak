@@ -5,6 +5,7 @@ import android.os.BatteryManager
 import android.content.Intent
 import android.content.IntentFilter
 import android.telephony.TelephonyManager
+import com.loconav.locodriver.Constants
 import java.util.regex.Pattern
 
 class PhoneUtil {
@@ -56,7 +57,7 @@ class PhoneUtil {
         }
 
         fun isPhoneNumberValid(inputString:String):Boolean {
-            val pattern = Pattern.compile("[2-9][0-9]{9}")
+            val pattern = Pattern.compile(Constants.RegexConstants.VALID_PHONE_NUMBER_REGEX)
             val matcher = pattern.matcher(inputString)
             return matcher.matches()
         }

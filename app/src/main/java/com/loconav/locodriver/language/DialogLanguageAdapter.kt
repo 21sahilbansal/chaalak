@@ -39,15 +39,14 @@ class DialogLanguageAdapter : RecyclerView.Adapter<DialogLanguageAdapter.DialogL
     }
 
     override fun onBindViewHolder(holder: DialogLanguageViewHolder, position: Int) {
+        holder.itemview.tag = position
         setData(holder, position)
     }
 
     private fun setData(holder: DialogLanguageViewHolder, position: Int) {
-        if(position == 0){
-            holder.languageTextView.text = LanguageType.English.name
-        } else if(position == 1) {
-            holder.languageTextView.text = LanguageType.Hindi.name
-        }
+
+        holder.languageTextView.text = languages[position]
+
 
 
         if (defaultSelectedLanguage == position)
@@ -73,6 +72,7 @@ class DialogLanguageAdapter : RecyclerView.Adapter<DialogLanguageAdapter.DialogL
     class DialogLanguageViewHolder(var itemview: View) : RecyclerView.ViewHolder(itemview) {
         val tick = itemview.iv_tick
         val languageTextView = itemView.text_language
+
     }
 
 

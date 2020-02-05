@@ -49,16 +49,16 @@ object LocaleHelper : KoinComponent{
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    private fun updateResources(context: Context, language: String?): Context {
-        val locale = Locale(language!!)
+    private fun updateResources(context: Context, language: String): Context {
+        val locale = Locale(language)
         Locale.setDefault(locale)
         val configuration = context.resources.configuration
         configuration.setLocale(locale)
         return context.createConfigurationContext(configuration)
     }
 
-    private fun updateResourcesLegacy(context: Context, language: String?): Context {
-        val locale = Locale(language!!)
+    private fun updateResourcesLegacy(context: Context, language: String): Context {
+        val locale = Locale(language)
         Locale.setDefault(locale)
         val resources = context.resources
         val configuration = resources.configuration

@@ -27,4 +27,25 @@ class Constants {
             const val VIEW_PROFILE_FRAGMENT = "view_profile_fragment"
         }
     }
+
+    interface AnimationConstants {
+        companion object {
+            const val ANIMATION_CONSTANT_RESEND_OTP_COUNTER = 60000
+            const val VALUEANIMATOR_START_ANIMATION_VALUE = 00.60f
+            const val VALUEANIMATOR_END_ANIMATION_VALUE = 00.00f
+
+        }
+    }
+
+    interface ViewProfileScreen {
+        companion object {
+            const val VIEW_PROFILE_TOOLBAR_TITLE = "My Profile"
+        }
+    }
+
+    interface RegexConstants {
+        companion object {
+            const val VALID_PHONE_NUMBER_REGEX = "[2-9][0-9]{9}"
+        }
+    }
 }

@@ -48,10 +48,4 @@
     <string name="blank_number_error_message">Mobile number field can’t be blank</string>
     <string name="invalid_number_error_message">Mobile number is not valid</string>
 
-
-    <string-array name="local_language_array" translatable="false">
-        <item name="locale_english" translatable="false">en</item>
-        <item name="locale_hindi" translatable="false">hi</item>
-    </string-array>
-
 </resources>

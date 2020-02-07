@@ -35,12 +35,14 @@ class ViewProfileFragment : BaseFragment() {
 
     var viewProfileViewModel: ViewProfileViewModel? = null
 
+    private val LANGUAGE_DIALOG_TAG = "Language_Dialog"
+
 
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         val actionBar = (activity as AppCompatActivity).supportActionBar as ActionBar
         actionBar.let {
-            it.title = "My Profile"
+            it.title = Constants.ViewProfileScreen.VIEW_PROFILE_TOOLBAR_TITLE
             it.setDisplayHomeAsUpEnabled(true)
             it.setDisplayShowHomeEnabled(true)
         }
@@ -53,7 +55,7 @@ class ViewProfileFragment : BaseFragment() {
         }
 
         tv_change_language.setOnClickListener {
-            LanguageDialogFragment().show(childFragmentManager, "Language_Dialog")
+            LanguageDialogFragment().show(childFragmentManager, LANGUAGE_DIALOG_TAG)
         }
 
         progressBar.visibility = VISIBLE

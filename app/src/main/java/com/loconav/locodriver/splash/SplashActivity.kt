@@ -18,10 +18,12 @@ import com.loconav.locodriver.Constants.SHARED_PREFERENCE.Companion.IS_LOGGED_IN
 import com.loconav.locodriver.R
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.landing.LandingActivity
+import com.loconav.locodriver.language.LanguageDataClass
 import com.loconav.locodriver.user.login.LoginActivity
 import com.loconav.locodriver.util.LocationUtil
 import com.loconav.locodriver.util.LocationWorkManager
 import com.loconav.locodriver.util.PhoneUtil
+import org.intellij.lang.annotations.Language
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 

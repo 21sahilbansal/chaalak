@@ -75,7 +75,7 @@ class NumberLoginFragment : BaseFragment() {
         }
 
         tv_change_language.setOnClickListener {
-            LocaleHelper.toggleBetweenHiAndEn(context!!)
+            LocaleHelper.toggleBetweenHiAndEn(it.context)
             EventBus.getDefault().post(LanguageEventBus(ON_LANGUAGE_CHANGED_FROM_LOGIN))
         }
     }

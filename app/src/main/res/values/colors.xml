@@ -13,4 +13,5 @@
     <color name="black_44">#444444</color>
     <color name="dirty_white">#fcfcfc</color>
     <color name="white">@android:color/white</color>
+    <color name="error_red">#d06666</color>
 </resources>

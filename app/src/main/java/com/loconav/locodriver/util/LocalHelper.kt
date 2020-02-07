@@ -3,16 +3,20 @@ package com.loconav.locodriver.util
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.language.LanguageType
+import com.loconav.locodriver.language.LanguageDataClass
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.*
+import kotlin.collections.HashMap
 
-object LocaleHelper : KoinComponent{
+object LocaleHelper : KoinComponent {
 
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
+
+    private val languageArray: Array<LanguageDataClass> by inject()
 
     val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
 
@@ -26,8 +30,13 @@ object LocaleHelper : KoinComponent{
         return setLocale(context, lang)
     }
 
-    fun getLanguage(context: Context): String? {
-        return getPersistedData(context, Locale.getDefault().language)
+    fun getLanguage(context: Context): Int {
+        val persistedData = getPersistedData(context, Locale.getDefault().language)
+        return if (persistedData == "hi") {
+            1
+        } else {
+            0
+        }
     }
 
     private fun setLocale(context: Context, language: String): Context {
@@ -41,7 +50,7 @@ object LocaleHelper : KoinComponent{
         return setLocale(context, languageString)
     }
 
-    private fun getPersistedData(context: Context, defaultLanguage: String): String{
+    private fun getPersistedData(context: Context, defaultLanguage: String): String {
         return sharedPreferenceUtil.getData(SELECTED_LANGUAGE, defaultLanguage)
     }
 
@@ -68,11 +77,7 @@ object LocaleHelper : KoinComponent{
         return context
     }
 
-
-    public fun toggleBetweenHiAndEn(context: Context) {
-        if(getLanguage(context).equals(LanguageType.Hindi.languageString))
-            changeLanguage(context, LanguageType.English.languageString)
-        else
-            changeLanguage(context, LanguageType.Hindi.languageString)
+    fun toggleBetweenHiAndEn(context: Context) {
+        changeLanguage(context, languageArray[1 - getLanguage(context)].shortProperty)
     }
 }

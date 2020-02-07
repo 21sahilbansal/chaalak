@@ -5,10 +5,8 @@ import android.os.BatteryManager
 import android.content.Intent
 import android.content.IntentFilter
 import android.telephony.TelephonyManager
-
-
-
-
+import com.loconav.locodriver.Constants
+import java.util.regex.Pattern
 
 class PhoneUtil {
 
@@ -56,6 +54,12 @@ class PhoneUtil {
                 TelephonyManager.NETWORK_TYPE_NR -> return "5G"
                 else -> return "Unknown"
             }
+        }
+
+        fun isPhoneNumberValid(inputString:String):Boolean {
+            val pattern = Pattern.compile(Constants.RegexConstants.VALID_PHONE_NUMBER_REGEX)
+            val matcher = pattern.matcher(inputString)
+            return matcher.matches()
         }
     }
 }

@@ -26,8 +26,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        if(!LocationUtil().isGPSEnabled())
-            openLocationSettings()
+//        if(!LocationUtil().isGPSEnabled())
+//            openLocationSettings()
         Log.e("service provider", PhoneUtil.getServiceProviderName(baseContext))
         Log.e("Network Type", PhoneUtil.getNetworkClass(baseContext))
 //        Log.e("Network Type network", NetworkUtil().getNetworkType(null).toString())

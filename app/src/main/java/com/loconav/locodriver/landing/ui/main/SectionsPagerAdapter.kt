@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
 import com.loconav.locodriver.R
+import com.loconav.locodriver.Trips.TripsFragment
 
 
 /**
@@ -17,9 +18,10 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1)
+        return when(position){
+            0-> TripsFragment.getInstance()
+            else -> PlaceholderFragment.newInstance(position+1)
+        }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

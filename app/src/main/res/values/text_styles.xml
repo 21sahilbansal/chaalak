@@ -96,4 +96,21 @@
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
 
+    <style name="ActiveTag">
+        <item name="android:fontFamily">OpenSansSemiBold-Regular</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
+    <style name="SmallLight">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/lightgrey</item>
+    </style>
+    <style name="SmallDark">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
 </resources>

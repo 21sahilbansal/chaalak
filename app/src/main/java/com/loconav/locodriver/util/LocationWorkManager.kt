@@ -16,21 +16,18 @@ class LocationWorkManager(context: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         val location = LocationUtil().getLocation()
         insertCoordinateToDb(location)
-        Log.i("Location Worker", LocationUtil().getLocation().toString())
         return Result.success()
     }
 
     private fun insertCoordinateToDb(location: Location?) {
         val locationAvaibility = LocationUtil().isGPSEnabled()
         val phoneBatteryPercentage = PhoneUtil.getBatteryPercentage(applicationContext)
-        var latitude: Double? = null
-        var longitude: Double? = null
         location?.let {
-            latitude = it.latitude
-            longitude = it.longitude
+            val latitude = it.latitude
+            val longitude = it.longitude
+            val currentCoordinate =
+                CurrentCoordinate(latitude, longitude, phoneBatteryPercentage, locationAvaibility)
+            db.currentCoordinateDao().insertAll(currentCoordinate)
         }
-        val currentCoordinate =
-            CurrentCoordinate(latitude, longitude, phoneBatteryPercentage, locationAvaibility)
-        db.currentCoordinateDao().insertAll(currentCoordinate)
     }
 }

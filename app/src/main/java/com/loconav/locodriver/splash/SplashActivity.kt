@@ -10,9 +10,6 @@ import android.provider.Settings
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.work.PeriodicWorkRequest
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.loconav.locodriver.Constants.SHARED_PREFERENCE.Companion.IS_LOGGED_IN
 
 import com.loconav.locodriver.R
@@ -30,7 +27,7 @@ import java.util.concurrent.TimeUnit
 class SplashActivity : AppCompatActivity() {
 
 
-    val sharedPreferenceUtil : SharedPreferenceUtil by inject()
+    val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +36,10 @@ class SplashActivity : AppCompatActivity() {
         Log.e("Network Type", PhoneUtil.getNetworkClass(baseContext))
 //        Log.e("Network Type network", NetworkUtil().getNetworkType(null).toString())
 
-        var intent : Intent
-        if(sharedPreferenceUtil.getData(IS_LOGGED_IN, false)) {
+        var intent: Intent
+        if (sharedPreferenceUtil.getData(IS_LOGGED_IN, false)) {
             intent = Intent(this, LandingActivity::class.java)
-        }else
+        } else
             intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
 

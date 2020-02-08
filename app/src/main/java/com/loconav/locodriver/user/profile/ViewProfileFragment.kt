@@ -19,6 +19,7 @@ import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.language.LanguageDialogFragment
 import com.loconav.locodriver.user.UserHttpService
+import com.loconav.locodriver.util.TimeUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.koin.android.ext.android.inject
@@ -74,13 +75,37 @@ class ViewProfileFragment : BaseFragment() {
         })
     }
 
-    private fun setData(driver : Driver){
-        picasso.load(driver.profilePicture).error(R.drawable.ic_profile).into(iv_profile_picture)
+    private fun setData(driver: Driver) {
+        driver.profilePicture?.let {
+            picasso.load(it).into(iv_profile_picture)
+        } ?: run { iv_profile_picture.setImageResource(R.drawable.ic_user_placeholder) }
+
         tv_driver_name.text = driver.name
-        tv_transporter_name.text = driver.transporterName
-        tv_avg_dist.text = driver.averageDistanceTravelled
-        tv_address.text = driver.currentAddressAttributes
-        tv_doj.text = Date(driver.dob?:0L).toString()
+
+        driver.transporterName?.let {
+            tv_transporter_name.text = it
+        } ?: run { tv_transporter_name.text = getString(R.string.no_transporter_text) }
+
+        driver.currentMonthlyIncome?.let {
+            tv_current_salary.text = String.format(getString(R.string.rupee),it)
+        } ?: run { tv_current_salary.text = getString(R.string.no_monthly_income_text) }
+
+        driver.currentAddressAttributes?.let {
+            tv_address.text = String.format("%s,%s,%s,%s,%s"
+                ,it.houseNumber
+                ,it.addressLine1
+                ,it.addressLine2
+                ,it.addressLine3
+                ,it.city)
+        }?:run { tv_address.text = getString(R.string.no_address_present) }
+
+        tv_doj.text = TimeUtils.getThFormatTime(driver.dateOfJoining ?: 0L)
+
+        driver.vehicleNumber?.let {
+            vehicle_number_value_tv.text = it
+        } ?: run {
+            vehicle_number_value_tv.text = getString(R.string.no_vehicle_assigned_text)
+        }
     }
 
     override fun getLayoutId(): Int {

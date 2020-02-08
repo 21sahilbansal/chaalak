@@ -16,6 +16,7 @@ android {
         def KEY_USER_AGENT = "user_agent"
         def KEY_GRAPHQL_BASE_URL = "graphql_base_url"
         buildConfigField("String", KEY_USER_AGENT, USER_AGENT)
+        vectorDrawables.useSupportLibrary=true
     }
     buildTypes {
 

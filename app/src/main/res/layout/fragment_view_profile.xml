@@ -26,7 +26,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
                 <ImageView
-                    android:src="@drawable/ic_profile"
+                    app:srcCompat="@drawable/ic_user_placeholder"
                     android:id="@+id/iv_profile_picture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -150,7 +150,7 @@
                 tools:layout_editor_absoluteY="296dp" />
 
             <TextView
-                android:id="@+id/tv_avg_dist"
+                android:id="@+id/tv_current_salary"
                 style="@style/BodyLarge"
                 android:layout_marginRight="30dp"
                 android:layout_marginEnd="30dp"
@@ -181,7 +181,7 @@
                 android:background="@color/border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_avg_dist" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_current_salary" />
 
             <TextView
                 android:id="@+id/textView9"

@@ -52,5 +52,11 @@
     <string name="address_text">Address</string>
     <string name="date_of_joining">Date of Joining</string>
     <string name="change_language_text">Change Language</string>
+    <string name="choose_language_text">Choose Language</string>
+    <string name="no_monthly_income_text">Monthly income not known</string>
+    <string name="no_transporter_text">Transporter not assigned</string>
+    <string name="no_vehicle_assigned_text">Vehicle not assigned</string>
+    <string name="rupee">₹%s</string>
+    <string name="no_address_present">Address not known</string>
 
 </resources>

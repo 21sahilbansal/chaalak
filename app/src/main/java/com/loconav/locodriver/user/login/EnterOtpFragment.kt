@@ -39,13 +39,12 @@ class EnterOtpFragment : BaseFragment() {
 
         enterOtpViewModel = ViewModelProviders.of(this).get(EnterOtpViewModel::class.java)
 
-
-
+        tv_change_number.text= String.format(getString(R.string.change_number_text)+"?")
         tv_change_number.setOnClickListener{
             EventBus.getDefault().post(LoginEvent(OPEN_NUMBER_LOGIN_FRAGMENT))
         }
 
-        tv_phone_number_title.setText("Enter OTP code sent to ${arguments?.getString(PHONE_NUMBER)}")
+        tv_phone_number_title.text = String.format(getString(R.string.otp_sent_number_text),arguments?.getString(PHONE_NUMBER))
 
         tv_resend_otp.setOnClickListener {
             resendOTP()

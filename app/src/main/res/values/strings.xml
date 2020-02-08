@@ -58,5 +58,9 @@
     <string name="no_vehicle_assigned_text">Vehicle not assigned</string>
     <string name="rupee">₹%s</string>
     <string name="no_address_present">Address not known</string>
+    <string name="mobile_number_hint">Mobile Number</string>
+    <string name="get_otp_text">get otp</string>
+    <string name="otp_sent_number_text">Enter OTP code sent to %s</string>
+    <string name="change_number_text">Change Number</string>
 
 </resources>

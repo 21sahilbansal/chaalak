@@ -54,7 +54,7 @@
                 android:layout_marginTop="30dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_driver_name"
-                android:text="Transporter Name" />
+                android:text="@string/transporter_name" />
 
             <TextView
                 android:id="@+id/tv_transporter_name"
@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_transporter_name" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/vehicle_number_tv"
                 style="@style/BodyLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,7 +99,55 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view"
-                android:text="Avg distance travelled per day (km) " />
+                android:text="Vehicle Number" />
+
+            <TextView
+                android:id="@+id/vehicle_number_value_tv"
+                style="@style/BodyLarge"
+                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:singleLine="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_number_tv"
+                tools:text="UP14BD7717" />
+
+
+            <View
+                android:id="@+id/view0"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@color/border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_number_value_tv" />
+
+
+            <TextView
+                android:id="@+id/textView8"
+                style="@style/BodyLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="30dp"
+                android:text="@string/current_salary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view0"
+                tools:layout_editor_absoluteY="296dp" />
 
             <TextView
                 android:id="@+id/tv_avg_dist"
@@ -145,7 +193,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view2"
-                android:text="Address" />
+                android:text="@string/address_text" />
 
             <TextView
                 android:id="@+id/tv_address"
@@ -191,7 +239,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view3"
-                android:text="Date of Joining" />
+                android:text="@string/date_of_joining" />
 
             <TextView
                 android:id="@+id/tv_doj"
@@ -242,7 +290,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view4"
-                android:text="Change Language" />
+                android:text="@string/change_language_text" />
             <View
                 android:id="@+id/view6"
                 android:layout_width="0dp"

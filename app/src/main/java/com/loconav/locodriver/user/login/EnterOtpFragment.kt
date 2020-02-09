@@ -24,6 +24,9 @@ import com.loconav.locodriver.language.LanguageEventBus
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_NUMBER_LOGIN_FRAGMENT
 import com.loconav.locodriver.util.LocaleHelper
 import kotlinx.android.synthetic.main.fragment_enter_otp.*
+import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
+import kotlinx.android.synthetic.main.fragment_enter_otp.tv_change_language
+import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -71,7 +74,9 @@ class EnterOtpFragment : BaseFragment() {
                             dataWrapper.data?.let {userDataResponse ->
                                 sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.AUTH_TOKEN, userDataResponse.driver?.authenticationToken?:"")
                                 sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.DRIVER_ID, userDataResponse.driver?.id?:0L)
-                                sharedPreferenceUtil.saveData(PHOTO_LINK, userDataResponse.driver?.profilePicture?:"")
+                                if(!userDataResponse.driver?.pictures?.profilePicture.isNullOrEmpty()){
+                                    sharedPreferenceUtil.saveData(PHOTO_LINK, userDataResponse.driver?.pictures?.profilePicture!![0])
+                                }
                                 sharedPreferenceUtil.saveData(IS_LOGGED_IN, true)
                                 EventBus.getDefault().post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
                             } ?: run{

@@ -31,8 +31,6 @@ data class Driver(
     var dob: Long? = null,
     @SerializedName("current_monthly_earning")
     var currentMonthlyIncome: Long? = null,
-    @SerializedName("profile_picture")
-    var profilePicture: String? = null,
     @SerializedName("transporter_name")
     var transporterName: String? = null,
     @SerializedName("avg_dist_travelled")
@@ -40,7 +38,9 @@ data class Driver(
     @SerializedName("vehicle_number")
     var vehicleNumber: String? = null,
     @SerializedName("current_address_attributes")
-    var currentAddressAttributes: Address? = null
+    var currentAddressAttributes: Address? = null,
+    @SerializedName("pictures")
+    var pictures: Pictures?=null
 )
 
 data class Address(
@@ -61,5 +61,10 @@ data class Address(
     var addressLine2: String? = "",
     @SerializedName("address_line_3")
     var addressLine3: String? = ""
+)
+
+data class Pictures(
+    @SerializedName("profile_picture")
+    var profilePicture:List<String>?=null
 )
 

@@ -21,6 +21,7 @@ import com.loconav.locodriver.language.LanguageDialogFragment
 import com.loconav.locodriver.user.UserHttpService
 import com.loconav.locodriver.util.TimeUtils
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -65,7 +66,9 @@ class ViewProfileFragment : BaseFragment() {
             dataWrapper.data?.let {userDataResponse ->
                 sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.AUTH_TOKEN, userDataResponse.authenticationToken?:"")
                 sharedPreferenceUtil.saveData(DRIVER_ID, userDataResponse.id?:0L)
-                sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.PHOTO_LINK, userDataResponse.profilePicture?:"")
+                if(!userDataResponse.pictures?.profilePicture.isNullOrEmpty()){
+                    sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.PHOTO_LINK, userDataResponse.pictures?.profilePicture!![0])
+                }
                 setData(userDataResponse)
                 progressBar.visibility = GONE
             } ?: run{
@@ -76,10 +79,13 @@ class ViewProfileFragment : BaseFragment() {
     }
 
     private fun setData(driver: Driver) {
-        driver.profilePicture?.let {
-            picasso.load(it).into(iv_profile_picture)
-        } ?: run { iv_profile_picture.setImageResource(R.drawable.ic_user_placeholder) }
+        if(sharedPreferenceUtil.getData(Constants.SHARED_PREFERENCE.PHOTO_LINK, "").equals("")){
+            iv_profile_picture.setImageResource(R.drawable.ic_user_placeholder)
 
+        }else{
+            picasso.load(sharedPreferenceUtil.getData(Constants.SHARED_PREFERENCE.PHOTO_LINK, ""))
+                .error(R.drawable.ic_user_placeholder).into(iv_profile_picture)
+        }
         tv_driver_name.text = driver.name
 
         driver.transporterName?.let {

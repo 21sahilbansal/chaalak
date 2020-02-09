@@ -34,7 +34,7 @@ class LandingActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
 
         val profileImageView = findViewById<CardView>(R.id.card_profile)
-//        picasso.load(sharedPreferenceUtil.getData(PHOTO_LINK, "")).error(R.drawable.ic_user_placeholder).into(iv_profile)
+        picasso.load(sharedPreferenceUtil.getData(PHOTO_LINK, "")).error(R.drawable.ic_user_placeholder).into(iv_profile)
         profileImageView.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)

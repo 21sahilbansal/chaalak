@@ -67,6 +67,7 @@ class EnterOtpFragment : BaseFragment() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                error_message.visibility = GONE
                 if(s?.length == 4) {
                     arguments?.getString(PHONE_NUMBER)?.let { phoneNumber ->
                         progressBar.visibility = View.VISIBLE
@@ -81,7 +82,8 @@ class EnterOtpFragment : BaseFragment() {
                                 EventBus.getDefault().post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
                             } ?: run{
                                 progressBar.visibility = GONE
-                                Toast.makeText(context, dataWrapper.throwable?.message, Toast.LENGTH_LONG).show()
+                                error_message.visibility=View.VISIBLE
+                                error_message.text=dataWrapper.throwable?.message
                             }
                         })
                     }
@@ -137,9 +139,11 @@ class EnterOtpFragment : BaseFragment() {
 
         enterOtpViewModel?.getOTP(arguments?.getString(PHONE_NUMBER)?:"")?.observe(this, Observer { dataWrapper ->
             dataWrapper.data?.let {userDataResponse ->
+                error_message.visibility=View.GONE
                 Log.e("variable ", userDataResponse.string())
             } ?: run{
-                Toast.makeText(context, dataWrapper.throwable?.message, Toast.LENGTH_LONG).show()
+                error_message.visibility=View.VISIBLE
+                error_message.text=dataWrapper.throwable?.message
             }
         })
     }

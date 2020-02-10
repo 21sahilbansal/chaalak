@@ -19,6 +19,7 @@ import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.language.LanguageDialogFragment
 import com.loconav.locodriver.user.UserHttpService
+import com.loconav.locodriver.util.AddressUtil
 import com.loconav.locodriver.util.TimeUtils
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
@@ -97,12 +98,7 @@ class ViewProfileFragment : BaseFragment() {
         } ?: run { tv_current_salary.text = getString(R.string.no_monthly_income_text) }
 
         driver.currentAddressAttributes?.let {
-            tv_address.text = String.format("%s,%s,%s,%s,%s"
-                ,it.houseNumber
-                ,it.addressLine1
-                ,it.addressLine2
-                ,it.addressLine3
-                ,it.city)
+            tv_address.text = AddressUtil.getAddress(it)
         }?:run { tv_address.text = getString(R.string.no_address_present) }
 
         tv_doj.text = TimeUtils.getThFormatTime(driver.dateOfJoining ?: 0L)

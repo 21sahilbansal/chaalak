@@ -17,6 +17,7 @@ import com.loconav.locodriver.landing.ui.main.SectionsPagerAdapter
 import com.loconav.locodriver.user.profile.ProfileActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
+import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.koin.android.ext.android.inject
 
 class LandingActivity : AppCompatActivity() {
@@ -34,7 +35,12 @@ class LandingActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
 
         val profileImageView = findViewById<CardView>(R.id.card_profile)
-        picasso.load(sharedPreferenceUtil.getData(PHOTO_LINK, "")).error(R.drawable.ic_user_placeholder).into(iv_profile)
+        if (sharedPreferenceUtil.getData(PHOTO_LINK, "").equals("")) {
+            iv_profile.setImageResource(R.drawable.ic_user_placeholder)
+        } else {
+            picasso.load(sharedPreferenceUtil.getData(PHOTO_LINK, ""))
+                .error(R.drawable.ic_user_placeholder).into(iv_profile)
+        }
         profileImageView.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)

@@ -99,7 +99,7 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view"
-                android:text="Vehicle Number" />
+                android:text="@string/vehicle_number_text" />
 
             <TextView
                 android:id="@+id/vehicle_number_value_tv"

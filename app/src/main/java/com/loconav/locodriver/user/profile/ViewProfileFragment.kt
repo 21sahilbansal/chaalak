@@ -45,7 +45,7 @@ class ViewProfileFragment : BaseFragment() {
         setHasOptionsMenu(true)
         val actionBar = (activity as AppCompatActivity).supportActionBar as ActionBar
         actionBar.let {
-            it.title = Constants.ViewProfileScreen.VIEW_PROFILE_TOOLBAR_TITLE
+            it.title = getString(R.string.profile_title_text)
             it.setDisplayHomeAsUpEnabled(true)
             it.setDisplayShowHomeEnabled(true)
         }

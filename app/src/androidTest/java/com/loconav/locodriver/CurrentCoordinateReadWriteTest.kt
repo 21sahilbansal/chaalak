@@ -36,9 +36,11 @@ class CurrentCoordinateReadWriteTest {
     @Test
     @Throws(Exception::class)
     fun writeCoordinateAndReadInList() {
-        val currentCoordinate: CurrentCoordinate = CurrentCoordinate(lat = 73.4, lng = 78.2, batteryPercentage = 89)
+        val currentCoordinate = CurrentCoordinate(lat = 73.4, lng = 78.2, batteryPercentage = 89,locationAvailability = true)
         currentCoordinateDao.insertAll(currentCoordinate)
-        val todoItem = currentCoordinateDao.findByLat(currentCoordinate.lat)
-        assertThat(todoItem, equalTo(currentCoordinate))
+        currentCoordinate.lat?.let {
+            val todoItem = currentCoordinateDao.findByLat(it)
+            assertThat(todoItem, equalTo(currentCoordinate))
+        }
     }
 }

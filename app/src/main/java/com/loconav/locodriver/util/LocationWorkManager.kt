@@ -23,11 +23,7 @@ class LocationWorkManager(context: Context, workerParams: WorkerParameters) :
         val locationAvaibility = LocationUtil().isGPSEnabled()
         val phoneBatteryPercentage = PhoneUtil.getBatteryPercentage(applicationContext)
         location?.let {
-            val latitude = it.latitude
-            val longitude = it.longitude
-            val currentCoordinate =
-                CurrentCoordinate(latitude, longitude, phoneBatteryPercentage, locationAvaibility)
-            db.currentCoordinateDao().insertAll(currentCoordinate)
+            db.currentCoordinateDao().insertAll(CurrentCoordinate(it.latitude, it.longitude, phoneBatteryPercentage, locationAvaibility))
         }
     }
 }

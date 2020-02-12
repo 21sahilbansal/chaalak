@@ -8,6 +8,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.loconav.locodriver.Constants.loginScreen.Companion.CORRECT_MOBILE_NUMBER
+import com.loconav.locodriver.Constants.loginScreen.Companion.EMPTY_PHONE_NUMBER
+import com.loconav.locodriver.Constants.loginScreen.Companion.PHONE_NUMBER_APPENDED_WITH_CHARACTER
+import com.loconav.locodriver.Constants.loginScreen.Companion.PHONE_NUMBER_APPENDED_WITH_ZERO
+import com.loconav.locodriver.Constants.loginScreen.Companion.PHONE_NUMBER_MORE_THEN_TEN_DIGIT
 import com.loconav.locodriver.user.login.LoginActivity
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +29,7 @@ class NumberLoginFragmentTest {
 
     @Test
     fun userCanEnterPhoneNumber(){
-        textInputMatcher("9898900989","9898900989",R.id.editTextNumber)
+        textInputMatcher(CORRECT_MOBILE_NUMBER, CORRECT_MOBILE_NUMBER,R.id.editTextNumber)
     }
     @Test
     fun userShouldNotbeAbletoAddCharacters(){
@@ -33,13 +38,13 @@ class NumberLoginFragmentTest {
 
     @Test
     fun userEnteredEmptyNumber(){
-        invalidNumberMatcher("",R.string.blank_number_error_message)
+        invalidNumberMatcher(EMPTY_PHONE_NUMBER,R.string.blank_number_error_message)
     }
 
     @Test
     fun userEnteredInvalidNumber(){
-        invalidNumberMatcher("23",R.string.invalid_number_error_message)
-        invalidNumberMatcher("0787234345",R.string.invalid_number_error_message)
+        invalidNumberMatcher(Constants.loginScreen.PHONE_NUMBER_LESS_THAN_TEN_DIGITS,R.string.invalid_number_error_message)
+        invalidNumberMatcher(PHONE_NUMBER_APPENDED_WITH_ZERO,R.string.invalid_number_error_message)
     }
 
     private fun invalidNumberMatcher(inputString:String,stringResid:Int){
@@ -59,19 +64,23 @@ class NumberLoginFragmentTest {
 
     @Test
     fun checkForNumbertoBeValidForLessThanTenDigit(){
-        assert(isPhoneNumberValid("8898"))
+        assert(isPhoneNumberValid(Constants.loginScreen.PHONE_NUMBER_LESS_THAN_TEN_DIGITS))
+    }
+    @Test
+    fun checkForNumberToBeValidForNumberAppendedWithCharacter(){
+        assert(isPhoneNumberValid(PHONE_NUMBER_APPENDED_WITH_CHARACTER))
     }
     @Test
     fun checkForNumbertoBeValidForMoreThanTenDigit(){
-        assert(isPhoneNumberValid("99898787895"))
+        assert(isPhoneNumberValid(PHONE_NUMBER_MORE_THEN_TEN_DIGIT))
     }
     @Test
     fun checkForNumbertoBeValidForNumberBeginingWithZero(){
-        assert(isPhoneNumberValid("0989878789"))
+        assert(isPhoneNumberValid(PHONE_NUMBER_APPENDED_WITH_ZERO))
     }
     @Test
     fun checkForNumbertoBeValidForCorrectNumber(){
-        assert(isPhoneNumberValid("0989878789"))
+        assert(isPhoneNumberValid(CORRECT_MOBILE_NUMBER))
     }
 
     private fun isPhoneNumberValid(inputString:String):Boolean{

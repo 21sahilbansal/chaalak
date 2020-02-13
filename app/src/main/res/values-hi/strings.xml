@@ -29,7 +29,7 @@
     <string name="mobile_number_hint">मोबाइल नंबर</string>
     <string name="get_otp_text">otp पाएं</string>
     <string name="otp_sent_number_text">%s पर भेजा गया OTP कोड दर्ज करें</string>
-    <string name="change_number_text">नंबर बदलें</string>
+    <string name="change_number_text">नंबर बदलें %s</string>
     <string name="vehicle_number_text">वाहन नंबर </string>
     <string name="profile_title_text">मेरी प्रोफाइल</string>
 </resources>

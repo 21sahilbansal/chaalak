@@ -80,9 +80,8 @@ class ViewProfileFragment : BaseFragment() {
     }
 
     private fun setData(driver: Driver) {
-        if(sharedPreferenceUtil.getData(Constants.SHARED_PREFERENCE.PHOTO_LINK, "").equals("")){
+        if(sharedPreferenceUtil.getData(Constants.SHARED_PREFERENCE.PHOTO_LINK, "").isEmpty()){
             iv_profile_picture.setImageResource(R.drawable.ic_user_placeholder)
-
         }else{
             picasso.load(sharedPreferenceUtil.getData(Constants.SHARED_PREFERENCE.PHOTO_LINK, ""))
                 .error(R.drawable.ic_user_placeholder).into(iv_profile_picture)

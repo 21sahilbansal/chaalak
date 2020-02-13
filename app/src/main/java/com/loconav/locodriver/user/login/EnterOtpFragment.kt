@@ -36,13 +36,14 @@ class EnterOtpFragment : BaseFragment() {
 
     var enterOtpViewModel: EnterOtpViewModel? = null
     val sharedPreferenceUtil : SharedPreferenceUtil by inject()
+    val MAX_OTP_LENGTH = 4
 
 
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
 
         enterOtpViewModel = ViewModelProviders.of(this).get(EnterOtpViewModel::class.java)
 
-        tv_change_number.text= String.format(getString(R.string.change_number_text)+"?")
+        tv_change_number.text=String.format(getString(R.string.change_number_text),"?")
         tv_change_number.setOnClickListener{
             EventBus.getDefault().post(LoginEvent(OPEN_NUMBER_LOGIN_FRAGMENT))
         }
@@ -68,7 +69,7 @@ class EnterOtpFragment : BaseFragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 error_message.visibility = GONE
-                if(s?.length == 4) {
+                if(s?.length == MAX_OTP_LENGTH) {
                     arguments?.getString(PHONE_NUMBER)?.let { phoneNumber ->
                         progressBar.visibility = View.VISIBLE
                         enterOtpViewModel?.validateOTP(phoneNumber, pinEntryEditText.text.toString())?.observe(this@EnterOtpFragment, Observer{dataWrapper ->

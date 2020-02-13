@@ -30,7 +30,7 @@
     <string name="mobile_number_hint">Mobile Number</string>
     <string name="get_otp_text">get otp</string>
     <string name="otp_sent_number_text">Enter OTP code sent to %s</string>
-    <string name="change_number_text">Change Number</string>
+    <string name="change_number_text">Change Number %s</string>
     <string name="vehicle_number_text">Vehicle Number</string>
     <string name="profile_title_text">My Profile</string>
 

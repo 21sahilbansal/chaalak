@@ -54,7 +54,7 @@ class LandingActivity : AppCompatActivity() {
         val tabs = findViewById<TabLayout>(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
         val profileImageView = findViewById<CardView>(R.id.card_profile)
-        if (sharedPreferenceUtil.getData(PHOTO_LINK, "").equals("")) {
+        if (sharedPreferenceUtil.getData(PHOTO_LINK, "").isEmpty()) {
             iv_profile.setImageResource(R.drawable.ic_user_placeholder)
         } else {
             picasso.load(sharedPreferenceUtil.getData(PHOTO_LINK, ""))

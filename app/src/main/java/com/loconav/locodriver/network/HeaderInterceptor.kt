@@ -9,7 +9,7 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import org.koin.standalone.KoinComponent
-import timber.log.Timber
+//import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -34,11 +34,11 @@ class HeaderInterceptor(val sharedPreferenceUtil: SharedPreferenceUtil,
             .header(KEY_APP_ID, BuildConfig.APPLICATION_ID)
             .header(KEY_USER_AGENT, BuildConfig.user_agent)
             .addHeader(KEY_CACHE_CONTROL, "no-cache")
-            .method(original.method(), original.body())
+            .method(original.method, original.body)
 
         val request = requestBuilder.build()
         val response = chain.proceed(request)
-        if (response.code() == 401) {
+        if (response.code == 401) {
             try {
                 AppUtils.logout()
             } catch (e: Exception) {
@@ -59,16 +59,16 @@ class HeaderInterceptor(val sharedPreferenceUtil: SharedPreferenceUtil,
 
     private fun handleError(e: IOException, response : Response) {
         Log.d(TAG, e.toString())
-        Timber.d(TAG, response.code())
-        Log.d(TAG, "endService error " + response.request().body() + " : " + Date().time)
+//        Timber.d(TAG, response.code())
+        Log.d(TAG, "endService error " + response.request.body + " : " + Date().time)
     }
 
     private fun handleSuccess(response: Response) {
-        response.body()?.let {
+        response.body?.let {
             val responseString = it.toString()
             Log.d(
                 "http", "endService "
-                          + response.request().url()
+                          + response.request.url
                         + " : "
                         + Date().time
                         + ":"

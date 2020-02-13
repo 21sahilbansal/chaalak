@@ -1,6 +1,7 @@
 package com.loconav.locodriver.di
 
 import android.location.Geocoder
+import com.google.gson.GsonBuilder
 import com.loconav.locodriver.BuildConfig
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.LanguageProperty.Companion.languageArray
@@ -70,7 +71,7 @@ val networkModule = module {
     single<Retrofit> {
         Retrofit.Builder()
             .baseUrl(BuildConfig.base_url)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .client(get<OkHttpClient>())
             .build()
     }

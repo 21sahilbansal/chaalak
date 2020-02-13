@@ -10,6 +10,7 @@ class Constants {
             const val NUMBER_LOGIN = "login/driver"
             const val DRIVER_OTP_VERIFY = "login/driver_otp_verify"
             const val GET_DRIVER = "drivers/{id}"
+            const val GET_TRIPS_LIST = "trips"
         }
     }
 

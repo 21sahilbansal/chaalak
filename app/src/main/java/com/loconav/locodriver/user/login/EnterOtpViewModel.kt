@@ -25,10 +25,7 @@ class EnterOtpViewModel : ViewModel(), KoinComponent {
     }
 
     fun getOTP(phoneNumber: String): LiveData<DataWrapper<ResponseBody>>? {
-        if(phoneNumber.isNotEmpty()){
             return userHttpService.requestServerForOTP(phoneNumber)
-        }
-        return null
     }
 
 

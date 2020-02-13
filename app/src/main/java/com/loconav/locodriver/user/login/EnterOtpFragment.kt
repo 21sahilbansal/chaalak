@@ -136,25 +136,25 @@ class EnterOtpFragment : BaseFragment() {
     }
 
 
-    private fun resendOTP(){
+    private fun resendOTP() {
 
-        enterOtpViewModel?.getOTP(arguments?.getString(PHONE_NUMBER)?:"")?.observe(this, Observer { dataWrapper ->
-            dataWrapper?.let {
-                dataWrapper.data?.let {userDataResponse ->
-                    error_message.visibility=View.GONE
+        enterOtpViewModel?.getOTP(arguments?.getString(PHONE_NUMBER) ?: "")
+            ?.observe(this, Observer { dataWrapper ->
+                dataWrapper.data?.let { userDataResponse ->
+                    error_message.visibility = View.GONE
                     Log.e("variable ", userDataResponse.string())
-                } ?: run{
-                    error_message.visibility=View.VISIBLE
-                    error_message.text=dataWrapper.throwable?.message
+                } ?: run {
+                    dataWrapper.throwable?.message?.let {
+                        error_message.visibility = View.VISIBLE
+                        error_message.text =
+                            error_message.context.getString(R.string.invalid_number_error_message)
+                    } ?: kotlin.run {
+                        error_message.visibility = View.VISIBLE
+                        error_message.text = dataWrapper.throwable?.message
+                    }
                 }
-            }?:run {
-                error_message.visibility=View.VISIBLE
-                error_message.text=error_message.context.getString(R.string.invalid_number_error_message)
-            }
-
-        })
+            })
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun parseOTP(event: SmsRetrieverEvent) {

@@ -16,19 +16,28 @@ class UserHttpService(val httpService: HttpApiService) {
     fun requestServerForOTP(phoneNumber: String): MutableLiveData<DataWrapper<ResponseBody>> {
         val dataWrapper = DataWrapper<ResponseBody>()
         val apiResponse = MutableLiveData<DataWrapper<ResponseBody>>()
+        if (phoneNumber.isEmpty()) {
+            val emptyPhoneNumberThrowable = Throwable()
+            dataWrapper.throwable = emptyPhoneNumberThrowable
+            apiResponse.postValue(dataWrapper)
+        } else {
+            httpService.getOTPForLogin(phoneNumber)
+                .enqueue(object : RetrofitCallback<ResponseBody>() {
+                    override fun handleSuccess(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+                        val serverResponse = response.body()
+                        dataWrapper.data = serverResponse
+                        apiResponse.postValue(dataWrapper)
+                    }
 
-        httpService.getOTPForLogin(phoneNumber).enqueue(object : RetrofitCallback<ResponseBody>() {
-            override fun handleSuccess(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                val serverResponse = response.body()
-                dataWrapper.data = serverResponse
-                apiResponse.postValue(dataWrapper)
-            }
-
-            override fun handleFailure(call: Call<ResponseBody>, t: Throwable) {
-                dataWrapper.throwable = t
-                apiResponse.postValue(dataWrapper)
-            }
-        })
+                    override fun handleFailure(call: Call<ResponseBody>, t: Throwable) {
+                        dataWrapper.throwable = t
+                        apiResponse.postValue(dataWrapper)
+                    }
+                })
+        }
         return apiResponse
     }
 

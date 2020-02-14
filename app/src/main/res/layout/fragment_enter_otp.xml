@@ -11,7 +11,7 @@
         android:id="@+id/header_image"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/login_bg"
+        app:srcCompat="@drawable/ic_login_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,25 +53,41 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         style="@style/MainHeading"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:maxLength="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_phone_number_title" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/error_message"
+        android:layout_height="wrap_content"
+        style="@style/ErrorMessage"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_change_number"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pinEntryEditText"
+        tools:text="Invalid"
+        android:visibility="invisible"
+        android:layout_marginLeft="30dp">
+    </TextView>
+
 
     <TextView
         android:id="@+id/tv_change_number"
         android:layout_marginTop="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         style="@style/TextlinkBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change Number?"
+        tools:text="Change Number?"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pinEntryEditText" />
 
@@ -82,10 +98,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:layout_marginRight="28dp"
+        android:layout_marginRight="30dp"
         android:text="@string/resend_otp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pinEntryEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/pinEntryEditText"
+        android:layout_marginEnd="30dp" />
 
     <TextView
         android:id="@+id/tv_timer"

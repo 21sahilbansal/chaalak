@@ -10,6 +10,7 @@ import com.loconav.locodriver.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_number_login.*
 import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.credentials.Credential
@@ -50,6 +51,7 @@ class NumberLoginFragment : BaseFragment() {
                 }
                 PhoneUtil.isPhoneNumberValid(editTextNumber.text.toString()) -> {
                     error_message.visibility=View.INVISIBLE
+                    editTextNumber.background=ContextCompat.getDrawable(view.context,R.drawable.bg_edittext)
                     requestServerForOtp()
                     EventBus.getDefault().post(LoginEvent(OPEN_ENTER_OTP_FRAGMENT, editTextNumber.text.toString()))
                 }
@@ -66,6 +68,7 @@ class NumberLoginFragment : BaseFragment() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 error_message.visibility= View.INVISIBLE
+                editTextNumber.background=ContextCompat.getDrawable(view.context,R.drawable.bg_edittext)
             }
         })
 
@@ -91,10 +94,12 @@ class NumberLoginFragment : BaseFragment() {
     }
 
     private fun displayNumberErrorMessage(stringResId:Int){
+        val numberEditText=editTextNumber
+        numberEditText.background= ContextCompat.getDrawable(numberEditText.context,R.drawable.error_bg_edit_text)
         error_message.visibility=View.VISIBLE
         error_message.text=getString(stringResId)
         val shake = loadAnimation(context, R.anim.shake)
-        editTextNumber.startAnimation(shake)
+        numberEditText.startAnimation(shake)
     }
 
     override fun getLayoutId(): Int {

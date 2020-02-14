@@ -26,7 +26,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
                 <ImageView
-                    android:src="@drawable/ic_profile"
+                    app:srcCompat="@drawable/ic_user_placeholder"
                     android:id="@+id/iv_profile_picture"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -45,7 +45,7 @@
                 tools:text="Raj Kumar" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/transporter_name_text"
                 style="@style/BodyLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="30dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_driver_name"
-                android:text="Transporter Name" />
+                android:text="@string/transporter_name" />
 
             <TextView
                 android:id="@+id/tv_transporter_name"
@@ -72,11 +72,11 @@
                 android:singleLine="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/transporter_name_text"
                 tools:text="Logistics Companies India" />
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/divider_below_transporter_name"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="30dp"
@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_transporter_name" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/vehicle_number_tv"
                 style="@style/BodyLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,11 +98,57 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view"
-                android:text="Avg distance travelled per day (km) " />
+                app:layout_constraintTop_toBottomOf="@+id/divider_below_transporter_name"
+                android:text="@string/vehicle_number_text" />
 
             <TextView
-                android:id="@+id/tv_avg_dist"
+                android:id="@+id/vehicle_number_value_tv"
+                style="@style/BodyLarge"
+                android:layout_marginRight="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:singleLine="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_number_tv"
+                tools:text="UP14BD7717" />
+
+
+            <View
+                android:id="@+id/divider_below_vehicle_number"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@color/border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_number_value_tv" />
+
+
+            <TextView
+                android:id="@+id/current_salary"
+                style="@style/BodyLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="30dp"
+                android:text="@string/current_salary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_below_vehicle_number" />
+
+            <TextView
+                android:id="@+id/tv_current_salary"
                 style="@style/BodyLarge"
                 android:layout_marginRight="30dp"
                 android:layout_marginEnd="30dp"
@@ -117,12 +163,12 @@
                 android:singleLine="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/current_salary"
                 tools:text="35,000/ month" />
 
 
             <View
-                android:id="@+id/view2"
+                android:id="@+id/divider_below_current_salary"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="30dp"
@@ -133,10 +179,10 @@
                 android:background="@color/border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_avg_dist" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_current_salary" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/address_text"
                 style="@style/BodyLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,8 +190,8 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2"
-                android:text="Address" />
+                app:layout_constraintTop_toBottomOf="@+id/divider_below_current_salary"
+                android:text="@string/address_text" />
 
             <TextView
                 android:id="@+id/tv_address"
@@ -163,12 +209,12 @@
                 android:singleLine="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/address_text"
                 tools:text="#22/1,Laxmi Nagar market, Delhi" />
 
 
             <View
-                android:id="@+id/view3"
+                android:id="@+id/divider_below_address"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="30dp"
@@ -182,7 +228,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_address" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/date_of_joining_text"
                 style="@style/BodyLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -190,8 +236,8 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3"
-                android:text="Date of Joining" />
+                app:layout_constraintTop_toBottomOf="@+id/divider_below_address"
+                android:text="@string/date_of_joining" />
 
             <TextView
                 android:id="@+id/tv_doj"
@@ -209,11 +255,11 @@
                 android:singleLine="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                app:layout_constraintTop_toBottomOf="@+id/date_of_joining_text"
                 tools:text="6/7/2016" />
 
             <View
-                android:id="@+id/view4"
+                android:id="@+id/divider_below_date_of_joining"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="30dp"
@@ -241,10 +287,10 @@
                 android:drawableRight="@drawable/next_cheveron"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view4"
-                android:text="Change Language" />
+                app:layout_constraintTop_toBottomOf="@+id/divider_below_date_of_joining"
+                android:text="@string/change_language_text" />
             <View
-                android:id="@+id/view6"
+                android:id="@+id/divider_below_change_language"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="30dp"
@@ -280,7 +326,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view6"/>
+                app:layout_constraintTop_toBottomOf="@+id/divider_below_change_language"/>
 
             <ProgressBar
                 android:id="@+id/progressBar"

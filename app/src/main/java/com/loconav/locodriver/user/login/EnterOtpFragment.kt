@@ -24,6 +24,9 @@ import com.loconav.locodriver.language.LanguageEventBus
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_NUMBER_LOGIN_FRAGMENT
 import com.loconav.locodriver.util.LocaleHelper
 import kotlinx.android.synthetic.main.fragment_enter_otp.*
+import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
+import kotlinx.android.synthetic.main.fragment_enter_otp.tv_change_language
+import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -33,19 +36,19 @@ class EnterOtpFragment : BaseFragment() {
 
     var enterOtpViewModel: EnterOtpViewModel? = null
     val sharedPreferenceUtil : SharedPreferenceUtil by inject()
+    val MAX_OTP_LENGTH = 4
 
 
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
 
         enterOtpViewModel = ViewModelProviders.of(this).get(EnterOtpViewModel::class.java)
 
-
-
+        tv_change_number.text=String.format(getString(R.string.change_number_text),"?")
         tv_change_number.setOnClickListener{
             EventBus.getDefault().post(LoginEvent(OPEN_NUMBER_LOGIN_FRAGMENT))
         }
 
-        tv_phone_number_title.setText("Enter OTP code sent to ${arguments?.getString(PHONE_NUMBER)}")
+        tv_phone_number_title.text = String.format(getString(R.string.otp_sent_number_text),arguments?.getString(PHONE_NUMBER))
 
         tv_resend_otp.setOnClickListener {
             resendOTP()
@@ -65,19 +68,23 @@ class EnterOtpFragment : BaseFragment() {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(s?.length == 4) {
+                error_message.visibility = GONE
+                if(s?.length == MAX_OTP_LENGTH) {
                     arguments?.getString(PHONE_NUMBER)?.let { phoneNumber ->
                         progressBar.visibility = View.VISIBLE
                         enterOtpViewModel?.validateOTP(phoneNumber, pinEntryEditText.text.toString())?.observe(this@EnterOtpFragment, Observer{dataWrapper ->
                             dataWrapper.data?.let {userDataResponse ->
                                 sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.AUTH_TOKEN, userDataResponse.driver?.authenticationToken?:"")
                                 sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.DRIVER_ID, userDataResponse.driver?.id?:0L)
-                                sharedPreferenceUtil.saveData(PHOTO_LINK, userDataResponse.driver?.profilePicture?:"")
+                                if(!userDataResponse.driver?.pictures?.profilePicture.isNullOrEmpty()){
+                                    sharedPreferenceUtil.saveData(PHOTO_LINK, userDataResponse.driver?.pictures?.profilePicture!![0])
+                                }
                                 sharedPreferenceUtil.saveData(IS_LOGGED_IN, true)
                                 EventBus.getDefault().post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
                             } ?: run{
                                 progressBar.visibility = GONE
-                                Toast.makeText(context, dataWrapper.throwable?.message, Toast.LENGTH_LONG).show()
+                                error_message.visibility=View.VISIBLE
+                                error_message.text=dataWrapper.throwable?.message
                             }
                         })
                     }
@@ -129,17 +136,25 @@ class EnterOtpFragment : BaseFragment() {
     }
 
 
-    private fun resendOTP(){
+    private fun resendOTP() {
 
-        enterOtpViewModel?.getOTP(arguments?.getString(PHONE_NUMBER)?:"")?.observe(this, Observer { dataWrapper ->
-            dataWrapper.data?.let {userDataResponse ->
-                Log.e("variable ", userDataResponse.string())
-            } ?: run{
-                Toast.makeText(context, dataWrapper.throwable?.message, Toast.LENGTH_LONG).show()
-            }
-        })
+        enterOtpViewModel?.getOTP(arguments?.getString(PHONE_NUMBER) ?: "")
+            ?.observe(this, Observer { dataWrapper ->
+                dataWrapper.data?.let { userDataResponse ->
+                    error_message.visibility = View.GONE
+                    Log.e("variable ", userDataResponse.string())
+                } ?: run {
+                    dataWrapper.throwable?.message?.let {
+                        error_message.visibility = View.VISIBLE
+                        error_message.text =
+                            error_message.context.getString(R.string.invalid_number_error_message)
+                    } ?: kotlin.run {
+                        error_message.visibility = View.VISIBLE
+                        error_message.text = dataWrapper.throwable?.message
+                    }
+                }
+            })
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun parseOTP(event: SmsRetrieverEvent) {

@@ -8,6 +8,8 @@ data class TripDataResponse(
 )
 
 data class TripData(
+//    @SerializedName("flag")
+//    var actionableFlag:Boolean?=null,
     @SerializedName("id")
     var tripId: Long? = null,
     @SerializedName("vehicle_number")

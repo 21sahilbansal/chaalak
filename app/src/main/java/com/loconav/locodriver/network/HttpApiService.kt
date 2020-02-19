@@ -1,5 +1,6 @@
 package com.loconav.locodriver.network
 
+import androidx.lifecycle.MutableLiveData
 import com.loconav.locodriver.Constants.HTTP.Companion.DRIVER_OTP_VERIFY
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_TRIPS_LIST
@@ -27,5 +28,5 @@ interface HttpApiService {
     fun getProfileData(@Path("id") driverId : Long) : Call<Driver>
 
     @GET(GET_TRIPS_LIST)
-    suspend fun getTripListData(@Query("driver_id") driverId: Long,@Query("states[]") states:ArrayList<String>): Response<TripDataResponse>
+    fun getTripListData(@Query("driver_id") driverId: Long,@Query("states[]") states:ArrayList<String>): Call<TripDataResponse>
 }

@@ -1,7 +1,6 @@
 package com.loconav.locodriver.Trips
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,25 +10,24 @@ import com.loconav.locodriver.R
 import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_trips.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class TripsFragment : BaseFragment() {
     var tripsListViewModel: TripsListViewModel? = null
 
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
         tripsListViewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
-        tripsListViewModel?.tripListDataResponse?.observe(this, Observer { dataWrapper ->
-            val tripsList = dataWrapper.data?.tripDataList
-            Log.i("trip_list",tripsList?.size.toString())
-            tripsList?.let {
+        progressBar.visibility = View.VISIBLE
+        tripsListViewModel?.getTripList()?.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()) {
+                progressBar.visibility = View.GONE
+                //no trips view visible
+            } else {
                 initAdapter(list_recycler_view, it)
+                progressBar.visibility = View.GONE
             }
         })
-        GlobalScope.launch(Dispatchers.Main) {
-            tripsListViewModel?.getTripsList()
-        }
+        tripsListViewModel?.getTransformedData()?.observe(viewLifecycleOwner, Observer {})
+
     }
 
     override fun getLayoutId(): Int {

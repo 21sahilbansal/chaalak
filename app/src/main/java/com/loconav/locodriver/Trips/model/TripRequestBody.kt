@@ -6,5 +6,7 @@ data class TripRequestBody(
     @SerializedName("states")
     var tripState: ArrayList<String>? = null,
     @SerializedName("driver_id")
-    var driverId: Long? = null
+    var driverId: Long? = null,
+    @SerializedName("filter")
+    var filter: ArrayList<String>?=null
 )

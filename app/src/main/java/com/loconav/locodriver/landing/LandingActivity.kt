@@ -28,6 +28,7 @@ import com.loconav.locodriver.util.LocationUtil
 import com.loconav.locodriver.util.LocationWorkManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
+import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
@@ -53,8 +54,12 @@ class LandingActivity : AppCompatActivity() {
         val tabs = findViewById<TabLayout>(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
         val profileImageView = findViewById<CardView>(R.id.card_profile)
-//        picasso.load(sharedPreferenceUtil.getData(PHOTO_LINK, "")).error(R.drawable.ic_profile)
-//            .into(iv_profile)
+        if (sharedPreferenceUtil.getData(PHOTO_LINK, "").isEmpty()) {
+            iv_profile.setImageResource(R.drawable.ic_user_placeholder)
+        } else {
+            picasso.load(sharedPreferenceUtil.getData(PHOTO_LINK, ""))
+                .error(R.drawable.ic_user_placeholder).into(iv_profile)
+        }
         profileImageView.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)

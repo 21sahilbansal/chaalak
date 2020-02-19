@@ -3,4 +3,33 @@
     <string name="logout">लॉग आउट</string>
     <string name="language_string">English</string>
     <string name="welcome_to_locodrive">लोकोड्राइव में आपका स्वागत है</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="ok">ओके</string>
+    <string name="enter_your_registered_mobile_number">अपना रजिस्टर्ड मोबाइल नंबर दर्ज करें</string>
+    <string name="otp_verification">OTP वेरिफिकेशन</string>
+    <string name="resend_otp">OTP दोबारा भेजें</string>
+    <string name="tab_text_1">ट्रिप्स</string>
+    <string name="tab_text_2">एक्सपेंसेस</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="something_went_wrong">कुछ गलत हो गया!!</string>
+    <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
+    <string name="blank_number_error_message">मोबाइल नंबर फ़ील्ड रिक्त नहीं हो सकता</string>
+    <string name="invalid_number_error_message">मोबाइल नंबर मान्य नहीं है</string>
+    <string name="transporter_name">ट्रांसपोर्टर का नाम</string>
+    <string name="current_salary">वर्तमान का वेतन</string>
+    <string name="address_text">पता</string>
+    <string name="date_of_joining">शामिल होने की तिथि</string>
+    <string name="change_language_text">भाषा बदलो</string>
+    <string name="choose_language_text">भाषा चुनें</string>
+    <string name="no_monthly_income_text">मासिक आय ज्ञात नहीं है</string>
+    <string name="no_transporter_text">ट्रांसपोर्टर को नहीं सौंपा</string>
+    <string name="no_vehicle_assigned_text">वाहन नहीं सौंपा</string>
+    <string name="rupee" translatable="false">₹%s</string>
+    <string name="no_address_present">पता नहीं है</string>
+    <string name="mobile_number_hint">मोबाइल नंबर</string>
+    <string name="get_otp_text">otp पाएं</string>
+    <string name="otp_sent_number_text">%s पर भेजा गया OTP कोड दर्ज करें</string>
+    <string name="change_number_text">नंबर बदलें %s</string>
+    <string name="vehicle_number_text">वाहन नंबर </string>
+    <string name="profile_title_text">मेरी प्रोफाइल</string>
 </resources>

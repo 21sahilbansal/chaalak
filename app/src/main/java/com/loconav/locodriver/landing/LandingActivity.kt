@@ -3,7 +3,7 @@ package com.loconav.locodriver.landing
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 
 import com.google.android.material.tabs.TabLayout
@@ -16,19 +16,15 @@ import androidx.core.app.ActivityCompat
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.loconav.locodriver.Constants.SHARED_PREFERENCE.Companion.PHOTO_LINK
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 
 import com.loconav.locodriver.R
-import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.landing.ui.main.SectionsPagerAdapter
-import com.loconav.locodriver.splash.SplashActivity
 import com.loconav.locodriver.user.profile.ProfileActivity
-import com.loconav.locodriver.util.LocationUtil
 import com.loconav.locodriver.util.LocationWorkManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
-import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
@@ -40,7 +36,6 @@ class LandingActivity : AppCompatActivity() {
     var workManager: WorkManager = WorkManager.getInstance()
     val locationGetterTask =
         PeriodicWorkRequestBuilder<LocationWorkManager>(15, TimeUnit.MINUTES)
-    var lastKnownLocation: Location? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +58,10 @@ class LandingActivity : AppCompatActivity() {
         profileImageView.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+        }
+        call_fab.setOnClickListener{
+            val phoneIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+"9650793733"))
+            startActivity(phoneIntent)
         }
     }
 

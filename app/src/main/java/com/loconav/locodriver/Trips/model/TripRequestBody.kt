@@ -8,5 +8,5 @@ data class TripRequestBody(
     @SerializedName("driver_id")
     var driverId: Long? = null,
     @SerializedName("filter")
-    var filter: ArrayList<String>?=null
+    var filter: HashMap<String, String>? = null
 )

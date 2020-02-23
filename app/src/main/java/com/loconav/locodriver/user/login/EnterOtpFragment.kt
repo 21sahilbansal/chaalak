@@ -2,20 +2,18 @@ package com.loconav.locodriver.user.login
 
 import android.animation.Animator
 import android.animation.ValueAnimator
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.loconav.locodriver.Constants
-import com.loconav.locodriver.Constants.SHARED_PREFERENCE.Companion.IS_LOGGED_IN
-import com.loconav.locodriver.Constants.SHARED_PREFERENCE.Companion.PHOTO_LINK
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.IS_LOGGED_IN
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 import com.loconav.locodriver.R
 import com.loconav.locodriver.SmsRetrieverEvent
 import com.loconav.locodriver.base.BaseFragment
@@ -26,7 +24,6 @@ import com.loconav.locodriver.util.LocaleHelper
 import kotlinx.android.synthetic.main.fragment_enter_otp.*
 import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
 import kotlinx.android.synthetic.main.fragment_enter_otp.tv_change_language
-import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -74,13 +71,13 @@ class EnterOtpFragment : BaseFragment() {
                         progressBar.visibility = View.VISIBLE
                         enterOtpViewModel?.validateOTP(phoneNumber, pinEntryEditText.text.toString())?.observe(this@EnterOtpFragment, Observer{dataWrapper ->
                             dataWrapper.data?.let {userDataResponse ->
-                                sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.AUTH_TOKEN, userDataResponse.driver?.authenticationToken?:"")
-                                sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.DRIVER_ID, userDataResponse.driver?.id?:0L)
+                                sharedPreferenceUtil.saveData(Constants.SharedPreferences.AUTH_TOKEN, userDataResponse.driver?.authenticationToken?:"")
+                                sharedPreferenceUtil.saveData(Constants.SharedPreferences.DRIVER_ID, userDataResponse.driver?.id?:0L)
                                 if(!userDataResponse.driver?.pictures?.profilePicture.isNullOrEmpty()){
                                     sharedPreferenceUtil.saveData(PHOTO_LINK, userDataResponse.driver?.pictures?.profilePicture!![0])
                                 }
                                 sharedPreferenceUtil.saveData(IS_LOGGED_IN, true)
-                                EventBus.getDefault().post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
+                                EventBus.getDefault().post(LoginEvent(LoginEvent.OPEN_SPLASH_ACTIVITY))
                             } ?: run{
                                 progressBar.visibility = GONE
                                 error_message.visibility=View.VISIBLE

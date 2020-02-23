@@ -34,5 +34,17 @@
     <string name="change_number_text">Change Number %s</string>
     <string name="vehicle_number_text">Vehicle Number</string>
     <string name="profile_title_text">My Profile</string>
+    <string name="unknown_source_city">Unknown source city</string>
+    <string name="unknown_start_time">Unknown Start Time</string>
+    <string name="unknown_dest_text">Unknown Destination City</string>
+    <string name="unknown_dest_end_time">Unknown end time</string>
+    <string name="unknown_vehicle_number">Vehicle number not found</string>
+    <string name="eta_text_trip_detail">ETA :</string>
+    <string name="start_time_text_trip_detail">Start Time :</string>
+    <string name="end_Time_text_trip_details">End Time :</string>
+    <string name="unknown_time_text">Unknown Time</string>
+    <string name="start_location_text">Start Location</string>
+    <string name="end_location_text">End Location</string>
+    <string name="checkpoint_position_text">Checkpoint %s</string>
 
 </resources>

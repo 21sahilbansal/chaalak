@@ -28,7 +28,7 @@ class HeaderInterceptor(val sharedPreferenceUtil: SharedPreferenceUtil,
 
         val original = chain.request()
         val requestBuilder: Request.Builder = original.newBuilder()
-            .header(KEY_AUTHORIZATION, sharedPreferenceUtil.getData(Constants.SHARED_PREFERENCE.AUTH_TOKEN, ""))
+            .header(KEY_AUTHORIZATION, sharedPreferenceUtil.getData(Constants.SharedPreferences.AUTH_TOKEN, ""))
 //            .header("X-Linehaul-V2-Secret", haulSecret)
             .header(KEY_APP_VERSION, AppUtils.getVersionCode())
             .header(KEY_APP_ID, BuildConfig.APPLICATION_ID)

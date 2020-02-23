@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".splash.SplashActivity"
+        <activity
+            android:name=".splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -25,16 +28,26 @@
         </activity>
         <activity
             android:name=".landing.LandingActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
         <activity
             android:name=".user.profile.ProfileActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoStatusBar" />
         <activity
             android:name=".user.login.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         </activity>
 
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Trips.tripDetail.DetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoStatusBar" />
+
         <receiver
             android:name=".receiver.SmsReceiver"
             android:exported="true">

@@ -1,6 +1,7 @@
-package com.loconav.locodriver.Trips
+package com.loconav.locodriver.Trips.tripList
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,16 +19,18 @@ class TripsFragment : BaseFragment() {
         tripsListViewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
         progressBar.visibility = View.VISIBLE
         tripsListViewModel?.getTripList()?.observe(viewLifecycleOwner, Observer {
-            if (it.isEmpty()) {
+            if (it.isNullOrEmpty()) {
                 progressBar.visibility = View.GONE
-                //no trips view visible
+
+                //no trip view required
             } else {
                 initAdapter(list_recycler_view, it)
                 progressBar.visibility = View.GONE
             }
         })
-        tripsListViewModel?.getTransformedData()?.observe(viewLifecycleOwner, Observer {})
-
+        tripsListViewModel?.getTransformedData()?.observe(viewLifecycleOwner, Observer {
+            Log.i("transformation done", it.toString())
+        })
     }
 
     override fun getLayoutId(): Int {
@@ -38,6 +41,11 @@ class TripsFragment : BaseFragment() {
         fun getInstance(): TripsFragment {
             return TripsFragment()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tripsListViewModel?.getTransformedData()
     }
 
     private fun initAdapter(view: RecyclerView, tripData: List<TripData>) {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/trip_detail_veh_number_tv"
+        style="@style/BodyLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        tools:text="HR12B3010" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trip_detail_rec"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/driver_cta_button_ll"
+        android:layout_height="100dp"
+        android:background="@drawable/trip_action_button_bg">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/driver_cta_button"
+            style="@style/LargeButtonTittle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:background="#5fb945"
+            android:textAllCaps="true"
+            tools:text="start trip" />
+    </LinearLayout>
+
+</LinearLayout>

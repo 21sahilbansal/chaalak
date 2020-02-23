@@ -43,7 +43,6 @@
             <TextView
                 android:id="@+id/active_tag_tv"
                 style="@style/ActiveTag"
-                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
@@ -201,7 +200,6 @@
             <Button
                 android:id="@+id/button_start_trip"
                 android:layout_width="0dp"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:background="@drawable/locobutton_background"
                 android:text="@string/start_trip_button_text"

@@ -9,9 +9,11 @@ import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragmentActivity
 import com.loconav.locodriver.landing.LandingActivity
 import com.loconav.locodriver.language.LanguageEventBus
+import com.loconav.locodriver.splash.SplashActivity
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_ENTER_OTP_FRAGMENT
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_LANDING_ACTIVITY
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_NUMBER_LOGIN_FRAGMENT
+import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_SPLASH_ACTIVITY
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -48,6 +50,11 @@ class LoginActivity : BaseFragmentActivity() {
         when (event.message) {
             OPEN_NUMBER_LOGIN_FRAGMENT -> openNumberLoginFragment()
             OPEN_ENTER_OTP_FRAGMENT -> inflateReplaceFragment(EnterOtpFragment.getInstance(event.`object` as String), true, Constants.FRAGMENT_TAG.ENTER_OTP_FRAGMENT)
+            OPEN_SPLASH_ACTIVITY->{
+                val intent = Intent(this, SplashActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
             OPEN_LANDING_ACTIVITY -> {
                 val intent = Intent(this, LandingActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

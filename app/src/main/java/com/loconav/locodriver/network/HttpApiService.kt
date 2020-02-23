@@ -1,10 +1,13 @@
 package com.loconav.locodriver.network
 
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable
 import com.loconav.locodriver.Constants.HTTP.Companion.DRIVER_OTP_VERIFY
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER
+import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER_CTA_TEMPLATE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_TRIPS_LIST
 import com.loconav.locodriver.Constants.HTTP.Companion.NUMBER_LOGIN
+import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.Trips.model.TripRequestBody
 import com.loconav.locodriver.driver.model.Driver
@@ -27,6 +30,9 @@ interface HttpApiService {
     @GET(GET_DRIVER)
     fun getProfileData(@Path("id") driverId : Long) : Call<Driver>
 
+    @GET(GET_DRIVER_CTA_TEMPLATE)
+    fun getDriverCtaTemplate():Call<DriverCtaTemplateResponse>
+
     @GET(GET_TRIPS_LIST)
-    fun getTripListData(@Query("driver_id") driverId: Long,@Query("states[]") states:ArrayList<String>): Call<TripDataResponse>
+    fun getTripListData(@Query("driver_id") driverId: Long,@Query("states[]") states:ArrayList<String>,@QueryMap filters:HashMap<String,String>): Call<TripDataResponse>
 }

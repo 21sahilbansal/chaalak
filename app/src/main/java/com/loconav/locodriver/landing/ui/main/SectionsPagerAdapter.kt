@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
 import com.loconav.locodriver.R
-import com.loconav.locodriver.Trips.TripsFragment
+import com.loconav.locodriver.Trips.tripList.TripsFragment
 
 
 /**

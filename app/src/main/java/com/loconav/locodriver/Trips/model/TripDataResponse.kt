@@ -8,8 +8,8 @@ data class TripDataResponse(
 )
 
 data class TripData(
-//    @SerializedName("flag")
-//    var actionableFlag:Boolean?=null,
+    @SerializedName("show_driver_cta")
+    var actionableFlag: Boolean? = null,
     @SerializedName("id")
     var tripId: Long? = null,
     @SerializedName("vehicle_number")
@@ -47,7 +47,9 @@ data class TripData(
     @SerializedName("check_points")
     var checkPointsList: List<CheckPointData>? = null,
     @SerializedName("driver_cta")
-    var driverCta: Cta? = null
+    var driverCta: Cta? = null,
+    @Transient var activeState: Boolean? = null
+
 )
 
 data class Cta(

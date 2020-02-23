@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class TimeUtils {
-    companion object{
+    companion object {
         fun getThFormatTime(time: Long): String {
             var finalString: String
             val date = Date(time)
@@ -29,5 +29,19 @@ class TimeUtils {
             finalString += format.format(Date(time))
             return finalString
         }
+
+        fun getDateTimeFromEpoch(epoch: Long): String {
+            val expiry = Date(epoch)
+            val format = SimpleDateFormat("dd MMMM yyyy HH:mm:ss")
+            return format.format(expiry)
+        }
+
+        fun getDateFromEpoch(epoch: Long):String {
+            val expiry = Date(epoch)
+            val format = SimpleDateFormat("dd/MM/yyyy")
+            return format.format(expiry)
+        }
     }
+
+
 }

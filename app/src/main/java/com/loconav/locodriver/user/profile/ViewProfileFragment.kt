@@ -12,27 +12,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.loconav.locodriver.AppUtils
 import com.loconav.locodriver.Constants
-import com.loconav.locodriver.Constants.SHARED_PREFERENCE.Companion.DRIVER_ID
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_ID
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragment
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.language.LanguageDialogFragment
-import com.loconav.locodriver.user.UserHttpService
 import com.loconav.locodriver.util.AddressUtil
 import com.loconav.locodriver.util.TimeUtils
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.koin.android.ext.android.inject
-import java.util.*
 
 
 class ViewProfileFragment : BaseFragment() {
 
     val picasso : Picasso by inject()
-
-    val userHttpService : UserHttpService by inject()
 
     val sharedPreferenceUtil : SharedPreferenceUtil by inject()
 
@@ -65,10 +60,10 @@ class ViewProfileFragment : BaseFragment() {
 
         viewProfileViewModel?.getDriverData(sharedPreferenceUtil.getData(DRIVER_ID, 0L))?.observe(this, Observer{dataWrapper ->
             dataWrapper.data?.let {userDataResponse ->
-                sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.AUTH_TOKEN, userDataResponse.authenticationToken?:"")
+                sharedPreferenceUtil.saveData(Constants.SharedPreferences.AUTH_TOKEN, userDataResponse.authenticationToken?:"")
                 sharedPreferenceUtil.saveData(DRIVER_ID, userDataResponse.id?:0L)
                 if(!userDataResponse.pictures?.profilePicture.isNullOrEmpty()){
-                    sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.PHOTO_LINK, userDataResponse.pictures?.profilePicture!![0])
+                    sharedPreferenceUtil.saveData(Constants.SharedPreferences.PHOTO_LINK, userDataResponse.pictures?.profilePicture!![0])
                 }
                 setData(userDataResponse)
                 progressBar.visibility = GONE
@@ -80,10 +75,10 @@ class ViewProfileFragment : BaseFragment() {
     }
 
     private fun setData(driver: Driver) {
-        if(sharedPreferenceUtil.getData(Constants.SHARED_PREFERENCE.PHOTO_LINK, "").isEmpty()){
+        if(sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, "").isEmpty()){
             iv_profile_picture.setImageResource(R.drawable.ic_user_placeholder)
         }else{
-            picasso.load(sharedPreferenceUtil.getData(Constants.SHARED_PREFERENCE.PHOTO_LINK, ""))
+            picasso.load(sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, ""))
                 .error(R.drawable.ic_user_placeholder).into(iv_profile_picture)
         }
         tv_driver_name.text = driver.name
@@ -100,7 +95,7 @@ class ViewProfileFragment : BaseFragment() {
             tv_address.text = AddressUtil.getAddress(it)
         }?:run { tv_address.text = getString(R.string.no_address_present) }
 
-        tv_doj.text = TimeUtils.getThFormatTime(driver.dateOfJoining ?: 0L)
+        tv_doj.text = TimeUtils.getDateFromEpoch(driver.dateOfJoining ?: 0L)
 
         driver.vehicleNumber?.let {
             vehicle_number_value_tv.text = it

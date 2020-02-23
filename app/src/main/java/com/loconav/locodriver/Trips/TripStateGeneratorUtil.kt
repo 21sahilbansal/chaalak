@@ -1,12 +1,24 @@
 package com.loconav.locodriver.Trips
 
+import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_ACTIVITY_END
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_ACTIVITY_START
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_CHECKPOINT_ENTRY
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_CHECKPOINT_EXIT
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_TRIP_END
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_TRIP_START
+import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
 import com.loconav.locodriver.Trips.model.TripData
+import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-object TripStateGeneratorUtil {
+object TripStateGeneratorUtil : KoinComponent {
+    val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
     var tripStateList: ArrayList<String> = ArrayList()
 
-    var currentStateOfList: String = tripStateList[0]
+//    var currentStateOfList: String = tripStateList[0]
 
     var nextState: String? = null
 
@@ -106,15 +118,54 @@ object TripStateGeneratorUtil {
         tripStateList.add(String.format("Left for %s", event))
     }
 
-    fun getNextState(currentState: String): String? {
-        if (tripStateList.contains(currentState)) {
-            val currentStateIndex = tripStateList.indexOf(currentState)
-            if (currentStateIndex + 1 < tripStateList.size) {
-                nextState = tripStateList[currentStateIndex + 1]
-                currentStateOfList = nextState!!
-            }
+//    fun getNextState(currentState: String): String? {
+//        if (tripStateList.contains(currentState)) {
+//            val currentStateIndex = tripStateList.indexOf(currentState)
+//            if (currentStateIndex + 1 < tripStateList.size) {
+//                nextState = tripStateList[currentStateIndex + 1]
+//                currentStateOfList = nextState!!
+//            }
+//        }
+//        return nextState
+//    }
+
+    fun setDriverCtaTemplates(driverCtaTemplateResponse: DriverCtaTemplateResponse) {
+        driverCtaTemplateResponse.tripStart?.let { tripStartLabel ->
+            setLabelsToSharedPref(DRIVER_CTA_LABEL_TRIP_START, tripStartLabel)
         }
-        return nextState
+        driverCtaTemplateResponse.checkpointEntry?.let { checkointEntryLabel ->
+            setLabelsToSharedPref(DRIVER_CTA_LABEL_CHECKPOINT_ENTRY, checkointEntryLabel)
+        }
+        driverCtaTemplateResponse.activityStart?.let { activityStartLabel ->
+            setLabelsToSharedPref(DRIVER_CTA_LABEL_ACTIVITY_START, activityStartLabel)
+        }
+        driverCtaTemplateResponse.activityEnd?.let { activityEndLabel ->
+            setLabelsToSharedPref(DRIVER_CTA_LABEL_ACTIVITY_END, activityEndLabel)
+        }
+        driverCtaTemplateResponse.checkpointExit?.let { checkpointExitLabel ->
+            setLabelsToSharedPref(DRIVER_CTA_LABEL_CHECKPOINT_EXIT, checkpointExitLabel)
+        }
+        driverCtaTemplateResponse.tripEnd?.let { tripEndLabel ->
+            setLabelsToSharedPref(DRIVER_CTA_LABEL_TRIP_END, tripEndLabel)
+        }
+    }
+
+    private fun setLabelsToSharedPref(labelTitle: String, labelTemplate: String) {
+        if (doesTemplateRequiresFiltering(labelTemplate)) {
+            val filteredString = formatLabel(labelTemplate)
+            sharedPreferenceUtil.saveData(labelTitle, filteredString)
+        } else {
+            sharedPreferenceUtil.saveData(labelTitle, labelTemplate)
+        }
+    }
+
+    private fun formatLabel(label: String): String {
+        val requiredString = label.substring(label.indexOf("$"), label.indexOf("$") + 1)
+        return label.replace(requiredString, "%s")
+    }
+
+    private fun doesTemplateRequiresFiltering(template: String): Boolean {
+        return template.contains("$")
     }
 
 }

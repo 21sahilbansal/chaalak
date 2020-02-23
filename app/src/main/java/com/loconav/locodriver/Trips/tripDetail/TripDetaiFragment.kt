@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.loconav.locodriver.R
 import com.loconav.locodriver.Trips.TripActionConfirmationDialog
+import com.loconav.locodriver.Trips.TripStateGeneratorUtil
 import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.base.BaseFragment
 import kotlinx.android.synthetic.main.trip_detail_fragment.*
@@ -29,7 +30,7 @@ class TripDetailFragment : BaseFragment() {
             Observer {
                 setData(it)
                 setTripActions(it)
-//                TripStateGeneratorUtil.setStateList(it)
+                TripStateGeneratorUtil.setStateList(it)
             })
         setClickListener()
     }

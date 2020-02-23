@@ -7,15 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.loconav.locodriver.Constants
-import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_ACTIVITY_END
-import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_ACTIVITY_START
-import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_CHECKPOINT_ENTRY
-import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_CHECKPOINT_EXIT
-import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_TRIP_END
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.IS_LOGGED_IN
 
 import com.loconav.locodriver.R
+import com.loconav.locodriver.Trips.TripStateGeneratorUtil
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.landing.LandingActivity
 import com.loconav.locodriver.user.login.LoginActivity
@@ -39,27 +34,13 @@ class SplashActivity : AppCompatActivity() {
 
         if (sharedPreferenceUtil.getData(IS_LOGGED_IN, false)) {
             splashActivityViewModel?.getDriverCtatemplates()?.observe(this, Observer {
-                it.data?.tripStart?.let {
-                    sharedPreferenceUtil.saveData(Constants.SharedPreferences.DRIVER_CTA_LABEL_TRIP_START, it)
-                }
-                it.data?.checkpointEntry?.let {
-                    sharedPreferenceUtil.saveData(DRIVER_CTA_LABEL_CHECKPOINT_ENTRY, it)
-                }
-                it.data?.activityStart?.let {
-                    sharedPreferenceUtil.saveData(DRIVER_CTA_LABEL_ACTIVITY_START, it)
-                }
-                it.data?.activityEnd?.let {
-                    sharedPreferenceUtil.saveData(DRIVER_CTA_LABEL_ACTIVITY_END , it)
-                }
-                it.data?.checkpointExit?.let {
-                    sharedPreferenceUtil.saveData(DRIVER_CTA_LABEL_CHECKPOINT_EXIT, it)
-                }
-                it.data?.tripEnd?.let {
-                    sharedPreferenceUtil.saveData(DRIVER_CTA_LABEL_TRIP_END , it)
+                it.data?.let { driverCtaLabelTemplate ->
+                    driverCtaLabelTemplate?.let {
+                        TripStateGeneratorUtil.setDriverCtaTemplates(driverCtaLabelTemplate)
+                    }
                 }
                 val intent = Intent(this, LandingActivity::class.java)
                 startActivity(intent)
-
             })
         } else {
             val intent = Intent(this, LoginActivity::class.java)

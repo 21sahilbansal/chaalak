@@ -4,7 +4,10 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.TestLooperManager
+import android.widget.TextView
 
 import com.google.android.material.tabs.TabLayout
 
@@ -25,6 +28,7 @@ import com.loconav.locodriver.user.profile.ProfileActivity
 import com.loconav.locodriver.util.LocationWorkManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
+import kotlinx.android.synthetic.main.dialog_change_language.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
@@ -48,6 +52,12 @@ class LandingActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs = findViewById<TabLayout>(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
+
+        val length = tabs.tabCount
+        for(i in 0 until length ){
+            tabs.getTabAt(i)?.customView = sectionsPagerAdapter.getTabView(i)
+        }
+        setTabListener(tabs)
         val profileImageView = findViewById<CardView>(R.id.card_profile)
         if (sharedPreferenceUtil.getData(PHOTO_LINK, "").isEmpty()) {
             iv_profile.setImageResource(R.drawable.ic_user_placeholder)
@@ -101,6 +111,32 @@ class LandingActivity : AppCompatActivity() {
             false
         }
     }
+
+    private fun setTabListener(tab:TabLayout){
+        tab.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+                val title =p0?.customView?.findViewById<TextView>(R.id.tab_title)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    title?.setTextAppearance(R.style.TopNav)
+                }else{
+                    title?.setTextAppearance(title.context,R.style.TopNav)
+                }
+            }
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                val title =p0?.customView?.findViewById<TextView>(R.id.tab_title)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    title?.setTextAppearance(R.style.TopNavActive)
+                }else{
+                    title?.setTextAppearance(title.context,R.style.TopNavActive)
+                }
+            }
+        })
+    }
+
+
 
     companion object {
         const val REQUEST_LOCATION_PERMISSION = 1000

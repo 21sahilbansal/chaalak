@@ -9,7 +9,7 @@
     <string name="language_string">हिंदी</string>
     <string name="logout">Logout</string>
     <string name="tab_text_1">Trips</string>
-    <string name="tab_text_2">Expenses</string>
+    <string name="tab_text_2">Expense</string>
     <string name="cancel">Cancel</string>
     <string name="welcome_to_locodrive">Welcome to Locodrive</string>
     <string name="something_went_wrong">Something Went Wrong!!</string>

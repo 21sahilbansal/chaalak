@@ -34,5 +34,5 @@ interface HttpApiService {
     fun getDriverCtaTemplate():Call<DriverCtaTemplateResponse>
 
     @GET(GET_TRIPS_LIST)
-    fun getTripListData(@Query("driver_id") driverId: Long,@Query("states[]") states:ArrayList<String>,@QueryMap filters:HashMap<String,String>): Call<TripDataResponse>
+    fun getTripListData(@Query("sort_order") string: String,@QueryMap filters:HashMap<String,Any>): Call<TripDataResponse>
 }

@@ -3,10 +3,8 @@ package com.loconav.locodriver.Trips.model
 import com.google.gson.annotations.SerializedName
 
 data class TripRequestBody(
-    @SerializedName("states")
-    var tripState: ArrayList<String>? = null,
-    @SerializedName("driver_id")
-    var driverId: Long? = null,
     @SerializedName("filter")
-    var filter: HashMap<String, String>? = null
+    var filter: HashMap<String, Any>? = null,
+    @SerializedName("sort_order")
+    var sortOrder:String?=null
 )

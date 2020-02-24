@@ -27,7 +27,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/no_trips"
+        app:srcCompat="@drawable/ic_no_trip"
         android:visibility="gone"
         android:id="@+id/no_trip_layout"
         app:layout_constraintStart_toStartOf="parent"

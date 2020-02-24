@@ -17,10 +17,19 @@ import org.koin.standalone.inject
 
 class TripListAdapter(val tripData: List<TripData>) :
     androidx.recyclerview.widget.RecyclerView.Adapter<TripListAdapter.TripListAdapterViewHolder>(),KoinComponent {
+
+    val TRIP_ITEM = 0
+    val TEXT_ITEM = 1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripListAdapterViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_trips_card, parent, false)
-        return TripListAdapterViewHolder(view)
+        return if(viewType==TRIP_ITEM){
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_trips_card, parent, false)
+            TripListAdapterViewHolder(view)
+        }else{
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_trip_list_heading, parent, false)
+            TripListAdapterViewHolder(view)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -28,11 +37,21 @@ class TripListAdapter(val tripData: List<TripData>) :
     }
 
     override fun onBindViewHolder(holder: TripListAdapterViewHolder, position: Int) {
-//        holder.setTripState(tripData[position])
-        holder.setTripActiveState(tripData[position], position)
-        holder.setData(tripData[position])
-        holder.enableActiveTripView(tripData[position])
-        holder.setClickListeners(tripData[position])
+        if(position!=1){
+//            holder.setTripState(tripData[position])
+            holder.setTripActiveState(tripData[position], position)
+            holder.setData(tripData[position])
+            holder.enableActiveTripView(tripData[position])
+            holder.setClickListeners(tripData[position])
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if(position==1){
+            TEXT_ITEM
+        }else{
+            TRIP_ITEM
+        }
 
     }
 

@@ -28,24 +28,24 @@ class TripDetailFragment : BaseFragment() {
         setActionBar()
         tripDetailFragmentViewModel?.getTrip(arguments?.get(TRIP_ID).toString())?.observe(this,
             Observer {
+                //                TripStateGeneratorUtil.setStateList(it)
                 setData(it)
                 setTripActions(it)
-                TripStateGeneratorUtil.setStateList(it)
             })
         setClickListener()
     }
 
     private fun setClickListener() {
-        driver_cta_button.setOnClickListener {
-            val confirmationDialog = TripActionConfirmationDialog()
-            confirmationDialog.show(childFragmentManager, "trip_action_confirmation_dialog")
-        }
+//        driver_cta_button.setOnClickListener {
+////            val confirmationDialog = TripActionConfirmationDialog()
+////            confirmationDialog.show(childFragmentManager, "trip_action_confirmation_dialog")
+//        }
     }
 
     private fun setData(trip: TripData) {
         trip_detail_veh_number_tv.text = trip.vehicleNumber
-//        driver_cta_button.text = TripStateGeneratorUtil.currentStateOfList
-        driver_cta_button.text = trip.driverCta?.ctaName
+//        driver_cta_button.text = TripStateGeneratorUtil.getCurrentState()
+//        driver_cta_button.text = trip.driverCta?.ctaName
         initTripDetailAdapter(trip_detail_rec, trip)
     }
 

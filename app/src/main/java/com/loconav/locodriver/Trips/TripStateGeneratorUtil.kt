@@ -1,6 +1,7 @@
 package com.loconav.locodriver.Trips
 
 import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_CURRENT_STATE_LABEL
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_ACTIVITY_END
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_ACTIVITY_START
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_CHECKPOINT_ENTRY
@@ -18,9 +19,13 @@ object TripStateGeneratorUtil : KoinComponent {
 
     var tripStateList: ArrayList<String> = ArrayList()
 
-//    var currentStateOfList: String = tripStateList[0]
+    var currentStateOfList: String?=null
 
     var nextState: String? = null
+
+    var currentCta:String?=null
+
+
 
     fun setStateList(trip: TripData?) {
         trip?.let {
@@ -93,41 +98,63 @@ object TripStateGeneratorUtil : KoinComponent {
 
     }
 
+    private fun setCurrentState(currentState: String){
+        currentStateOfList=currentState
+    }
+
     private fun addLeavingCheckpointStateToList(event: String) {
-        tripStateList.add(String.format("Left for checkpoint %s", event))
+        tripStateList.add(String.format(sharedPreferenceUtil.getData(
+            DRIVER_CTA_LABEL_CHECKPOINT_EXIT,""), event))
     }
 
     private fun addEndTripStateToList() {
-        tripStateList.add("End trip")
+        tripStateList.add(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_TRIP_END,""))
     }
 
     private fun addStartTripStateToList() {
-        tripStateList.add("Start trip")
+        tripStateList.add(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_TRIP_START,""))
     }
 
     private fun addCheckPointActivityToTripStateList(checkpointActivityName: String) {
-        tripStateList.add(String.format("Start %s", checkpointActivityName))
-        tripStateList.add(String.format("End %s", checkpointActivityName))
+        tripStateList.add(String.format(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_ACTIVITY_START,""), checkpointActivityName))
+        tripStateList.add(String.format(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_ACTIVITY_END,""), checkpointActivityName))
     }
 
     private fun addEntryEventToList(event: String) {
-        tripStateList.add(String.format("Entry at %s", event))
+        tripStateList.add(String.format(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_CHECKPOINT_ENTRY,""), event))
     }
 
     private fun addLeavingForDestinationStateToList(event: String) {
-        tripStateList.add(String.format("Left for %s", event))
+        tripStateList.add(String.format(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_CHECKPOINT_EXIT,""), event))
     }
 
-//    fun getNextState(currentState: String): String? {
-//        if (tripStateList.contains(currentState)) {
-//            val currentStateIndex = tripStateList.indexOf(currentState)
-//            if (currentStateIndex + 1 < tripStateList.size) {
-//                nextState = tripStateList[currentStateIndex + 1]
-//                currentStateOfList = nextState!!
-//            }
-//        }
-//        return nextState
-//    }
+    fun getCurrentState(): String? {
+        return if (!tripStateList.isNullOrEmpty() && currentStateOfList == null) {
+            currentStateOfList = tripStateList[0]
+            sharedPreferenceUtil.saveData(DRIVER_CTA_CURRENT_STATE_LABEL, currentStateOfList!!)
+            currentStateOfList
+        } else if (currentStateOfList != null) {
+            sharedPreferenceUtil.saveData(DRIVER_CTA_CURRENT_STATE_LABEL, currentStateOfList!!)
+            currentStateOfList
+        } else {
+            null
+        }
+    }
+
+    fun getNextState(currentState: String): String? {
+        if (tripStateList.contains(currentState)) {
+            val currentStateIndex = tripStateList.indexOf(currentState)
+            if (currentStateIndex + 1 < tripStateList.size) {
+                nextState = tripStateList[currentStateIndex + 1]
+                currentStateOfList = nextState!!
+            }
+        }
+        return nextState
+    }
+
+    fun setCurrentState(){
+
+    }
 
     fun setDriverCtaTemplates(driverCtaTemplateResponse: DriverCtaTemplateResponse) {
         driverCtaTemplateResponse.tripStart?.let { tripStartLabel ->
@@ -160,12 +187,12 @@ object TripStateGeneratorUtil : KoinComponent {
     }
 
     private fun formatLabel(label: String): String {
-        val requiredString = label.substring(label.indexOf("$"), label.indexOf("$") + 1)
+        val requiredString = label.substring(label.indexOf("("), label.indexOf(")") + 1)
         return label.replace(requiredString, "%s")
     }
 
     private fun doesTemplateRequiresFiltering(template: String): Boolean {
-        return template.contains("$")
+        return template.contains("(") && template.contains(")")
     }
 
 }

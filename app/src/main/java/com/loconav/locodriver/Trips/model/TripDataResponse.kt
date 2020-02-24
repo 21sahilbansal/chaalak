@@ -48,7 +48,9 @@ data class TripData(
     var checkPointsList: List<CheckPointData>? = null,
     @SerializedName("driver_cta")
     var driverCta: Cta? = null,
-    @Transient var activeState: Boolean? = null
+    @Transient var activeState: Boolean? = null,
+    @Transient var currentState: String? = null,
+    @Transient var currentCptId: Long? = null
 
 )
 

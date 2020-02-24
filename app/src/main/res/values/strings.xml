@@ -46,5 +46,6 @@
     <string name="start_location_text">Start Location</string>
     <string name="end_location_text">End Location</string>
     <string name="checkpoint_position_text">Checkpoint %s</string>
+    <string name="subheading_confirmation_dialog">Are you sure you want to %s ?</string>
 
 </resources>

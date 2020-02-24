@@ -33,15 +33,14 @@ class SplashActivity : AppCompatActivity() {
 //        Log.e("Network Type network", NetworkUtil().getNetworkType(null).toString())
 
         if (sharedPreferenceUtil.getData(IS_LOGGED_IN, false)) {
-            splashActivityViewModel?.getDriverCtatemplates()?.observe(this, Observer {
-                it.data?.let { driverCtaLabelTemplate ->
-                    driverCtaLabelTemplate?.let {
-                        TripStateGeneratorUtil.setDriverCtaTemplates(driverCtaLabelTemplate)
-                    }
-                }
+//            splashActivityViewModel?.getDriverCtatemplates()?.observe(this, Observer {
+//                it.data?.let { driverCtaLabelTemplate ->
+//                    driverCtaLabelTemplate?.let {
+//                        TripStateGeneratorUtil.setDriverCtaTemplates(driverCtaLabelTemplate)
+//                    }
+//                }})
                 val intent = Intent(this, LandingActivity::class.java)
                 startActivity(intent)
-            })
         } else {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

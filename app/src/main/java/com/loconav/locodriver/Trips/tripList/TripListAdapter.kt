@@ -1,17 +1,17 @@
 package com.loconav.locodriver.Trips.tripList
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
+import com.loconav.locodriver.Trips.TripStateGeneratorUtil
 import com.loconav.locodriver.Trips.tripDetail.DetailActivity
 import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.item_trips_card.view.*
-import kotlinx.android.synthetic.main.trip_detail_fragment.view.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -28,6 +28,7 @@ class TripListAdapter(val tripData: List<TripData>) :
     }
 
     override fun onBindViewHolder(holder: TripListAdapterViewHolder, position: Int) {
+//        holder.setTripState(tripData[position])
         holder.setTripActiveState(tripData[position], position)
         holder.setData(tripData[position])
         holder.enableActiveTripView(tripData[position])
@@ -78,9 +79,9 @@ class TripListAdapter(val tripData: List<TripData>) :
                     viewContext.getString(R.string.unknown_dest_end_time)
             }
 
-            tripData.driverCta?.ctaName?.let {
-                itemView.button_start_trip.text = sharedPreferenceUtil.getData("cta_trip_start","")
-            }
+//            tripData.driverCta?.ctaName?.let {
+//                itemView.button_start_trip.text = TripStateGeneratorUtil.getCurrentState()
+//            }
         }
 
         fun setClickListeners(tripData: TripData){
@@ -112,6 +113,17 @@ class TripListAdapter(val tripData: List<TripData>) :
                 }
             }
         }
+//        fun setTripState(tripData: TripData){
+//            TripStateGeneratorUtil.setStateList(tripData)
+//            tripData.currentState=TripStateGeneratorUtil.getCurrentState()
+////            if(tripData.driverCta?.ctaName == Constants.SharedPreferences.DRIVER_CTA_LABEL_TRIP_START
+////                ||tripData.driverCta?.ctaName == Constants.SharedPreferences.DRIVER_CTA_LABEL_TRIP_END
+////                ||tripData.driverCta?.ctaName == Constants.SharedPreferences.DRIVER_CTA_LABEL_SOURCE_ENTRY
+////                ||tripData.driverCta?.ctaName == Constants.SharedPreferences.DRIVER_CTA_LABEL_SOURCE_EXIT
+////                ||tripData.driverCta?.ctaName == Constants.SharedPreferences.DRIVER_CTA_LABEL_DESTINATION_ENTRY
+////                ||tripData.driverCta?.ctaName == Constants.SharedPreferences.DRIVER_CTA_LABEL_DESTINATION_EXIT )
+////            tripData.currentCptId=tripData.driverCta.
+//        }
 
         fun setTripActiveState(tripData: TripData, position: Int) {
             tripData.activeState = position == 0

@@ -21,12 +21,17 @@ class Constants {
             const val DRIVER_ID = "driver_id"
             const val PHOTO_LINK = "photo_link"
             const val IS_LOGGED_IN = "is_logged_in"
-            const val DRIVER_CTA_LABEL_TRIP_START = "cta_trip_start"
-            const val DRIVER_CTA_LABEL_CHECKPOINT_ENTRY = "cta_cpt_entry"
-            const val DRIVER_CTA_LABEL_ACTIVITY_START = "cta_activity_start"
-            const val DRIVER_CTA_LABEL_ACTIVITY_END = "cta_activity_end"
-            const val DRIVER_CTA_LABEL_CHECKPOINT_EXIT = "cta_cpt_exit"
-            const val DRIVER_CTA_LABEL_TRIP_END = "cta_trip_end"
+            const val DRIVER_CTA_LABEL_TRIP_START = "trip_start"
+            const val DRIVER_CTA_LABEL_CHECKPOINT_ENTRY = "cpt_entry"
+            const val DRIVER_CTA_LABEL_ACTIVITY_START = "activity_start"
+            const val DRIVER_CTA_LABEL_ACTIVITY_END = "activity_end"
+            const val DRIVER_CTA_LABEL_CHECKPOINT_EXIT = "cpt_exit"
+            const val DRIVER_CTA_LABEL_TRIP_END = "trip_end"
+            const val DRIVER_CTA_LABEL_SOURCE_ENTRY = "source_entry"
+            const val DRIVER_CTA_LABEL_SOURCE_EXIT = "source_exit"
+            const val DRIVER_CTA_LABEL_DESTINATION_ENTRY = "destination_entry"
+            const val DRIVER_CTA_LABEL_DESTINATION_EXIT = "destination_exit"
+            const val DRIVER_CTA_CURRENT_STATE_LABEL = "current_label"
         }
     }
 

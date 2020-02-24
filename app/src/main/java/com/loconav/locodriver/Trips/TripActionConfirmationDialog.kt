@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.trip_activity_confirmation_dialog.*
@@ -27,25 +29,33 @@ class TripActionConfirmationDialog : BaseDialogFragment() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        setListeners()
+        initData(tripActionConfirmationDialog)
+        setListeners(tripActionConfirmationDialog)
         return builder
     }
 
-    fun initData() {
-        // add string for driver cta for confirmation
+    fun initData(view:View?) {
+        val subHeading=view?.findViewById<TextView>(R.id.tv_confimation_sub_heading)
+//        subHeading?.text=String.format(getString(R.string.subheading_confirmation_dialog),TripStateGeneratorUtil.getCurrentState())
+//        setListeners(view)
     }
 
-    private fun setListeners() {
-        tv_confimation_decline?.setOnClickListener(closeDialogClickListener)
-        button_confirmation_yes?.setOnClickListener(confirmationClickListener)
+    private fun setListeners(view:View?) {
+        val declineConfirmation=view?.findViewById<TextView>(R.id.tv_confimation_decline)
+        declineConfirmation?.setOnClickListener(closeDialogClickListener)
+        val acceptingConfirmation =view?.findViewById<Button>(R.id.button_confirmation_yes)
+//        acceptingConfirmation?.setOnClickListener(confirmationClickListener)
     }
 
     private val closeDialogClickListener = View.OnClickListener {
         dismiss()
     }
-    private val confirmationClickListener = View.OnClickListener {
-        //Fire event for confirmation to be listened by Fragment
-    }
+//    private val confirmationClickListener = View.OnClickListener {
+//        TripStateGeneratorUtil.getCurrentState()?.let{
+//            TripStateGeneratorUtil.getNextState(it)
+//        }
+//        TripStateGeneratorUtil.getCurrentState()
+//    }
 
     override fun getScreenName(): String? {
         return null

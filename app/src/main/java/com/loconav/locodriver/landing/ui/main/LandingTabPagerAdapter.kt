@@ -19,7 +19,7 @@ import com.loconav.locodriver.R
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
+class LandingTabPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
@@ -41,6 +41,13 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
         val view = LayoutInflater.from(mContext)
             .inflate(R.layout.custom_tab_layout, null)
         val title = view.findViewById<TextView>(R.id.tab_title)
+        setTabTitleStyle(title, position)
+        title.text = getPageTitle(position)
+        return view
+    }
+
+    private fun setTabTitleStyle(title: TextView, position: Int) {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             title.setTextAppearance(
                 if (position == 0)
@@ -48,23 +55,21 @@ class SectionsPagerAdapter(private val mContext: Context, fm: FragmentManager) :
                 else
                     R.style.TopNav
             )
-        }else{
+        } else {
             title.setTextAppearance(
-                title.context,if (position == 0)
+                title.context, if (position == 0)
                     R.style.TopNavActive
                 else
-                    R.style.TopNav)
+                    R.style.TopNav
+            )
         }
-        title.text = getPageTitle(position)
-        return view
-
     }
 
     companion object {
         @StringRes
         private val TAB_TITLES = intArrayOf(
-            R.string.tab_text_1,
-            R.string.tab_text_2
+            R.string.tab_text_trip,
+            R.string.tab_text_expense
         )
     }
 }

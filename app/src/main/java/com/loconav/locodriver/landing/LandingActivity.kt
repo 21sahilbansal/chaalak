@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.TestLooperManager
 import android.widget.TextView
 
 import com.google.android.material.tabs.TabLayout
@@ -19,43 +18,47 @@ import androidx.core.app.ActivityCompat
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 
 import com.loconav.locodriver.R
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.landing.ui.main.SectionsPagerAdapter
+import com.loconav.locodriver.landing.ui.main.LandingTabPagerAdapter
 import com.loconav.locodriver.user.profile.ProfileActivity
 import com.loconav.locodriver.util.LocationWorkManager
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
-import kotlinx.android.synthetic.main.dialog_change_language.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
 class LandingActivity : AppCompatActivity() {
 
-    val LOCATION_WORKER_TAG="location_worker_tag"
-    val picasso: Picasso by inject()
+    private val LOCATION_WORKER_TAG = "location_worker_tag"
+    private val picasso: Picasso by inject()
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     var workManager: WorkManager = WorkManager.getInstance()
-    val locationGetterTask =
+    private val locationGetterTask =
         PeriodicWorkRequestBuilder<LocationWorkManager>(15, TimeUnit.MINUTES)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         if (checkLocationPermission()) {
-            workManager.enqueueUniquePeriodicWork(LOCATION_WORKER_TAG,ExistingPeriodicWorkPolicy.REPLACE,locationGetterTask.build())
+            workManager.enqueueUniquePeriodicWork(
+                LOCATION_WORKER_TAG,
+                ExistingPeriodicWorkPolicy.REPLACE,
+                locationGetterTask.build()
+            )
         }
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        val sectionsPagerAdapter = LandingTabPagerAdapter(this, supportFragmentManager)
         val viewPager = findViewById<ViewPager>(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         val tabs = findViewById<TabLayout>(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
 
-        val length = tabs.tabCount
-        for(i in 0 until length ){
-            tabs.getTabAt(i)?.customView = sectionsPagerAdapter.getTabView(i)
+        val tabCount = tabs.tabCount
+        for (tabIndex in 0 until tabCount) {
+            tabs.getTabAt(tabIndex)?.customView = sectionsPagerAdapter.getTabView(tabIndex)
         }
         setTabListener(tabs)
         val profileImageView = findViewById<CardView>(R.id.card_profile)
@@ -69,8 +72,16 @@ class LandingActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
-        call_fab.setOnClickListener{
-            val phoneIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+"9650793733"))
+        call_fab.setOnClickListener {
+            val phoneIntent = Intent(
+                Intent.ACTION_DIAL, Uri.parse(
+                    String.format(
+                        "%s%s",
+                        Constants.TripConstants.INTENT_ACTION_DIAL_TEXT,
+                        Constants.TripConstants.CONTACT_PHONE_NUMBER
+                    )
+                )
+            )
             startActivity(phoneIntent)
         }
     }
@@ -83,7 +94,11 @@ class LandingActivity : AppCompatActivity() {
         when (requestCode) {
             REQUEST_LOCATION_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    workManager.enqueueUniquePeriodicWork(LOCATION_WORKER_TAG,ExistingPeriodicWorkPolicy.REPLACE,locationGetterTask.build())
+                    workManager.enqueueUniquePeriodicWork(
+                        LOCATION_WORKER_TAG,
+                        ExistingPeriodicWorkPolicy.REPLACE,
+                        locationGetterTask.build()
+                    )
                 }
             }
         }
@@ -112,30 +127,30 @@ class LandingActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTabListener(tab:TabLayout){
-        tab.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(p0: TabLayout.Tab?) {
+    private fun setTabListener(tab: TabLayout) {
+        tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {
             }
 
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-                val title =p0?.customView?.findViewById<TextView>(R.id.tab_title)
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                val title = tab?.customView?.findViewById<TextView>(R.id.tab_title)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     title?.setTextAppearance(R.style.TopNav)
-                }else{
-                    title?.setTextAppearance(title.context,R.style.TopNav)
+                } else {
+                    title?.setTextAppearance(title.context, R.style.TopNav)
                 }
             }
-            override fun onTabSelected(p0: TabLayout.Tab?) {
-                val title =p0?.customView?.findViewById<TextView>(R.id.tab_title)
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val title = tab?.customView?.findViewById<TextView>(R.id.tab_title)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     title?.setTextAppearance(R.style.TopNavActive)
-                }else{
-                    title?.setTextAppearance(title.context,R.style.TopNavActive)
+                } else {
+                    title?.setTextAppearance(title.context, R.style.TopNavActive)
                 }
             }
         })
     }
-
 
 
     companion object {

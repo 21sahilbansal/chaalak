@@ -21,17 +21,16 @@ class TripsFragment : BaseFragment() {
         tripsListViewModel?.getTripList()?.observe(viewLifecycleOwner, Observer {
             if (it.isNullOrEmpty()) {
                 progressBar.visibility = View.GONE
-                no_trip_layout.visibility =View.VISIBLE
-                no_trip_text.visibility=View.VISIBLE
-                //no trip view required
+                no_trip_layout.visibility = View.VISIBLE
+                no_trip_text.visibility = View.VISIBLE
             } else {
-                no_trip_layout.visibility =View.GONE
-                no_trip_text.visibility=View.GONE
+                no_trip_layout.visibility = View.GONE
+                no_trip_text.visibility = View.GONE
                 initAdapter(list_recycler_view, it)
                 progressBar.visibility = View.GONE
             }
         })
-        tripsListViewModel?.getTransformedData()?.observe(viewLifecycleOwner, Observer {
+        tripsListViewModel?.fetchTripListData()?.observe(viewLifecycleOwner, Observer {
             Log.i("transformation done", it.toString())
         })
     }
@@ -48,7 +47,7 @@ class TripsFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        tripsListViewModel?.getTransformedData()
+        tripsListViewModel?.fetchTripListData()
     }
 
     private fun initAdapter(view: RecyclerView, tripData: List<TripData>) {

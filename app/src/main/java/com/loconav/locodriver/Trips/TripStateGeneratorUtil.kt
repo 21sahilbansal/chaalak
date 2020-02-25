@@ -1,6 +1,5 @@
 package com.loconav.locodriver.Trips
 
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_CURRENT_STATE_LABEL
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_ACTIVITY_END
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.DRIVER_CTA_LABEL_ACTIVITY_START
@@ -19,12 +18,11 @@ object TripStateGeneratorUtil : KoinComponent {
 
     var tripStateList: ArrayList<String> = ArrayList()
 
-    var currentStateOfList: String?=null
+    var currentStateOfList: String? = null
 
     var nextState: String? = null
 
-    var currentCta:String?=null
-
+    var currentCta: String? = null
 
 
     fun setStateList(trip: TripData?) {
@@ -98,34 +96,67 @@ object TripStateGeneratorUtil : KoinComponent {
 
     }
 
-    private fun setCurrentState(currentState: String){
-        currentStateOfList=currentState
+    private fun setCurrentState(currentState: String) {
+        currentStateOfList = currentState
     }
 
     private fun addLeavingCheckpointStateToList(event: String) {
-        tripStateList.add(String.format(sharedPreferenceUtil.getData(
-            DRIVER_CTA_LABEL_CHECKPOINT_EXIT,""), event))
+        tripStateList.add(
+            String.format(
+                sharedPreferenceUtil.getData(
+                    DRIVER_CTA_LABEL_CHECKPOINT_EXIT, ""
+                ), event
+            )
+        )
     }
 
     private fun addEndTripStateToList() {
-        tripStateList.add(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_TRIP_END,""))
+        tripStateList.add(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_TRIP_END, ""))
     }
 
     private fun addStartTripStateToList() {
-        tripStateList.add(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_TRIP_START,""))
+        tripStateList.add(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_TRIP_START, ""))
     }
 
     private fun addCheckPointActivityToTripStateList(checkpointActivityName: String) {
-        tripStateList.add(String.format(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_ACTIVITY_START,""), checkpointActivityName))
-        tripStateList.add(String.format(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_ACTIVITY_END,""), checkpointActivityName))
+        tripStateList.add(
+            String.format(
+                sharedPreferenceUtil.getData(
+                    DRIVER_CTA_LABEL_ACTIVITY_START,
+                    ""
+                ), checkpointActivityName
+            )
+        )
+        tripStateList.add(
+            String.format(
+                sharedPreferenceUtil.getData(
+                    DRIVER_CTA_LABEL_ACTIVITY_END,
+                    ""
+                ), checkpointActivityName
+            )
+        )
     }
 
     private fun addEntryEventToList(event: String) {
-        tripStateList.add(String.format(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_CHECKPOINT_ENTRY,""), event))
+        tripStateList.add(
+            String.format(
+                sharedPreferenceUtil.getData(
+                    DRIVER_CTA_LABEL_CHECKPOINT_ENTRY,
+                    ""
+                ), event
+            )
+        )
     }
 
     private fun addLeavingForDestinationStateToList(event: String) {
-        tripStateList.add(String.format(sharedPreferenceUtil.getData(DRIVER_CTA_LABEL_CHECKPOINT_EXIT,""), event))
+        tripStateList.add(
+            String.format(
+                sharedPreferenceUtil.getData(
+                    DRIVER_CTA_LABEL_CHECKPOINT_EXIT,
+                    ""
+                ), event
+            )
+        )
     }
 
     fun getCurrentState(): String? {
@@ -152,7 +183,7 @@ object TripStateGeneratorUtil : KoinComponent {
         return nextState
     }
 
-    fun setCurrentState(){
+    fun setCurrentState() {
 
     }
 

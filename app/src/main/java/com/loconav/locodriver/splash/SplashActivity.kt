@@ -24,6 +24,7 @@ class SplashActivity : AppCompatActivity() {
     var splashActivityViewModel: SplashActivityViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var intent: Intent? = null
         splashActivityViewModel =
             ViewModelProviders.of(this).get(SplashActivityViewModel::class.java)
         super.onCreate(savedInstanceState)
@@ -32,19 +33,18 @@ class SplashActivity : AppCompatActivity() {
         Log.e("Network Type", PhoneUtil.getNetworkClass(baseContext))
 //        Log.e("Network Type network", NetworkUtil().getNetworkType(null).toString())
 
-        if (sharedPreferenceUtil.getData(IS_LOGGED_IN, false)) {
-//            splashActivityViewModel?.getDriverCtatemplates()?.observe(this, Observer {
-//                it.data?.let { driverCtaLabelTemplate ->
-//                    driverCtaLabelTemplate?.let {
-//                        TripStateGeneratorUtil.setDriverCtaTemplates(driverCtaLabelTemplate)
-//                    }
-//                }})
-                val intent = Intent(this, LandingActivity::class.java)
-                startActivity(intent)
+        intent = if (sharedPreferenceUtil.getData(IS_LOGGED_IN, false)) {
+            //            splashActivityViewModel?.getDriverCtatemplates()?.observe(this, Observer {
+            //                it.data?.let { driverCtaLabelTemplate ->
+            //                    driverCtaLabelTemplate?.let {
+            //                        TripStateGeneratorUtil.setDriverCtaTemplates(driverCtaLabelTemplate)
+            //                    }
+            //                }})
+            Intent(this, LandingActivity::class.java)
         } else {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            Intent(this, LoginActivity::class.java)
         }
+        startActivity(intent)
 
     }
 

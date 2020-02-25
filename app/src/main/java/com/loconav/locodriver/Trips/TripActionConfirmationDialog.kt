@@ -24,38 +24,42 @@ class TripActionConfirmationDialog : BaseDialogFragment() {
         val builder = Dialog(tripActionConfirmationDialog!!.context)
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE)
         builder.setCanceledOnTouchOutside(false)
-        builder.setContentView(tripActionConfirmationDialog!!)
+        tripActionConfirmationDialog?.let {
+            builder.setContentView(it)
+        }
         builder.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        initData(tripActionConfirmationDialog)
-        setListeners(tripActionConfirmationDialog)
+//        initData(tripActionConfirmationDialog)
         return builder
     }
 
-    fun initData(view:View?) {
-        val subHeading=view?.findViewById<TextView>(R.id.tv_confimation_sub_heading)
-//        subHeading?.text=String.format(getString(R.string.subheading_confirmation_dialog),TripStateGeneratorUtil.getCurrentState())
+    fun initData(view: View?) {
+        val subHeading = view?.findViewById<TextView>(R.id.tv_confimation_sub_heading)
+//        subHeading?.text = String.format(
+//            getString(R.string.subheading_confirmation_dialog),
+//            TripStateGeneratorUtil.getCurrentState()
+//        )
 //        setListeners(view)
     }
 
-    private fun setListeners(view:View?) {
-        val declineConfirmation=view?.findViewById<TextView>(R.id.tv_confimation_decline)
+    private fun setListeners(view: View?) {
+        val declineConfirmation = view?.findViewById<TextView>(R.id.tv_confimation_decline)
         declineConfirmation?.setOnClickListener(closeDialogClickListener)
-        val acceptingConfirmation =view?.findViewById<Button>(R.id.button_confirmation_yes)
-//        acceptingConfirmation?.setOnClickListener(confirmationClickListener)
+        val acceptingConfirmation = view?.findViewById<Button>(R.id.button_confirmation_yes)
+        acceptingConfirmation?.setOnClickListener(confirmationClickListener)
     }
 
     private val closeDialogClickListener = View.OnClickListener {
         dismiss()
     }
-//    private val confirmationClickListener = View.OnClickListener {
-//        TripStateGeneratorUtil.getCurrentState()?.let{
+    private val confirmationClickListener = View.OnClickListener {
+        //        TripStateGeneratorUtil.getCurrentState()?.let{
 //            TripStateGeneratorUtil.getNextState(it)
 //        }
 //        TripStateGeneratorUtil.getCurrentState()
-//    }
+    }
 
     override fun getScreenName(): String? {
         return null

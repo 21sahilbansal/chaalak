@@ -8,8 +8,8 @@
     <string name="resend_otp">Resend OTP</string>
     <string name="language_string">हिंदी</string>
     <string name="logout">Logout</string>
-    <string name="tab_text_1">Trips</string>
-    <string name="tab_text_2">Expense</string>
+    <string name="tab_text_trip">Trips</string>
+    <string name="tab_text_expense">Expense</string>
     <string name="cancel">Cancel</string>
     <string name="welcome_to_locodrive">Welcome to Locodrive</string>
     <string name="something_went_wrong">Something Went Wrong!!</string>
@@ -48,5 +48,7 @@
     <string name="checkpoint_position_text">Checkpoint %s</string>
     <string name="subheading_confirmation_dialog">Are you sure you want to %s ?</string>
     <string name="no_trips_has_been_added">No Trips has been added</string>
+    <string name="active_tag">Active</string>
+    <string name="upcoming_trip_tag">Upcoming Trip</string>
 
 </resources>

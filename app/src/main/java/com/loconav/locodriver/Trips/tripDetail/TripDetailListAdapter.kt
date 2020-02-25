@@ -11,7 +11,7 @@ import com.loconav.locodriver.Trips.model.CheckPointData
 import com.loconav.locodriver.util.TimeUtils
 import kotlinx.android.synthetic.main.item_trip_detail_checkpoints.view.*
 
-class TripDetailListAdapter(val checkpointList: List<CheckPointData>) :
+class TripDetailListAdapter(private val checkpointList: List<CheckPointData>) :
     RecyclerView.Adapter<TripDetailListAdapter.TripDataAdapterViewHolder>() {
     override fun onBindViewHolder(holder: TripDataAdapterViewHolder, position: Int) {
         holder.setCheckpointData(checkpointList[position])
@@ -30,7 +30,7 @@ class TripDetailListAdapter(val checkpointList: List<CheckPointData>) :
     }
 
     class TripDataAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val viewContext = itemView.context
+        private val viewContext = itemView.context
         fun setCheckpointData(checkpoint: CheckPointData) {
             itemView.start_location_address_tv.text = checkpoint.checkPointAddress
             setActivityTag(checkpoint)
@@ -40,7 +40,7 @@ class TripDetailListAdapter(val checkpointList: List<CheckPointData>) :
                 Constants.TripConstants.SOURCE_IDENTIFIER -> {
                     itemView.checkpoint_location_text.text =
                         viewContext.getString(R.string.start_location_text)
-                    setItemdata(R.drawable.ic_source, View.GONE, View.VISIBLE, R.style.BodyLarge)
+                    setItemData(R.drawable.ic_source, View.GONE, View.VISIBLE, R.style.BodyLarge)
                 }
                 Constants.TripConstants.CHECKPOINT_IDENTIFIER -> {
                     itemView.checkpoint_location_text.text =
@@ -48,7 +48,7 @@ class TripDetailListAdapter(val checkpointList: List<CheckPointData>) :
                             viewContext.getString(R.string.checkpoint_position_text),
                             checkpoint.checkPointPosition?.minus(1)
                         )
-                    setItemdata(
+                    setItemData(
                         R.drawable.ic_checkpoint_dot,
                         View.VISIBLE,
                         View.VISIBLE,
@@ -58,7 +58,7 @@ class TripDetailListAdapter(val checkpointList: List<CheckPointData>) :
                 Constants.TripConstants.DESTINATION_IDENTIFIER -> {
                     itemView.checkpoint_location_text.text =
                         viewContext.getString(R.string.end_location_text)
-                    setItemdata(
+                    setItemData(
                         R.drawable.ic_destination,
                         View.VISIBLE,
                         View.GONE,
@@ -108,15 +108,15 @@ class TripDetailListAdapter(val checkpointList: List<CheckPointData>) :
             }
         }
 
-        private fun setItemdata(
-            checkpointImageResid: Int,
-            trackAboveVisiblity: Int,
-            trackBelowVisiblity: Int,
+        private fun setItemData(
+            checkpointImageResId: Int,
+            trackLineAboveVisibility: Int,
+            trackLineBelowVisibility: Int,
             textStyleResId: Int
         ) {
-            itemView.source_icon.setImageResource(checkpointImageResid)
-            itemView.vertical_solid_line_above.visibility = trackAboveVisiblity
-            itemView.vertical_solid_line_below.visibility = trackBelowVisiblity
+            itemView.source_icon.setImageResource(checkpointImageResId)
+            itemView.vertical_solid_line_above.visibility = trackLineAboveVisibility
+            itemView.vertical_solid_line_below.visibility = trackLineBelowVisibility
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 itemView.start_location_address_tv.setTextAppearance(textStyleResId)
             } else {

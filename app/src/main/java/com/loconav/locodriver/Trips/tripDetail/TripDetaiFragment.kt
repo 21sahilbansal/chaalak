@@ -18,8 +18,8 @@ import com.loconav.locodriver.base.BaseFragment
 import kotlinx.android.synthetic.main.trip_detail_fragment.*
 
 class TripDetailFragment : BaseFragment() {
-    var tripDetailFragmentViewModel: TripDetailFragmentViewModel? = null
-    var actionBar: ActionBar? = null
+    private var tripDetailFragmentViewModel: TripDetailFragmentViewModel? = null
+    private var actionBar: ActionBar? = null
 
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
         tripDetailFragmentViewModel =
@@ -32,14 +32,14 @@ class TripDetailFragment : BaseFragment() {
                 setData(it)
                 setTripActions(it)
             })
-        setClickListener()
+//        setClickListener()
     }
 
     private fun setClickListener() {
-//        driver_cta_button.setOnClickListener {
-////            val confirmationDialog = TripActionConfirmationDialog()
-////            confirmationDialog.show(childFragmentManager, "trip_action_confirmation_dialog")
-//        }
+        driver_cta_button.setOnClickListener {
+            //            val confirmationDialog = TripActionConfirmationDialog()
+//            confirmationDialog.show(childFragmentManager, "trip_action_confirmation_dialog")
+        }
     }
 
     private fun setData(trip: TripData) {

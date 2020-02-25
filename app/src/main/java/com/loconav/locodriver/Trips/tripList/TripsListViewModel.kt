@@ -8,13 +8,13 @@ import org.koin.standalone.inject
 
 class TripsListViewModel : ViewModel(), KoinComponent {
 
-    private val tripDataManager :TripDataManager by inject()
+    private val tripDataManager: TripDataManager by inject()
 
     fun getTripList(): LiveData<List<TripData>>? {
         return tripDataManager.getTripsList()
     }
 
-    fun getTransformedData(): LiveData<Boolean>? {
+    fun fetchTripListData(): LiveData<Boolean>? {
         return tripDataManager.fetchTrips()
     }
 }

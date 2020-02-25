@@ -1,6 +1,5 @@
 package com.loconav.locodriver.splash
 
-import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.loconav.locodriver.Trips.TripsRepo

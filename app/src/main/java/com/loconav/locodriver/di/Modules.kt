@@ -72,7 +72,7 @@ val networkModule = module {
     single<Retrofit> {
         Retrofit.Builder()
             .baseUrl(BuildConfig.base_url)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .addConverterFactory(GsonConverterFactory.create())
             .client(get<OkHttpClient>())
             .build()
     }
@@ -104,7 +104,7 @@ val appModule = module {
     /**
      * {usage}: val tripDataManager : TripDataManager by inject()
      */
-    single { TripDataManager()}
+    single { TripDataManager() }
 
 
     /**

@@ -23,7 +23,6 @@ class TripDataManager : KoinComponent {
 
     var liveTripMap: MutableLiveData<HashMap<String, TripData>>? =
         MutableLiveData()
-    val states= arrayListOf("initialized","ongoing","delayed")
     var filterState: HashMap<String, Any> = HashMap()
 
     private val driverId = sharedPreferenceUtil.getData(Constants.SharedPreferences.DRIVER_ID, 0L)
@@ -37,9 +36,9 @@ class TripDataManager : KoinComponent {
     }
 
     fun fetchTrips(): LiveData<Boolean>? {
-        var newLiveData: LiveData<Boolean>? = null
-        filterState[FILTER_STATES]=states
-        filterState[Constants.TripConstants.FILTER_DRIVER_ID]=driverId
+        var tranformationLiveData: LiveData<Boolean>? = null
+        filterState[FILTER_STATES] = Constants.TripConstants.tripStateArray
+        filterState[Constants.TripConstants.FILTER_DRIVER_ID] = driverId
         if (0L != driverId) {
             response = TripsRepo().getTripListData(
                 TripRequestBody(
@@ -48,7 +47,7 @@ class TripDataManager : KoinComponent {
                 )
             )
             response?.let {
-                newLiveData = Transformations.map(it) { tripDataResponse ->
+                tranformationLiveData = Transformations.map(it) { tripDataResponse ->
                     tripDataList?.postValue(tripDataResponse.data?.tripDataList)
                     val tripMap = initTripData(tripDataResponse.data?.tripDataList)
                     liveTripMap?.postValue(tripMap)
@@ -56,13 +55,13 @@ class TripDataManager : KoinComponent {
                 }
             }
         }
-        return newLiveData
+        return tranformationLiveData
     }
 
     fun fetchSingleTrip(tripId: String): LiveData<Boolean>? {
-        var newLiveData: LiveData<Boolean>? = null
-        filterState[FILTER_STATES]=states
-        filterState[Constants.TripConstants.FILTER_DRIVER_ID]=driverId
+        var tranformationLiveData: LiveData<Boolean>? = null
+        filterState[FILTER_STATES] = Constants.TripConstants.tripStateArray
+        filterState[Constants.TripConstants.FILTER_DRIVER_ID] = driverId
         filterState[Constants.TripConstants.UNIQUE_ID] = tripId
         if (driverId != 0L) {
             response = TripsRepo().getTripListData(
@@ -72,14 +71,14 @@ class TripDataManager : KoinComponent {
                 )
             )
             response?.let {
-                newLiveData = Transformations.map(it) { tripDataResponse ->
+                tranformationLiveData = Transformations.map(it) { tripDataResponse ->
                     val tripMap = initTripData(tripDataResponse.data?.tripDataList)
                     liveTripMap?.postValue(tripMap)
                     true
                 }
             }
         }
-        return newLiveData
+        return tranformationLiveData
     }
 
 

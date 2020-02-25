@@ -1,6 +1,5 @@
 package com.loconav.locodriver
 
-import android.util.SparseArray
 import com.loconav.locodriver.language.LanguageDataClass
 
 class Constants {
@@ -56,13 +55,21 @@ class Constants {
 
     interface TripConstants {
         companion object {
+            const val INTENT_ACTION_DIAL_TEXT = "tel:"
+            const val CONTACT_PHONE_NUMBER = "9650793733"
             const val SORT_ORDER_ASCENDING = "asc"
             const val FILTER_DRIVER_ID = "filters[driver_id]"
-            const val FILTER_STATES ="filter[states]"
+            const val FILTER_STATES = "filter[states]"
             const val UNIQUE_ID = "filters[unique_id]"
             const val CHECKPOINT_IDENTIFIER = 1
             const val SOURCE_IDENTIFIER = 0
             const val DESTINATION_IDENTIFIER = 2
+            val tripStateArray = arrayListOf(
+                "initialized"
+                , "ongoing"
+                , "delayed"
+            )
+
         }
     }
 

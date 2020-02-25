@@ -15,19 +15,21 @@ import kotlinx.android.synthetic.main.item_trips_card.view.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class TripListAdapter(val tripData: List<TripData>) :
-    androidx.recyclerview.widget.RecyclerView.Adapter<TripListAdapter.TripListAdapterViewHolder>(),KoinComponent {
+class TripListAdapter(private val tripData: List<TripData>) :
+    androidx.recyclerview.widget.RecyclerView.Adapter<TripListAdapter.TripListAdapterViewHolder>(),
+    KoinComponent {
 
-    val TRIP_ITEM = 0
-    val TEXT_ITEM = 1
+    private val TRIP_ITEM = 0
+    private val TEXT_ITEM = 1
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripListAdapterViewHolder {
-        return if(viewType==TRIP_ITEM){
+        return if (viewType == TRIP_ITEM) {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_trips_card, parent, false)
             TripListAdapterViewHolder(view)
-        }else{
+        } else {
             val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_trip_list_heading, parent, false)
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_trip_list_heading, parent, false)
             TripListAdapterViewHolder(view)
         }
     }
@@ -37,7 +39,7 @@ class TripListAdapter(val tripData: List<TripData>) :
     }
 
     override fun onBindViewHolder(holder: TripListAdapterViewHolder, position: Int) {
-        if(position!=1){
+        if (position != 1) {
 //            holder.setTripState(tripData[position])
             holder.setTripActiveState(tripData[position], position)
             holder.setData(tripData[position])
@@ -47,17 +49,17 @@ class TripListAdapter(val tripData: List<TripData>) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(position==1){
+        return if (position == 1) {
             TEXT_ITEM
-        }else{
+        } else {
             TRIP_ITEM
         }
 
     }
 
     class TripListAdapterViewHolder(itemView: View) :
-        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView),KoinComponent {
-        val sharedPreferenceUtil:SharedPreferenceUtil by inject()
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), KoinComponent {
+        val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
         fun setData(tripData: TripData) {
             val viewContext = itemView.context
@@ -103,8 +105,8 @@ class TripListAdapter(val tripData: List<TripData>) :
 //            }
         }
 
-        fun setClickListeners(tripData: TripData){
-            val holderOnClickListener=View.OnClickListener {
+        fun setClickListeners(tripData: TripData) {
+            val holderOnClickListener = View.OnClickListener {
                 val intent = Intent(
                     itemView.context,
                     DetailActivity::class.java
@@ -132,6 +134,7 @@ class TripListAdapter(val tripData: List<TripData>) :
                 }
             }
         }
+
 //        fun setTripState(tripData: TripData){
 //            TripStateGeneratorUtil.setStateList(tripData)
 //            tripData.currentState=TripStateGeneratorUtil.getCurrentState()

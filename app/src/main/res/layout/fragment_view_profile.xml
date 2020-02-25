@@ -205,8 +205,6 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:gravity="start"
-                android:maxLines="1"
-                android:singleLine="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/address_text"

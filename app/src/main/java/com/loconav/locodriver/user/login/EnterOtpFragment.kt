@@ -9,7 +9,9 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -43,12 +45,20 @@ class EnterOtpFragment : BaseFragment() {
 
         enterOtpViewModel = ViewModelProviders.of(this).get(EnterOtpViewModel::class.java)
 
-        tv_change_number.text=String.format(getString(R.string.change_number_text),"?")
-        tv_change_number.setOnClickListener{
+        tv_change_number.text = String.format(getString(R.string.change_number_text), "?")
+        tv_change_number.setOnClickListener {
             EventBus.getDefault().post(LoginEvent(OPEN_NUMBER_LOGIN_FRAGMENT))
         }
 
-        tv_phone_number_title.text = String.format(getString(R.string.otp_sent_number_text),arguments?.getString(PHONE_NUMBER))
+        otp_first_number.addTextChangedListener(otpTextWatcher)
+        otp_second_number.addTextChangedListener(otpTextWatcher)
+        otp_third_number.addTextChangedListener(otpTextWatcher)
+        otp_forth_number.addTextChangedListener(otpTextWatcher)
+
+        tv_phone_number_title.text = String.format(
+            getString(R.string.otp_sent_number_text),
+            arguments?.getString(PHONE_NUMBER)
+        )
 
         tv_resend_otp.setOnClickListener {
             resendOTP()
@@ -58,40 +68,85 @@ class EnterOtpFragment : BaseFragment() {
 
         tv_change_language.setOnClickListener {
             LocaleHelper.toggleBetweenHiAndEn(context!!)
-            EventBus.getDefault().post(LanguageEventBus(LanguageEventBus.ON_LANGUAGE_CHANGED_FROM_LOGIN))
+            EventBus.getDefault()
+                .post(LanguageEventBus(LanguageEventBus.ON_LANGUAGE_CHANGED_FROM_LOGIN))
         }
 
         startCountAnimation()
         startSmsReceiver()
+    }
 
-        pinEntryEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                error_message.visibility = GONE
-                if(s?.length == MAX_OTP_LENGTH) {
-                    arguments?.getString(PHONE_NUMBER)?.let { phoneNumber ->
-                        progressBar.visibility = View.VISIBLE
-                        enterOtpViewModel?.validateOTP(phoneNumber, pinEntryEditText.text.toString())?.observe(this@EnterOtpFragment, Observer{dataWrapper ->
-                            dataWrapper.data?.let {userDataResponse ->
-                                sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.AUTH_TOKEN, userDataResponse.driver?.authenticationToken?:"")
-                                sharedPreferenceUtil.saveData(Constants.SHARED_PREFERENCE.DRIVER_ID, userDataResponse.driver?.id?:0L)
-                                if(!userDataResponse.driver?.pictures?.profilePicture.isNullOrEmpty()){
-                                    sharedPreferenceUtil.saveData(PHOTO_LINK, userDataResponse.driver?.pictures?.profilePicture!![0])
-                                }
-                                sharedPreferenceUtil.saveData(IS_LOGGED_IN, true)
-                                EventBus.getDefault().post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
-                            } ?: run{
-                                progressBar.visibility = GONE
-                                error_message.visibility=View.VISIBLE
-                                error_message.text=dataWrapper.throwable?.message
-                            }
-                        })
-                    }
+    private val otpTextWatcher: TextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable) {
+            if (s.length == 1) {
+                if (otp_first_number.length() == 1) {
+                    otp_second_number.requestFocus()
+                }
+
+                if (otp_second_number.length() == 1) {
+                    otp_third_number.requestFocus()
+                }
+                if (otp_third_number.length() == 1) {
+                    otp_forth_number.requestFocus()
+                }
+            } else if (s.isEmpty()) {
+                if (otp_forth_number.length() == 0) {
+                    otp_third_number.requestFocus()
+                }
+                if (otp_third_number.length() == 0) {
+                    otp_second_number.requestFocus()
+                }
+                if (otp_second_number.length() == 0) {
+                    otp_first_number.requestFocus()
                 }
             }
-        })
+        }
 
+        override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            error_message.visibility = GONE
+            if(otpEntered()){
+                arguments?.getString(PHONE_NUMBER)?.let { phoneNumber ->
+                    progressBar.visibility = View.VISIBLE
+                    enterOtpViewModel?.validateOTP(phoneNumber, s.toString())
+                        ?.observe(this@EnterOtpFragment, Observer { dataWrapper ->
+                            dataWrapper.data?.let { userDataResponse ->
+                                sharedPreferenceUtil.saveData(
+                                    Constants.SHARED_PREFERENCE.AUTH_TOKEN,
+                                    userDataResponse.driver?.authenticationToken ?: ""
+                                )
+                                sharedPreferenceUtil.saveData(
+                                    Constants.SHARED_PREFERENCE.DRIVER_ID,
+                                    userDataResponse.driver?.id ?: 0L
+                                )
+                                if (!userDataResponse.driver?.pictures?.profilePicture.isNullOrEmpty()) {
+                                    sharedPreferenceUtil.saveData(
+                                        PHOTO_LINK,
+                                        userDataResponse.driver?.pictures?.profilePicture!![0]
+                                    )
+                                }
+                                sharedPreferenceUtil.saveData(IS_LOGGED_IN, true)
+                                EventBus.getDefault()
+                                    .post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
+                            } ?: run {
+                                progressBar.visibility = GONE
+                                error_message.visibility = View.VISIBLE
+                                error_message.text = dataWrapper.throwable?.message
+                            }
+                        })
+                }
+            }
+        }
+
+    }
+
+    private fun otpEntered():Boolean{
+        return otp_first_number.length() == 1
+                && otp_second_number.length() == 1
+                && otp_third_number.length() == 1
+                && otp_forth_number.length() == 1
     }
 
     override fun getLayoutId(): Int {
@@ -160,7 +215,12 @@ class EnterOtpFragment : BaseFragment() {
     fun parseOTP(event: SmsRetrieverEvent) {
         when (event.message) {
             SmsRetrieverEvent.READ_OTP -> {
-                pinEntryEditText.setText(event.`object` as String)
+                val otp = event.`object` as String
+                val otpArray=otp.toCharArray()
+                otp_first_number.setText(otpArray[0].toString(), TextView.BufferType.EDITABLE)
+                otp_second_number.setText(otpArray[1].toString(), TextView.BufferType.EDITABLE)
+                otp_third_number.setText(otpArray[2].toString(), TextView.BufferType.EDITABLE)
+                otp_forth_number.setText(otpArray[3].toString(), TextView.BufferType.EDITABLE)
             }
         }
     }

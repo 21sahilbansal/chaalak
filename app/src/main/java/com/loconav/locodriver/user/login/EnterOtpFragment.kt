@@ -78,25 +78,24 @@ class EnterOtpFragment : BaseFragment() {
 
     private val otpTextWatcher: TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable) {
-            if (s.length == 1) {
-                if (otp_first_number.length() == 1) {
+            if (s.isNotEmpty()) {
+                if (otp_first_number.text.isNotEmpty()) {
                     otp_second_number.requestFocus()
                 }
-
-                if (otp_second_number.length() == 1) {
+                if (otp_second_number.text.isNotEmpty()) {
                     otp_third_number.requestFocus()
                 }
-                if (otp_third_number.length() == 1) {
+                if (otp_third_number.text.isNotEmpty()) {
                     otp_forth_number.requestFocus()
                 }
-            } else if (s.isEmpty()) {
-                if (otp_forth_number.length() == 0) {
+            } else {
+                if (otp_forth_number.text.isEmpty()) {
                     otp_third_number.requestFocus()
                 }
-                if (otp_third_number.length() == 0) {
+                if (otp_third_number.text.isEmpty()) {
                     otp_second_number.requestFocus()
                 }
-                if (otp_second_number.length() == 0) {
+                if (otp_second_number.text.isEmpty()) {
                     otp_first_number.requestFocus()
                 }
             }
@@ -240,4 +239,5 @@ class EnterOtpFragment : BaseFragment() {
         super.onDestroyView()
         enterOtpViewModel?.stopAnimation()
     }
+
 }

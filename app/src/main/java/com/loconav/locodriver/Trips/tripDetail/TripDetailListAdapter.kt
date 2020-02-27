@@ -91,7 +91,7 @@ class TripDetailListAdapter(private val checkpointList: List<CheckPointData>) :
 
         private fun setCheckpointTime(checkpointTime: Long?) {
             checkpointTime?.let {
-                itemView.start_time_value_tv.text = TimeUtils.getDateTimeFromEpoch(it)
+                itemView.start_time_value_tv.text = TimeUtils.getDateTimeFromEpoch(it,Constants.RegexConstants.DATE_TIME_FORMAT)
             } ?: run {
                 itemView.start_time_value_tv.text =
                     viewContext.getString(R.string.unknown_time_text)

@@ -37,7 +37,7 @@ class TripDetailFragment : BaseFragment() {
 
     private fun setClickListener() {
         driver_cta_button.setOnClickListener {
-            //            val confirmationDialog = TripActionConfirmationDialog()
+//            val confirmationDialog = TripActionConfirmationDialog()
 //            confirmationDialog.show(childFragmentManager, "trip_action_confirmation_dialog")
         }
     }

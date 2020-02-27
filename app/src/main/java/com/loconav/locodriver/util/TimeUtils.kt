@@ -30,15 +30,9 @@ class TimeUtils {
             return finalString
         }
 
-        fun getDateTimeFromEpoch(epoch: Long): String {
+        fun getDateTimeFromEpoch(epoch: Long,format:String): String {
             val expiry = Date(epoch)
-            val format = SimpleDateFormat("dd MMMM yyyy HH:mm:ss")
-            return format.format(expiry)
-        }
-
-        fun getDateFromEpoch(epoch: Long):String {
-            val expiry = Date(epoch)
-            val format = SimpleDateFormat("dd/MM/yyyy")
+            val format = SimpleDateFormat(format)
             return format.format(expiry)
         }
     }

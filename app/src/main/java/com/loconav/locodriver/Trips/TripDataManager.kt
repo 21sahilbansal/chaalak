@@ -48,8 +48,9 @@ class TripDataManager : KoinComponent {
             )
             response?.let {
                 tranformationLiveData = Transformations.map(it) { tripDataResponse ->
-                    tripDataList?.postValue(tripDataResponse.data?.tripDataList)
-                    val tripMap = initTripData(tripDataResponse.data?.tripDataList)
+                    val tripData = tripDataResponse.data?.tripDataList
+                    tripDataList?.postValue(tripData)
+                    val tripMap = initTripData(tripData)
                     liveTripMap?.postValue(tripMap)
                     true
                 }
@@ -84,13 +85,10 @@ class TripDataManager : KoinComponent {
 
     private fun initTripData(tripData: List<TripData>?): HashMap<String, TripData>? {
         val tripMap: HashMap<String, TripData>? = HashMap()
-        var index = 0
         tripData?.let {
             for (trip in it) {
-                val tripLiveData = it[index]
-                index++
                 trip.tripUniqueId?.let { uniqueId ->
-                    tripMap?.put(uniqueId, tripLiveData)
+                    tripMap?.put(uniqueId, trip)
                 }
             }
         }

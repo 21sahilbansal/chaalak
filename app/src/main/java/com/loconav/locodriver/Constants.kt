@@ -11,6 +11,9 @@ class Constants {
             const val GET_DRIVER = "drivers/{id}"
             const val GET_TRIPS_LIST = "trips"
             const val GET_DRIVER_CTA_TEMPLATE = "trip_events/labels"
+            const val GET_EXPENSE_LIST = "drivers/uploadable_expenses"
+            const val GET_EXPENSE = "drivers/uploadable_expenses/{id}"
+
         }
     }
 

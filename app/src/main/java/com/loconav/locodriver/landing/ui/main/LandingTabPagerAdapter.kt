@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.core.widget.TextViewCompat.setTextAppearance
 import com.loconav.locodriver.R
+import com.loconav.locodriver.expense.Expense
+import com.loconav.locodriver.expense.ExpenseListFragment
 
 
 /**
@@ -25,7 +27,7 @@ class LandingTabPagerAdapter(private val mContext: Context, fm: FragmentManager)
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> TripsFragment.getInstance()
-            else -> PlaceholderFragment.newInstance(position + 1)
+            else -> ExpenseListFragment.getInstance()
         }
     }
 

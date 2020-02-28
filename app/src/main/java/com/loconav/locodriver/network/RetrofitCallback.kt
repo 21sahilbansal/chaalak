@@ -29,7 +29,7 @@ abstract class RetrofitCallback<T> : Callback<T> {
     }
 
     override fun onResponse(call: Call<T>, response: Response<T>) {
-        Timber.e("endService " + response.raw().request().url() + " : " + Date().time)
+        Timber.e("endService " + response.raw().request.url + " : " + Date().time)
         if (response.isSuccessful()) {
             handleSuccess(call, response)
         } else {

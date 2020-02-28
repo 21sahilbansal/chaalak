@@ -17,6 +17,12 @@
         <item name="android:lineSpacingExtra">7sp</item>
     </style>
 
+    <style name="LargeButtonTittle">
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+    </style>
     <style name="ButtonTittle">
         <item name="android:fontFamily">@font/opensans_bold</item>
         <item name="android:textSize">16sp</item>
@@ -95,5 +101,39 @@
         <item name="android:lineSpacingExtra">5sp</item>
         <item name="android:fontFamily">@font/opensans_semibold</item>
     </style>
+
+    <style name="ActiveTag">
+        <item name="android:fontFamily">OpenSansSemiBold-Regular</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
+    <style name="SmallLight">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/lightgrey</item>
+    </style>
+    <style name="LightGrey">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/lightgrey</item>
+        <item name="android:lineSpacingExtra">5sp</item>
+    </style>
+    <style name="SmallDark">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/dark</item>
+    </style>
+    <style name="TopNav">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/lightgrey</item>
+    </style>
+    <style name="TopNavActive">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/main</item>
+    </style>
+
 
 </resources>

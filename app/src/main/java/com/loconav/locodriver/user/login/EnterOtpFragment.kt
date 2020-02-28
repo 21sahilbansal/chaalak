@@ -2,7 +2,6 @@ package com.loconav.locodriver.user.login
 
 import android.animation.Animator
 import android.animation.ValueAnimator
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,8 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.loconav.locodriver.Constants
-import com.loconav.locodriver.Constants.SHARED_PREFERENCE.Companion.IS_LOGGED_IN
-import com.loconav.locodriver.Constants.SHARED_PREFERENCE.Companion.PHOTO_LINK
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.IS_LOGGED_IN
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 import com.loconav.locodriver.R
 import com.loconav.locodriver.SmsRetrieverEvent
 import com.loconav.locodriver.base.BaseFragment
@@ -28,7 +27,6 @@ import com.loconav.locodriver.util.LocaleHelper
 import kotlinx.android.synthetic.main.fragment_enter_otp.*
 import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
 import kotlinx.android.synthetic.main.fragment_enter_otp.tv_change_language
-import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -113,11 +111,11 @@ class EnterOtpFragment : BaseFragment() {
                         ?.observe(this@EnterOtpFragment, Observer { dataWrapper ->
                             dataWrapper.data?.let { userDataResponse ->
                                 sharedPreferenceUtil.saveData(
-                                    Constants.SHARED_PREFERENCE.AUTH_TOKEN,
+                                    Constants.SharedPreferences.AUTH_TOKEN,
                                     userDataResponse.driver?.authenticationToken ?: ""
                                 )
                                 sharedPreferenceUtil.saveData(
-                                    Constants.SHARED_PREFERENCE.DRIVER_ID,
+                                    Constants.SharedPreferences.DRIVER_ID,
                                     userDataResponse.driver?.id ?: 0L
                                 )
                                 if (!userDataResponse.driver?.pictures?.profilePicture.isNullOrEmpty()) {

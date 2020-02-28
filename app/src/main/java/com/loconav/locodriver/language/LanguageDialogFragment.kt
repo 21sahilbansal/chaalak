@@ -14,12 +14,11 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class LanguageDialogFragment : BaseDialogFragment() {
+    override val layoutId: Int = R.layout.dialog_change_language
 
     override fun getScreenName(): String? {
         return this::class.java.simpleName
     }
-
-
     lateinit var recyclerView: RecyclerView
     private lateinit var dialogLanguageAdapter: DialogLanguageAdapter
 

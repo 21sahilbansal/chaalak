@@ -1,9 +1,11 @@
 package com.loconav.locodriver.di
 
 import android.location.Geocoder
+import com.google.gson.GsonBuilder
 import com.loconav.locodriver.BuildConfig
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.LanguageProperty.Companion.languageArray
+import com.loconav.locodriver.Trips.TripDataManager
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.network.HeaderInterceptor
@@ -98,6 +100,11 @@ val appModule = module {
      * {usage}: val picasso : Picasso by inject()
      */
     single { Picasso.get() }
+
+    /**
+     * {usage}: val tripDataManager : TripDataManager by inject()
+     */
+    single { TripDataManager() }
 
 
     /**

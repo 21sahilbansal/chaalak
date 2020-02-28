@@ -7,6 +7,7 @@
     <color name="primary_text">@color/dark</color>
     <color name="black_overlay">#66000000</color>
     <color name="main">#006db8</color>
+    <color name="main_20">#cc006db8</color>
     <color name="lightgrey">#8a000000</color>
     <color name="main_30">#4d006db8</color>
     <color name="border">#dddddd</color>
@@ -14,4 +15,6 @@
     <color name="dirty_white">#fcfcfc</color>
     <color name="white">@android:color/white</color>
     <color name="error_red">#d06666</color>
+    <color name="landing_background_pale_blue">#0d006db8</color>
+    <color name="active_tag_green">#8029bc4b</color>
 </resources>

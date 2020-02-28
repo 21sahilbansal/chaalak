@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="15dp"
+        app:cardCornerRadius="6dp"
+        android:elevation="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/vehicle_number_tv"
+                style="@style/PageHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="115dp"
+                android:layout_marginRight="115dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="TP19301">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/active_tag_tv"
+                style="@style/ActiveTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bg_active_trip_tag"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="Active">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/source_city_tv"
+                style="@style/BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginRight="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_number_tv"
+                android:text="Gurugram">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/start_time_tv"
+                style="@style/SmallLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/source_city_tv"
+                android:text="Start Time :">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/start_time_value_tv"
+                style="@style/SmallDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/start_time_tv"
+                app:layout_constraintTop_toBottomOf="@+id/source_city_tv"
+                android:text="8 February 2020 12:30 PM">
+
+            </TextView>
+
+            <View
+                android:id="@+id/divider_line"
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="44dp"
+                android:layout_marginLeft="44dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/start_time_tv" />
+
+            <TextView
+                android:id="@+id/destination_city_tv"
+                style="@style/BodyLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_line"
+                android:text="YamunaNagar">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/end_time_tv"
+                style="@style/SmallLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/button_start_trip"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/destination_city_tv"
+                android:text="End Time :">
+
+            </TextView>
+
+            <View
+                android:layout_width="1dp"
+                android:id="@+id/verticla_dashed_line"
+                android:orientation="vertical"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                app:layout_constraintBottom_toTopOf="@id/destination_city_tv"
+                app:layout_constraintTop_toBottomOf="@id/source_city_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="25dp"
+                android:background="@drawable/vertical_dashed_drawable"
+                android:layout_marginLeft="25dp">
+            </View>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/verticla_dashed_line"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="17dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginStart="17dp"
+                app:srcCompat="@drawable/ic_source">
+            </ImageView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/verticla_dashed_line"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginStart="17dp"
+                app:srcCompat="@drawable/ic_destination">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/end_time_value_tv"
+                style="@style/SmallDark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/destination_city_tv"
+                app:layout_constraintStart_toEndOf="@+id/end_time_tv"
+                android:text="8 February 2020 12:30 PM">
+
+            </TextView>
+
+            <Button
+                android:id="@+id/button_start_trip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/locobutton_background"
+                android:text="@string/start_trip_button_text"
+                android:textAllCaps="true"
+                android:textAppearance="@style/ButtonTittle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/end_time_value_tv" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

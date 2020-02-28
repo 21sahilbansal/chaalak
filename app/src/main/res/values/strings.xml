@@ -8,14 +8,15 @@
     <string name="resend_otp">Resend OTP</string>
     <string name="language_string">हिंदी</string>
     <string name="logout">Logout</string>
-    <string name="tab_text_1">Trips</string>
-    <string name="tab_text_2">Expenses</string>
+    <string name="tab_text_trip">Trips</string>
+    <string name="tab_text_expense">Expense</string>
     <string name="cancel">Cancel</string>
     <string name="welcome_to_locodrive">Welcome to Locodrive</string>
     <string name="something_went_wrong">Something Went Wrong!!</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="blank_number_error_message">Mobile number field can’t be blank</string>
     <string name="invalid_number_error_message">Mobile number is not valid</string>
+    <string name="start_trip_button_text">start trip</string>
     <string name="transporter_name">Transporter Name</string>
     <string name="current_salary">Current Salary</string>
     <string name="address_text">Address</string>
@@ -33,5 +34,21 @@
     <string name="change_number_text">Change Number %s</string>
     <string name="vehicle_number_text">Vehicle Number</string>
     <string name="profile_title_text">My Profile</string>
+    <string name="unknown_source_city">Unknown source city</string>
+    <string name="unknown_start_time">Unknown Start Time</string>
+    <string name="unknown_dest_text">Unknown Destination City</string>
+    <string name="unknown_dest_end_time">Unknown end time</string>
+    <string name="unknown_vehicle_number">Vehicle number not found</string>
+    <string name="eta_text_trip_detail">ETA :</string>
+    <string name="start_time_text_trip_detail">Start Time :</string>
+    <string name="end_Time_text_trip_details">End Time :</string>
+    <string name="unknown_time_text">Unknown Time</string>
+    <string name="start_location_text">Start Location</string>
+    <string name="end_location_text">End Location</string>
+    <string name="checkpoint_position_text">Checkpoint %s</string>
+    <string name="subheading_confirmation_dialog">Are you sure you want to %s ?</string>
+    <string name="no_trips_has_been_added">No Trips has been added</string>
+    <string name="active_tag">Active</string>
+    <string name="upcoming_trip_tag">Upcoming Trip</string>
 
 </resources>

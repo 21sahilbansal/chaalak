@@ -56,9 +56,9 @@ object TripStateGeneratorUtil : KoinComponent {
                 val index = 1
                 if (!it.checkPointsList.isNullOrEmpty()) {
                     for (item in it.checkPointsList!!) {
-                        val currentCheckPoint = it.checkPointsList!![index]
-                        if (index == it.checkPointsList!!.size) {
-                            it.tripDestination?.chekPointActivity!!.checkPointActivityName?.let {
+                        val currentCheckPoint = item
+                        if (item.checkPointPosition == it.checkPointsList!!.size) {
+                            it.tripDestination?.chekPointActivity?.checkPointActivityName?.let {
                                 addCheckPointActivityToTripStateList(it)
                             }
                             break

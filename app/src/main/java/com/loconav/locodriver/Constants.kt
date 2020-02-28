@@ -79,6 +79,8 @@ class Constants {
     interface RegexConstants {
         companion object {
             const val VALID_PHONE_NUMBER_REGEX = "[2-9][0-9]{9}"
+            const val DATE_TIME_FORMAT="dd MMMM yyyy HH:mm:ss"
+            const val DATE_FORMAT="dd/MM/yyyy"
         }
     }
 

@@ -11,44 +11,28 @@ import android.widget.TextView
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.trip_activity_confirmation_dialog.*
+import kotlinx.android.synthetic.main.trip_activity_confirmation_dialog.view.*
 
 class TripActionConfirmationDialog : BaseDialogFragment() {
 
-    var tripActionConfirmationDialog: View? = null
+    override val layoutId: Int = R.layout.trip_activity_confirmation_dialog
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        tripActionConfirmationDialog = activity?.layoutInflater?.inflate(
-            R.layout.trip_activity_confirmation_dialog,
-            LinearLayout(activity),
-            false
-        )
-        val builder = Dialog(tripActionConfirmationDialog!!.context)
-        builder.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        builder.setCanceledOnTouchOutside(false)
-        tripActionConfirmationDialog?.let {
-            builder.setContentView(it)
-        }
-        builder.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-//        initData(tripActionConfirmationDialog)
-        return builder
+        initData()
+        setListeners()
+        return super.onCreateDialog(savedInstanceState)
     }
 
-    fun initData(view: View?) {
-        val subHeading = view?.findViewById<TextView>(R.id.tv_confimation_sub_heading)
-//        subHeading?.text = String.format(
-//            getString(R.string.subheading_confirmation_dialog),
+    private fun initData() {
+        view?.tv_confimation_sub_heading?.text = String.format(
+            getString(R.string.subheading_confirmation_dialog),""
 //            TripStateGeneratorUtil.getCurrentState()
-//        )
-//        setListeners(view)
+        )
     }
 
-    private fun setListeners(view: View?) {
-        val declineConfirmation = view?.findViewById<TextView>(R.id.tv_confimation_decline)
-        declineConfirmation?.setOnClickListener(closeDialogClickListener)
-        val acceptingConfirmation = view?.findViewById<Button>(R.id.button_confirmation_yes)
-        acceptingConfirmation?.setOnClickListener(confirmationClickListener)
+    private fun setListeners() {
+        view?.tv_confimation_decline?.setOnClickListener(closeDialogClickListener)
+        view?.button_confirmation_yes?.setOnClickListener(confirmationClickListener)
     }
 
     private val closeDialogClickListener = View.OnClickListener {

@@ -79,7 +79,7 @@ class TripListAdapter(private val tripData: List<TripData>) :
 
             tripData.tripShouldStartTs?.let {
                 itemView.start_time_value_tv.text =
-                    com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(it)
+                    com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(it, Constants.RegexConstants.DATE_TIME_FORMAT)
             } ?: run {
                 itemView.start_time_value_tv.text =
                     viewContext.getString(R.string.unknown_start_time)
@@ -94,7 +94,7 @@ class TripListAdapter(private val tripData: List<TripData>) :
 
             tripData.tripDestination?.exitEta?.let {
                 itemView.end_time_value_tv.text =
-                    com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(it)
+                    com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(it,Constants.RegexConstants.DATE_TIME_FORMAT)
             } ?: run {
                 itemView.end_time_value_tv.text =
                     viewContext.getString(R.string.unknown_dest_end_time)

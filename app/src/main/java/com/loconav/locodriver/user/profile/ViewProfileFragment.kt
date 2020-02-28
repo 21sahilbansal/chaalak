@@ -95,7 +95,7 @@ class ViewProfileFragment : BaseFragment() {
             tv_address.text = AddressUtil.getAddress(it)
         }?:run { tv_address.text = getString(R.string.no_address_present) }
 
-        tv_doj.text = TimeUtils.getDateFromEpoch(driver.dateOfJoining ?: 0L)
+        tv_doj.text = TimeUtils.getDateTimeFromEpoch(driver.dateOfJoining ?: 0L,Constants.RegexConstants.DATE_FORMAT)
 
         driver.vehicleNumber?.let {
             vehicle_number_value_tv.text = it

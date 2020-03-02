@@ -13,7 +13,7 @@ data class Expense(
     @ColumnInfo(name = "expense_Id")
     var expenseId: Long? = null,
     @SerializedName("truck_id")
-    @ColumnInfo(name="truck_id")
+    @ColumnInfo(name = "truck_id")
     var truckId: Long? = null,
     @SerializedName("remarks")
     @ColumnInfo(name = "remarks")
@@ -62,5 +62,5 @@ data class Expense(
     var accountId: Long? = null,
     @SerializedName("account_type")
     @ColumnInfo(name = "account_type")
-    var accountType: Long? = null
+    var accountType: String? = null
 )

@@ -17,4 +17,8 @@
     <color name="error_red">#d06666</color>
     <color name="landing_background_pale_blue">#0d006db8</color>
     <color name="active_tag_green">#8029bc4b</color>
+    <color name="color_pending_brown">#c98f0d</color>
+    <color name="color_approved_green">#29bc4b</color>
+    <color name="color_rejected_red">#e65718</color>
+
 </resources>

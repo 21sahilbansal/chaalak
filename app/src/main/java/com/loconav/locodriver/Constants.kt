@@ -44,6 +44,7 @@ class Constants {
             const val NUMBER_LOGIN_FRAGMENT = "number_login_fragment"
             const val VIEW_PROFILE_FRAGMENT = "view_profile_fragment"
             const val TRIP_DETAIL_FRAGMENT = "trip_detail_fragment"
+            const val EXPENSE_DETAIL_FRAGMENT="expense_detail_fragment"
         }
     }
 
@@ -58,6 +59,7 @@ class Constants {
 
     interface TripConstants {
         companion object {
+            const val SOURCE_TRIP="trip"
             const val INTENT_ACTION_DIAL_TEXT = "tel:"
             const val CONTACT_PHONE_NUMBER = "9650793733"
             const val SORT_ORDER_ASCENDING = "asc"
@@ -76,11 +78,21 @@ class Constants {
         }
     }
 
+    interface ExpenseConstants {
+        companion object {
+            const val SOURCE_EXPENSE="expense"
+            const val VERIFICATION_PENDING = "Verfication Pending"
+            const val REJECTED = "Rejected"
+            const val VERIFIED = "Verified"
+        }
+    }
+
     interface RegexConstants {
         companion object {
             const val VALID_PHONE_NUMBER_REGEX = "[2-9][0-9]{9}"
-            const val DATE_TIME_FORMAT="dd MMMM yyyy HH:mm:ss"
-            const val DATE_FORMAT="dd/MM/yyyy"
+            const val DATE_TIME_FORMAT = "dd MMMM yyyy HH:mm:ss"
+            const val DATE_FORMAT = "dd/MM/yyyy"
+            const val TIME_FORMAT_12_HOUR = "hh:mm a"
         }
     }
 

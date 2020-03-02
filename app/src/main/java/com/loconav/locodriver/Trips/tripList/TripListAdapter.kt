@@ -2,10 +2,12 @@ package com.loconav.locodriver.Trips.tripList
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.TripConstants.Companion.SOURCE_TRIP
 import com.loconav.locodriver.R
 import com.loconav.locodriver.Trips.TripStateGeneratorUtil
 import com.loconav.locodriver.Trips.tripDetail.DetailActivity
@@ -111,6 +113,9 @@ class TripListAdapter(private val tripData: List<TripData>) :
                     itemView.context,
                     DetailActivity::class.java
                 )
+                val bundle=Bundle()
+                bundle.putString("source",SOURCE_TRIP)
+                intent.putExtras(bundle)
                 intent.data = Uri.parse(tripData.tripUniqueId)
                 itemView.context.startActivity(intent)
             }

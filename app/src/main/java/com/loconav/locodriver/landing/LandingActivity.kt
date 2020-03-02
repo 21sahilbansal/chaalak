@@ -22,6 +22,7 @@ import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 
 import com.loconav.locodriver.R
+import com.loconav.locodriver.Trips.tripList.TripsFragment
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.landing.ui.main.LandingTabPagerAdapter
 import com.loconav.locodriver.user.profile.ProfileActivity
@@ -71,18 +72,6 @@ class LandingActivity : AppCompatActivity() {
         profileImageView.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
-        }
-        call_fab.setOnClickListener {
-            val phoneIntent = Intent(
-                Intent.ACTION_DIAL, Uri.parse(
-                    String.format(
-                        "%s%s",
-                        Constants.TripConstants.INTENT_ACTION_DIAL_TEXT,
-                        Constants.TripConstants.CONTACT_PHONE_NUMBER
-                    )
-                )
-            )
-            startActivity(phoneIntent)
         }
     }
 

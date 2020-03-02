@@ -12,7 +12,7 @@ interface ExpenseDao {
     @Query("SELECT * FROM expense WHERE expense_Id = :expenseId")
     fun findByExpenseId(expenseId: Long): LiveData<Expense>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg expense: Expense)
 
     @Query("DELETE FROM expense WHERE expense_Id = :expenseId")

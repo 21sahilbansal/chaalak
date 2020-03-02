@@ -38,7 +38,10 @@ class ExpenseRepo : KoinComponent {
                     response.body()?.let {
                         dataWrapper.data = response.body()
                         for (item in dataWrapper.data!!) {
-                            expenseDao.insertAll(item)
+                            GlobalScope.launch {
+                                Dispatchers.Default
+                                expenseDao.insertAll(item)
+                            }
                         }
                     }
                 }
@@ -62,7 +65,10 @@ class ExpenseRepo : KoinComponent {
                 ) {
                     response.body()?.let {
                         dataWrapper.data = it
-                        expenseDao.updateExpense(dataWrapper.data!!)
+                        GlobalScope.launch {
+                            Dispatchers.Default
+                            expenseDao.updateExpense(dataWrapper.data!!)
+                        }
                     }
 
 //                    apiResponse.postValue(dataWrapper)

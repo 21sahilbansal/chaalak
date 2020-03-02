@@ -1,5 +1,7 @@
 package com.loconav.locodriver.Trips.tripDetail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -10,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
 import com.loconav.locodriver.Trips.TripActionConfirmationDialog
 import com.loconav.locodriver.Trips.TripStateGeneratorUtil
@@ -32,14 +35,29 @@ class TripDetailFragment : BaseFragment() {
                 setData(it)
                 setTripActions(it)
             })
-//        setClickListener()
+        setClickListener()
     }
 
     private fun setClickListener() {
-        driver_cta_button.setOnClickListener {
-//            val confirmationDialog = TripActionConfirmationDialog()
-//            confirmationDialog.show(childFragmentManager, "trip_action_confirmation_dialog")
+//        driver_cta_button.setOnClickListener {
+////            val confirmationDialog = TripActionConfirmationDialog()
+////            confirmationDialog.show(childFragmentManager, "trip_action_confirmation_dialog")
+//        }
+
+        call_fab.setOnClickListener {
+                        val phoneIntent = Intent(
+                Intent.ACTION_DIAL,
+                Uri.parse(
+                    String.format(
+                        "%s%s",
+                        Constants.TripConstants.INTENT_ACTION_DIAL_TEXT,
+                        Constants.TripConstants.CONTACT_PHONE_NUMBER
+                    )
+                )
+            )
+            startActivity(phoneIntent)
         }
+
     }
 
     private fun setData(trip: TripData) {

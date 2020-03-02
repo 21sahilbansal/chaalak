@@ -50,5 +50,11 @@
     <string name="no_trips_has_been_added">No Trips has been added</string>
     <string name="active_tag">Active</string>
     <string name="upcoming_trip_tag">Upcoming Trip</string>
+    <string name="no_expense_has_been_added">No Expense has been added</string>
+    <string name="add_expense_by_clicking_button">Add Expense by clicking + button</string>
+    <string name="unknown_expense_type">Unknown expense type</string>
+    <string name="verification_pending_expense_status">Verification Pending</string>
+    <string name="no_amount_present">Amount not added</string>
+    <string name="documents">Documents</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.loconav.locodriver.expense
+package com.loconav.locodriver.expense.expenseDetail
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragment
+import com.loconav.locodriver.expense.Expense
+import com.loconav.locodriver.expense.ExpenseDocumentAdapter
 import com.loconav.locodriver.util.TimeUtils
 import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
 import kotlinx.android.synthetic.main.fragment_expense_detail.*
@@ -59,7 +61,7 @@ class ExpenseDetailFragment : BaseFragment() {
 
     }
 
-    private fun initDocumentimageAdapter(view:RecyclerView,expense:Expense){
+    private fun initDocumentimageAdapter(view:RecyclerView,expense: Expense){
         val expenseListAdapter = ExpenseDocumentAdapter(expense)
         val layoutManager = GridLayoutManager(view.context, 2,GridLayoutManager.HORIZONTAL,false)
         view.layoutManager = layoutManager
@@ -139,7 +141,8 @@ class ExpenseDetailFragment : BaseFragment() {
 
     companion object {
         fun getInstance(expenseId: Long, expenseTitle: String?): ExpenseDetailFragment {
-            val expenseDetaiFragment = ExpenseDetailFragment()
+            val expenseDetaiFragment =
+                ExpenseDetailFragment()
             val bundle = Bundle()
             bundle.putLong(EXPENSE_ID, expenseId)
             bundle.putString(EXPENSE_TITLE, expenseTitle)

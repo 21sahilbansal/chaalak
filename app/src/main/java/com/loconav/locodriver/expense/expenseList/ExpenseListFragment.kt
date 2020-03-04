@@ -1,4 +1,4 @@
-package com.loconav.locodriver.expense
+package com.loconav.locodriver.expense.expenseList
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragment
+import com.loconav.locodriver.expense.AddExpenseActivity
+import com.loconav.locodriver.expense.Expense
 import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
 import kotlinx.android.synthetic.main.fragment_expense_list.*
 
@@ -70,7 +72,8 @@ class ExpenseListFragment : BaseFragment() {
     }
 
     private fun initAdapter(view: RecyclerView, expenseList: List<Expense>) {
-        val expenseListAdapter = ExpenseListAdapter(expenseList)
+        val expenseListAdapter =
+            ExpenseListAdapter(expenseList)
         val layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
         view.layoutManager = layoutManager
         view.adapter = expenseListAdapter

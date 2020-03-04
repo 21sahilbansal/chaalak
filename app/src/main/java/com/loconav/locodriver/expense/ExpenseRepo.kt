@@ -1,10 +1,13 @@
 package com.loconav.locodriver.expenses
 
+import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.room.AppDatabase
+import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.expense.Expense
+import com.loconav.locodriver.expense.ExpenseType
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.RetrofitCallback
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +21,29 @@ import retrofit2.Response
 class ExpenseRepo : KoinComponent {
     private val httpApiService: HttpApiService by inject()
     private val db: AppDatabase by inject()
+    private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     val expenseDao = db.expenseDao()
+
+
+    fun getExpenseType(): MutableLiveData<DataWrapper<ExpenseType>>? {
+        val dataWrapper = DataWrapper<ExpenseType>()
+        val apiResponse = MutableLiveData<DataWrapper<ExpenseType>>()
+        httpApiService.getExpenseType().enqueue(object : RetrofitCallback<ExpenseType>() {
+            override fun handleSuccess(call: Call<ExpenseType>, response: Response<ExpenseType>) {
+                response.body()?.let {
+                    dataWrapper.data = it
+                    sharedPreferenceUtil.saveData("expense_type", it)
+                    apiResponse.postValue(dataWrapper)
+                }
+            }
+
+            override fun handleFailure(call: Call<ExpenseType>, t: Throwable) {
+                dataWrapper.throwable = t
+                apiResponse.postValue(dataWrapper)
+            }
+        })
+        return apiResponse
+    }
 
     fun getExpenseList(page: Int): MutableLiveData<DataWrapper<List<Expense>>>? {
         val dataWrapper = DataWrapper<List<Expense>>()

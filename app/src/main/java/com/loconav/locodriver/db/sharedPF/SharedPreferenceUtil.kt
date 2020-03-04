@@ -3,6 +3,9 @@ package com.loconav.locodriver.db.sharedPF
 import android.app.Activity
 import android.content.SharedPreferences
 import com.loconav.locodriver.application.LocoDriverApplication
+import com.google.gson.Gson
+import java.util.*
+
 
 class SharedPreferenceUtil (val fileName : String){
 
@@ -16,6 +19,13 @@ class SharedPreferenceUtil (val fileName : String){
     fun saveData(key: String, value: String) {
         editor.putString(key, value)
         return editor.apply()
+    }
+
+    fun saveData(key: String,value:Any){
+        val gson = Gson()
+        val json = gson.toJson(value)
+        editor.putString(key, json)
+        editor.apply()
     }
 
 

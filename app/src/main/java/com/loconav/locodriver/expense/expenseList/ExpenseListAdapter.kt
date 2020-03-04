@@ -1,4 +1,4 @@
-package com.loconav.locodriver.expense
+package com.loconav.locodriver.expense.expenseList
 
 import android.content.Intent
 import android.net.Uri
@@ -14,6 +14,7 @@ import com.loconav.locodriver.Constants.ExpenseConstants.Companion.VERIFIED
 import com.loconav.locodriver.Constants.RegexConstants.Companion.TIME_FORMAT_12_HOUR
 import com.loconav.locodriver.R
 import com.loconav.locodriver.Trips.tripDetail.DetailActivity
+import com.loconav.locodriver.expense.Expense
 import com.loconav.locodriver.util.TimeUtils
 import kotlinx.android.synthetic.main.item_expense_list_card.view.*
 
@@ -26,7 +27,9 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
     ): ExpenseListAdapterViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_expense_list_card, parent, false)
-        return ExpenseListAdapterViewHolder(view)
+        return ExpenseListAdapterViewHolder(
+            view
+        )
     }
 
     override fun getItemCount(): Int {

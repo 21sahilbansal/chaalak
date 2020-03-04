@@ -1,8 +1,9 @@
-package com.loconav.locodriver.expense
+package com.loconav.locodriver.expense.expenseList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.loconav.locodriver.base.DataWrapper
+import com.loconav.locodriver.expense.Expense
 import com.loconav.locodriver.expenses.ExpenseRepo
 
 class ExpenseListViewModel : ViewModel() {

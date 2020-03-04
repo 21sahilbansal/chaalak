@@ -12,7 +12,7 @@ import com.loconav.locodriver.Trips.tripList.TripsFragment
 import android.view.LayoutInflater
 import android.widget.TextView
 import com.loconav.locodriver.R
-import com.loconav.locodriver.expense.ExpenseListFragment
+import com.loconav.locodriver.expense.expenseList.ExpenseListFragment
 
 
 /**

@@ -5,12 +5,14 @@ import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER_CTA_TEMPLATE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_EXPENSE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_EXPENSE_LIST
+import com.loconav.locodriver.Constants.HTTP.Companion.GET_EXPENSE_TYPE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_TRIPS_LIST
 import com.loconav.locodriver.Constants.HTTP.Companion.NUMBER_LOGIN
 import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.expense.Expense
+import com.loconav.locodriver.expense.ExpenseType
 import com.loconav.locodriver.user.login.EnterOTPResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -40,4 +42,7 @@ interface HttpApiService {
 
     @GET(GET_EXPENSE)
     fun getExpense(@Path("id") expenseId: Long): Call<Expense>
+
+    @GET(GET_EXPENSE_TYPE)
+    fun getExpenseType():Call<ExpenseType>
 }

@@ -7,7 +7,7 @@ import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.TRIP_DETAIL_FRAGM
 import com.loconav.locodriver.Constants.TripConstants.Companion.SOURCE_TRIP
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragmentActivity
-import com.loconav.locodriver.expense.ExpenseDetailFragment
+import com.loconav.locodriver.expense.expenseDetail.ExpenseDetailFragment
 
 class DetailActivity : BaseFragmentActivity() {
 

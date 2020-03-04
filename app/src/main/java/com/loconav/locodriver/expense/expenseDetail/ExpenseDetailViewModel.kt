@@ -1,9 +1,9 @@
-package com.loconav.locodriver.expense
+package com.loconav.locodriver.expense.expenseDetail
 
-import android.graphics.LightingColorFilter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.loconav.locodriver.base.DataWrapper
+import com.loconav.locodriver.expense.Expense
 import com.loconav.locodriver.expenses.ExpenseRepo
 
 class ExpenseDetailViewModel:ViewModel() {

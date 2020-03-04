@@ -1,5 +1,6 @@
 package com.loconav.locodriver
 
+import com.loconav.locodriver.expense.MonthProperty
 import com.loconav.locodriver.language.LanguageDataClass
 
 class Constants {
@@ -13,6 +14,7 @@ class Constants {
             const val GET_DRIVER_CTA_TEMPLATE = "trip_events/labels"
             const val GET_EXPENSE_LIST = "drivers/uploadable_expenses"
             const val GET_EXPENSE = "drivers/uploadable_expenses/{id}"
+            const val GET_EXPENSE_TYPE = "drivers/uploadable_expenses/expense_types"
 
         }
     }
@@ -74,6 +76,20 @@ class Constants {
                 "initialized"
                 , "ongoing"
                 , "delayed"
+            )
+            val monthMap = arrayOf(
+                MonthProperty(1,"January"),
+                MonthProperty(2,"February"),
+                MonthProperty(3,"March"),
+                MonthProperty(4,"April"),
+                MonthProperty(5,"May"),
+                MonthProperty(6,"June"),
+                MonthProperty(7,"July"),
+                MonthProperty(8,"August"),
+                MonthProperty(9,"September"),
+                MonthProperty(10,"October"),
+                MonthProperty(11,"November"),
+                MonthProperty(12,"December")
             )
 
         }

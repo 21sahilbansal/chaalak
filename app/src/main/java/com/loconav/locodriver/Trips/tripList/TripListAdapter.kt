@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.TripConstants.Companion.SOURCE_TRIP
 import com.loconav.locodriver.R
-import com.loconav.locodriver.Trips.TripStateGeneratorUtil
 import com.loconav.locodriver.Trips.tripDetail.DetailActivity
 import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil

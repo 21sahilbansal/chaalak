@@ -1,9 +1,7 @@
 package com.loconav.locodriver.di
 
 import android.location.Geocoder
-import com.google.gson.GsonBuilder
 import com.loconav.locodriver.BuildConfig
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.LanguageProperty.Companion.languageArray
 import com.loconav.locodriver.Trips.TripDataManager
 import com.loconav.locodriver.db.room.AppDatabase

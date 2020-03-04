@@ -1,21 +1,15 @@
 package com.loconav.locodriver.expenses
 
-import android.provider.Settings
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.room.AppDatabase
-import com.loconav.locodriver.di.applicationModule
 import com.loconav.locodriver.expense.Expense
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.RetrofitCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newCoroutineContext
-import org.koin.dsl.module.applicationContext
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import retrofit2.Call

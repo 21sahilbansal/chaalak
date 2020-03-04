@@ -1,9 +1,6 @@
 package com.loconav.locodriver.Trips.tripDetail
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE_EXPENSE
 import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.EXPENSE_DETAIL_FRAGMENT
 import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.TRIP_DETAIL_FRAGMENT
@@ -11,7 +8,6 @@ import com.loconav.locodriver.Constants.TripConstants.Companion.SOURCE_TRIP
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragmentActivity
 import com.loconav.locodriver.expense.ExpenseDetailFragment
-import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : BaseFragmentActivity() {
 

@@ -14,10 +14,8 @@ import com.loconav.locodriver.Constants.ExpenseConstants.Companion.VERIFIED
 import com.loconav.locodriver.Constants.RegexConstants.Companion.TIME_FORMAT_12_HOUR
 import com.loconav.locodriver.R
 import com.loconav.locodriver.Trips.tripDetail.DetailActivity
-import com.loconav.locodriver.Trips.tripList.TripListAdapter
 import com.loconav.locodriver.util.TimeUtils
 import kotlinx.android.synthetic.main.item_expense_list_card.view.*
-import java.util.*
 
 
 class ExpenseListAdapter(private val expenseData: List<Expense>) :

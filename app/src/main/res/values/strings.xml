@@ -56,5 +56,12 @@
     <string name="verification_pending_expense_status">Verification Pending</string>
     <string name="no_amount_present">Amount not added</string>
     <string name="documents">Documents</string>
+    <string name="expense_amount">Expense Amount</string>
+    <string name="enter_amount_here_hint">Enter Amount Here</string>
+    <string name="purpose_text">Purpose</string>
+    <string name="expense_date_text">Expense Date</string>
+    <string name="add_expense_button_text">Add Expense</string>
+    <string name="click_here_to_add_photo">Click here to add photo</string>
+    <string name="add_expense_toolbar_title">Add Expense</string>
 
 </resources>

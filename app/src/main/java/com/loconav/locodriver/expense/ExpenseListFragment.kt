@@ -1,24 +1,17 @@
 package com.loconav.locodriver.expense
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
-import com.loconav.locodriver.Trips.tripList.TripsListViewModel
 import com.loconav.locodriver.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_enter_otp.*
 import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
 import kotlinx.android.synthetic.main.fragment_expense_list.*
-import kotlinx.coroutines.GlobalScope
-import okhttp3.Dispatcher
 
 class ExpenseListFragment : BaseFragment() {
     var expenseListViewModel: ExpenseListViewModel? = null
@@ -43,16 +36,8 @@ class ExpenseListFragment : BaseFragment() {
         progressBar.visibility = View.VISIBLE
         initRequest(page)
         add_expense_fab.setOnClickListener {
-            //            val phoneIntent = Intent(
-//                Intent.ACTION_DIAL, Uri.parse(
-//                    String.format(
-//                        "%s%s",
-//                        Constants.TripConstants.INTENT_ACTION_DIAL_TEXT,
-//                        Constants.TripConstants.CONTACT_PHONE_NUMBER
-//                    )
-//                )
-//            )
-//            startActivity(phoneIntent)
+            val intent = Intent(context, AddExpenseActivity::class.java)
+            startActivity(intent)
         }
 
     }
@@ -61,7 +46,7 @@ class ExpenseListFragment : BaseFragment() {
         expenseListViewModel?.getFetchExpenseList(page)?.observe(this, Observer {
             it.throwable?.let { error ->
                 progressBar.visibility = View.GONE
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

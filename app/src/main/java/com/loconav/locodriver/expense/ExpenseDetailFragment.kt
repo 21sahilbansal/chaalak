@@ -3,29 +3,21 @@ package com.loconav.locodriver.expense
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.GridLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
-import com.loconav.locodriver.Trips.tripDetail.TripDetailFragment
-import com.loconav.locodriver.Trips.tripDetail.TripDetailFragmentViewModel
 import com.loconav.locodriver.base.BaseFragment
 import com.loconav.locodriver.util.TimeUtils
-import kotlinx.android.synthetic.main.fragment_enter_otp.*
 import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
 import kotlinx.android.synthetic.main.fragment_expense_detail.*
-import kotlinx.android.synthetic.main.item_expense_list_card.view.*
 
 class ExpenseDetailFragment : BaseFragment() {
     private var expenseDetailViewModel: ExpenseDetailViewModel? = null
@@ -54,7 +46,7 @@ class ExpenseDetailFragment : BaseFragment() {
         expenseDetailViewModel?.getIndividualExpense(expenseId)?.observe(this, Observer {
             it.throwable?.let { error ->
                 progressBar.visibility = View.GONE
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -69,7 +61,7 @@ class ExpenseDetailFragment : BaseFragment() {
 
     private fun initDocumentimageAdapter(view:RecyclerView,expense:Expense){
         val expenseListAdapter = ExpenseDocumentAdapter(expense)
-        val layoutManager = GridLayoutManager(view.context, LinearLayoutManager.VERTICAL)
+        val layoutManager = GridLayoutManager(view.context, 2,GridLayoutManager.HORIZONTAL,false)
         view.layoutManager = layoutManager
         view.adapter = expenseListAdapter
     }

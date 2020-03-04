@@ -11,9 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.loconav.locodriver.Trips.tripList.TripsFragment
 import android.view.LayoutInflater
 import android.widget.TextView
-import androidx.core.widget.TextViewCompat.setTextAppearance
 import com.loconav.locodriver.R
-import com.loconav.locodriver.expense.Expense
 import com.loconav.locodriver.expense.ExpenseListFragment
 
 

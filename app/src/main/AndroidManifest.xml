@@ -47,6 +47,9 @@
             android:name=".Trips.tripDetail.DetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoStatusBar" />
+        <activity android:name=".expense.AddExpenseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoStatusBar"/>
 
         <receiver
             android:name=".receiver.SmsReceiver"

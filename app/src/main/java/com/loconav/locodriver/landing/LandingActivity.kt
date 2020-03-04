@@ -3,7 +3,6 @@ package com.loconav.locodriver.landing
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
@@ -18,11 +17,9 @@ import androidx.core.app.ActivityCompat
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 
 import com.loconav.locodriver.R
-import com.loconav.locodriver.Trips.tripList.TripsFragment
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.landing.ui.main.LandingTabPagerAdapter
 import com.loconav.locodriver.user.profile.ProfileActivity

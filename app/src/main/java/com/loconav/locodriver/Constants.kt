@@ -45,6 +45,7 @@ class Constants {
             const val VIEW_PROFILE_FRAGMENT = "view_profile_fragment"
             const val TRIP_DETAIL_FRAGMENT = "trip_detail_fragment"
             const val EXPENSE_DETAIL_FRAGMENT="expense_detail_fragment"
+            const val ADD_EXPENSE_FRAGEMENT="add_expense_fragment"
         }
     }
 

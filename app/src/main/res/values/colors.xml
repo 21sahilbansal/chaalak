@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
+    <color name="colorTransparent">#00ffffff</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="dark">#de000000</color>
@@ -20,5 +21,6 @@
     <color name="color_pending_brown">#c98f0d</color>
     <color name="color_approved_green">#29bc4b</color>
     <color name="color_rejected_red">#e65718</color>
+    <color name="dark_gray">#888888</color>
 
 </resources>

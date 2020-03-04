@@ -3,8 +3,10 @@ package com.loconav.locodriver.expense
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-
+import com.google.gson.reflect.TypeToken
 
 @Entity(tableName = "expense")
 data class Expense(
@@ -20,7 +22,7 @@ data class Expense(
     var expenseRemarks: String? = null,
     @SerializedName("amount")
     @ColumnInfo(name = "amount")
-    var amount: Double? = null,
+    var amount: Int? = null,
     @SerializedName("expense_date")
     @ColumnInfo(name = "expense_date")
     var expenseDate: Long? = null,
@@ -63,4 +65,11 @@ data class Expense(
     @SerializedName("account_type")
     @ColumnInfo(name = "account_type")
     var accountType: String? = null
+//    @SerializedName("uploads")
+//    var documents: Document? = null
 )
+
+//data class Document(
+//    @SerializedName("expense_document")
+//    val expenseDocList: List<String>? = null
+//)

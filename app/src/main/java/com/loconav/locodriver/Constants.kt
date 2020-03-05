@@ -1,6 +1,6 @@
 package com.loconav.locodriver
 
-import com.loconav.locodriver.expense.MonthProperty
+import com.loconav.locodriver.expense.addExpense.MonthProperty
 import com.loconav.locodriver.language.LanguageDataClass
 
 class Constants {
@@ -46,8 +46,9 @@ class Constants {
             const val NUMBER_LOGIN_FRAGMENT = "number_login_fragment"
             const val VIEW_PROFILE_FRAGMENT = "view_profile_fragment"
             const val TRIP_DETAIL_FRAGMENT = "trip_detail_fragment"
-            const val EXPENSE_DETAIL_FRAGMENT="expense_detail_fragment"
-            const val ADD_EXPENSE_FRAGEMENT="add_expense_fragment"
+            const val EXPENSE_DETAIL_FRAGMENT = "expense_detail_fragment"
+            const val ADD_EXPENSE_FRAGEMENT = "add_expense_fragment"
+            const val IMAGE_CHOOSER_DIALOG = "image_chooser_dialog"
         }
     }
 
@@ -62,7 +63,7 @@ class Constants {
 
     interface TripConstants {
         companion object {
-            const val SOURCE_TRIP="trip"
+            const val SOURCE_TRIP = "trip"
             const val INTENT_ACTION_DIAL_TEXT = "tel:"
             const val CONTACT_PHONE_NUMBER = "9650793733"
             const val SORT_ORDER_ASCENDING = "asc"
@@ -78,18 +79,18 @@ class Constants {
                 , "delayed"
             )
             val monthMap = arrayOf(
-                MonthProperty(1,"January"),
-                MonthProperty(2,"February"),
-                MonthProperty(3,"March"),
-                MonthProperty(4,"April"),
-                MonthProperty(5,"May"),
-                MonthProperty(6,"June"),
-                MonthProperty(7,"July"),
-                MonthProperty(8,"August"),
-                MonthProperty(9,"September"),
-                MonthProperty(10,"October"),
-                MonthProperty(11,"November"),
-                MonthProperty(12,"December")
+                MonthProperty(1, "January"),
+                MonthProperty(2, "February"),
+                MonthProperty(3, "March"),
+                MonthProperty(4, "April"),
+                MonthProperty(5, "May"),
+                MonthProperty(6, "June"),
+                MonthProperty(7, "July"),
+                MonthProperty(8, "August"),
+                MonthProperty(9, "September"),
+                MonthProperty(10, "October"),
+                MonthProperty(11, "November"),
+                MonthProperty(12, "December")
             )
 
         }
@@ -97,10 +98,17 @@ class Constants {
 
     interface ExpenseConstants {
         companion object {
-            const val SOURCE_EXPENSE="expense"
+            const val SOURCE_EXPENSE = "expense"
             const val VERIFICATION_PENDING = "Verfication Pending"
             const val REJECTED = "Rejected"
             const val VERIFIED = "Verified"
+        }
+    }
+
+    interface PermisionsConstant {
+        companion object {
+            const val GALLERY_REQUEST_CODE = 1
+            const val CAMERA_REQUEST_CODE = 2
         }
     }
 

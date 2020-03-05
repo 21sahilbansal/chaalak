@@ -1,13 +1,12 @@
 package com.loconav.locodriver.expenses
 
-import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.expense.Expense
-import com.loconav.locodriver.expense.ExpenseType
+import com.loconav.locodriver.expense.model.Expense
+import com.loconav.locodriver.expense.model.ExpenseType
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.RetrofitCallback
 import kotlinx.coroutines.Dispatchers

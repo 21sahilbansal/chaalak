@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.loconav.locodriver.driver.CurrentCoordinate
-import com.loconav.locodriver.expense.Expense
+import com.loconav.locodriver.expense.model.Expense
 import com.loconav.locodriver.expense.ExpenseDao
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.migration.Migration

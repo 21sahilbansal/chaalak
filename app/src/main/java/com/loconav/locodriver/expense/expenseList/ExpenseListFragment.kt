@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragment
-import com.loconav.locodriver.expense.AddExpenseActivity
-import com.loconav.locodriver.expense.Expense
+import com.loconav.locodriver.expense.addExpense.AddExpenseActivity
+import com.loconav.locodriver.expense.model.Expense
 import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
 import kotlinx.android.synthetic.main.fragment_expense_list.*
 

@@ -63,5 +63,8 @@
     <string name="add_expense_button_text">Add Expense</string>
     <string name="click_here_to_add_photo">Click here to add photo</string>
     <string name="add_expense_toolbar_title">Add Expense</string>
+    <string name="gallery_text">Gallery</string>
+    <string name="camera_text">Camera</string>
+    <string name="choose_photo_heading_text">Choose Photo</string>
 
 </resources>

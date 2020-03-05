@@ -1,4 +1,4 @@
-package com.loconav.locodriver.expense
+package com.loconav.locodriver.expense.addExpense
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.loconav.locodriver.Constants.TripConstants.Companion.monthMap
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
+import com.loconav.locodriver.expense.model.ExpenseType
 import com.loconav.locodriver.expenses.ExpenseRepo
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -18,7 +19,7 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     private val expenseRepo = ExpenseRepo()
     val date = Calendar.getInstance()
     private val currentDate = date.get(Calendar.DATE)
-    private val currentMonth = date.get(Calendar.MONTH) + 1
+    private val currentMonth = date.get(Calendar.MONTH)
     private val currentYear = date.get(Calendar.YEAR)
     var expenseTypeList: MutableLiveData<List<String>> = MutableLiveData()
     var dateLiveList: MutableLiveData<List<String>> = MutableLiveData()
@@ -35,12 +36,15 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         expenseList.add("Please Select")
         val json = sharedPreferenceUtil.getData("expense_type", "")
         val list = gson.fromJson(json, ExpenseType::class.java)
-        if (!list.expenseType.isNullOrEmpty()) {
-            for (item in list.expenseType) {
-                expenseList.add(item)
+        list?.let {
+            if (!it.expenseType.isNullOrEmpty()) {
+                for (item in it.expenseType) {
+                    expenseList.add(item)
+                }
             }
+            expenseTypeList.postValue(expenseList)
         }
-        expenseTypeList.postValue(expenseList)
+
     }
 
     fun getDateSpinnerList() {
@@ -69,7 +73,7 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     private fun generateMonthList() {
         val monthList = ArrayList<String>()
         monthList.add("Month")
-        for (i in 0 until currentMonth) {
+        for (i in 0 .. currentMonth) {
             monthList.add(monthMap[i].monthName)
         }
         monthLiveList.postValue(monthList)
@@ -89,7 +93,7 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         var maxDate = 31
         if (position == 2) {
             maxDate = 28
-        } else if (position == currentMonth) {
+        } else if (position == currentMonth + 1) {
             maxDate = currentDate
         }
         generateDateList(maxDate)

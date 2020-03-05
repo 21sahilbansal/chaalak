@@ -2,6 +2,7 @@ package com.loconav.locodriver.expense
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.loconav.locodriver.expense.model.Expense
 
 @Dao
 interface ExpenseDao {

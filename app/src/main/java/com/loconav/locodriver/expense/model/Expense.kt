@@ -1,4 +1,4 @@
-package com.loconav.locodriver.expense
+package com.loconav.locodriver.expense.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

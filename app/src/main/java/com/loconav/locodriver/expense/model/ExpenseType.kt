@@ -1,4 +1,4 @@
-package com.loconav.locodriver.expense
+package com.loconav.locodriver.expense.model
 
 import com.google.gson.annotations.SerializedName
 

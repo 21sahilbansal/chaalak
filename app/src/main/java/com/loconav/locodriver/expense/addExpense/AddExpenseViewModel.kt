@@ -1,5 +1,6 @@
 package com.loconav.locodriver.expense.addExpense
 
+import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,10 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.*
 import kotlin.collections.ArrayList
+import java.text.SimpleDateFormat
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import org.koin.ext.checkedStringValue
+
 
 class AddExpenseViewModel : ViewModel(), KoinComponent {
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
@@ -39,12 +44,26 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         list?.let {
             if (!it.expenseType.isNullOrEmpty()) {
                 for (item in it.expenseType) {
-                    expenseList.add(item)
+                    expenseList.add(item.value)
                 }
             }
             expenseTypeList.postValue(expenseList)
         }
 
+    }
+
+    fun getTypeOfExpense(typeTemplate:String):String{
+        val gson = Gson()
+        val json = sharedPreferenceUtil.getData("expense_type", "")
+        val list = gson.fromJson(json, ExpenseType::class.java)
+        list.expenseType?.let {
+            for (entry in it.entries){
+                if(entry.value == typeTemplate){
+                    return entry.key
+                }
+            }
+        }
+        return ""
     }
 
     fun getDateSpinnerList() {
@@ -97,6 +116,17 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
             maxDate = currentDate
         }
         generateDateList(maxDate)
+    }
+
+    fun isAmountValid(amount :Editable?):Boolean{
+        return if(amount.isNullOrEmpty()){
+            false
+        }else amount.trim().toString().toInt() !in 100000 downTo -1
+    }
+
+    fun getEpochFromExpenseDate(date:String,month:String,year:String):Long{
+        val strDate = String.format("%s/%s/%s",date,month,year)
+        return SimpleDateFormat("dd/MMMM/yyyy").parse(strDate).time
     }
 }
 

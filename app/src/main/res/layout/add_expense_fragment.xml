@@ -338,7 +338,7 @@
         android:layout_marginEnd="15dp"/>
 
     <Button
-        android:id="@+id/button_get_otp"
+        android:id="@+id/button_add_expense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/locobutton_background"

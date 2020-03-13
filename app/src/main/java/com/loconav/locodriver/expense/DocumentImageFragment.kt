@@ -5,8 +5,10 @@ import android.text.Editable
 import android.view.View
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragment
+import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.REMOVE_IMAGE
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_document_image.*
+import org.greenrobot.eventbus.EventBus
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -15,9 +17,17 @@ class DocumentImageFragment:BaseFragment(),KoinComponent {
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
         val imageuri=arguments?.get(IMAGE_URI).toString()
         val editable=arguments?.getBoolean(IMAGE_EDITABLE)
+        val position = arguments?.getInt(IMAGE_POSITION)
         picasso.load(imageuri).error(R.drawable.ic_user_placeholder).into(document_image_iv)
         if(editable==false){
             document_image_delete_iv.visibility = View.GONE
+        }
+        document_image_back_iv.setOnClickListener {
+            activity?.finish()
+        }
+        document_image_delete_iv.setOnClickListener {
+            EventBus.getDefault().post(ImageSelectionEvent(REMOVE_IMAGE,position))
+            activity?.finish()
         }
     }
 

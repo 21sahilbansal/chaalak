@@ -1,5 +1,6 @@
 package com.loconav.locodriver.expense.addExpense
 
+import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -284,6 +285,11 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
             }
             ImageSelectionEvent.ENABLE_ADD_IMAGE -> {
                 enableAddImage()
+            }
+            ImageSelectionEvent.REMOVE_IMAGE -> {
+                val position = imageSelectionEvent.`object` as Int
+                expenseDocumentAdapter?.list?.removeAt(position)
+                expenseDocumentAdapter?.notifyDataSetChanged()
             }
         }
     }

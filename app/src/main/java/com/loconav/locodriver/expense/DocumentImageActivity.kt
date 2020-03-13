@@ -1,7 +1,6 @@
 package com.loconav.locodriver.expense
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragmentActivity

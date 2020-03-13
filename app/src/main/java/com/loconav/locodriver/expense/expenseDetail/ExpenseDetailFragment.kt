@@ -62,10 +62,16 @@ class ExpenseDetailFragment : BaseFragment() {
     }
 
     private fun initDocumentimageAdapter(view:RecyclerView,expense: Expense){
-//        val expenseListAdapter = ExpenseDocumentAdapter()
-//        val layoutManager = GridLayoutManager(view.context, 2,GridLayoutManager.HORIZONTAL,false)
-//        view.layoutManager = layoutManager
-//        view.adapter = expenseListAdapter
+        val documetList= expense.documents?.expenseDocList
+        if(documetList.isNullOrEmpty()){
+            no_doc_title.visibility =View.VISIBLE
+        }else{
+            no_doc_title.visibility =View.GONE
+            val expenseListAdapter = ExpenseDocumentAdapter(documetList as ArrayList<String>,false)
+            val layoutManager = GridLayoutManager(view.context, 3,GridLayoutManager.VERTICAL,false)
+            view.layoutManager = layoutManager
+            view.adapter = expenseListAdapter
+        }
     }
 
     private fun setData(expense: Expense) {

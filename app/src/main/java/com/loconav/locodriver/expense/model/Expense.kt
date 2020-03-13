@@ -1,12 +1,10 @@
 package com.loconav.locodriver.expense.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
+import androidx.room.*
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
+import com.loconav.locodriver.expense.DocumentTypeConverter
 
 @Entity(tableName = "expense")
 data class Expense(
@@ -64,12 +62,15 @@ data class Expense(
     var accountId: Long? = null,
     @SerializedName("account_type")
     @ColumnInfo(name = "account_type")
-    var accountType: String? = null
-//    @SerializedName("uploads")
-//    var documents: Document? = null
+    var accountType: String? = null,
+    @SerializedName("uploads")
+    @Embedded
+    var documents: Document? = null
 )
 
-//data class Document(
-//    @SerializedName("expense_document")
-//    val expenseDocList: List<String>? = null
-//)
+data class Document(
+    @SerializedName("expense_document")
+    @ColumnInfo(name = "expenseDocList")
+    @TypeConverters(DocumentTypeConverter::class)
+    val expenseDocList: List<String>? = null
+)

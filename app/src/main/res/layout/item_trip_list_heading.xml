@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upcomin Trips"
+        android:text="@string/upcoming_trips"
         style="@style/SmallLight"
         android:id="@+id/upcoming_trip_heading_text"
         android:layout_marginLeft="15dp"

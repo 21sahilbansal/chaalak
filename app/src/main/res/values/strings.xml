@@ -69,5 +69,6 @@
     <string name="error_amount_text">Enter valid amount</string>
     <string name="error_expense_type_text">Enter valid type</string>
     <string name="error_date">Enter valid date</string>
+    <string name="upcoming_trips">Upcoming Trips</string>
 
 </resources>

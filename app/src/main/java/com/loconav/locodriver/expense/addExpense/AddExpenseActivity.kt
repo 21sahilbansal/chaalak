@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.DOCUMENT_IMAGE_FRAGMENT
 import com.loconav.locodriver.Constants.PermisionsConstant.Companion.CAMERA_REQUEST_CODE
 import com.loconav.locodriver.Constants.PermisionsConstant.Companion.GALLERY_REQUEST_CODE
 import com.loconav.locodriver.R
@@ -44,8 +45,8 @@ class AddExpenseActivity : BaseFragmentActivity() {
                 }
                 CAMERA_REQUEST_CODE -> {
 
-                    val bitmap=intent?.extras?.get("data") as Bitmap
-                    val uri = ImageUtil().getImageUri(applicationContext,bitmap)
+                    val bitmap = intent?.extras?.get("data") as Bitmap
+                    val uri = ImageUtil().getImageUri(applicationContext, bitmap)
                     EventBus.getDefault().post(
                         ImageSelectionEvent(
                             ImageSelectionEvent.IMAGE_SELECTED,

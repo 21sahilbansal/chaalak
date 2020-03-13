@@ -1,6 +1,5 @@
 package com.loconav.locodriver.expense.addExpense
 
-import android.icu.text.MessagePattern
 import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

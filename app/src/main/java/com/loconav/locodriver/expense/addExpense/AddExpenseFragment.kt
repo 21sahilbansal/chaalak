@@ -124,7 +124,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 error_date_tv.text = getString(R.string.error_date)
                 return@setOnClickListener
             }
-            imageUriList.let {
+            expenseDocumentAdapter?.list?.let {
                 prepareImageToBeSentToServer(it)
             }
 
@@ -143,7 +143,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
         }
     }
 
-    private fun prepareImageToBeSentToServer(list: List<String>) {
+    private fun prepareImageToBeSentToServer(list: ArrayList<String>) {
         addExpenseRequestBody.multipartList = addExpenseViewModel?.getMultipartFromUri(list)
     }
 

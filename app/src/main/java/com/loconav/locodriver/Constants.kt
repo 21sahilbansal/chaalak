@@ -49,6 +49,7 @@ class Constants {
             const val TRIP_DETAIL_FRAGMENT = "trip_detail_fragment"
             const val EXPENSE_DETAIL_FRAGMENT = "expense_detail_fragment"
             const val ADD_EXPENSE_FRAGEMENT = "add_expense_fragment"
+            const val DOCUMENT_IMAGE_FRAGMENT = "document_image_fragment"
             const val IMAGE_CHOOSER_DIALOG = "image_chooser_dialog"
         }
     }

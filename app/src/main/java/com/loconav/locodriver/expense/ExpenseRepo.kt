@@ -5,13 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
+import com.loconav.locodriver.expense.model.AddExpenseRequestBody
 import com.loconav.locodriver.expense.model.Expense
 import com.loconav.locodriver.expense.model.ExpenseType
+import com.loconav.locodriver.expense.model.UploadExpenseResponse
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.RetrofitCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import retrofit2.Call
@@ -41,6 +46,50 @@ class ExpenseRepo : KoinComponent {
                 apiResponse.postValue(dataWrapper)
             }
         })
+        return apiResponse
+    }
+
+    fun uploadExpense(addExpenseRequestBody: AddExpenseRequestBody): MutableLiveData<DataWrapper<UploadExpenseResponse>>? {
+        val dataWrapper = DataWrapper<UploadExpenseResponse>()
+        val apiResponse = MutableLiveData<DataWrapper<UploadExpenseResponse>>()
+        if (addExpenseRequestBody.expenseType == null && addExpenseRequestBody.amount == null && addExpenseRequestBody.expenseDate == null) return null
+        val expenseType =
+            RequestBody.create(MediaType.parse("text/plain"), addExpenseRequestBody.expenseType!!)
+        val expenseAmount = RequestBody.create(
+            MediaType.parse("text/plain"),
+            addExpenseRequestBody.amount!!.toString()
+        )
+        val expenseDate = RequestBody.create(
+            MediaType.parse("text/plain"),
+            addExpenseRequestBody.expenseDate!!.toString()
+        )
+
+        httpApiService.uploadExpense(
+            expenseType, expenseAmount, expenseDate,
+            addExpenseRequestBody.multipartList
+        )
+            .enqueue(object : RetrofitCallback<UploadExpenseResponse>() {
+                override fun handleSuccess(
+                    call: Call<UploadExpenseResponse>,
+                    response: Response<UploadExpenseResponse>
+                ) {
+                    response.body()?.let {
+                        dataWrapper.data = it
+                        it.expense?.let {
+                            GlobalScope.launch {
+                                Dispatchers.Default
+                                expenseDao.insertAll(it)
+                            }
+                        }
+                    }
+                    apiResponse.postValue(dataWrapper)
+                }
+
+                override fun handleFailure(call: Call<UploadExpenseResponse>, t: Throwable) {
+                    dataWrapper.throwable = t
+                    apiResponse.postValue(dataWrapper)
+                }
+            })
         return apiResponse
     }
 

@@ -15,6 +15,7 @@ class Constants {
             const val GET_EXPENSE_LIST = "drivers/uploadable_expenses"
             const val GET_EXPENSE = "drivers/uploadable_expenses/{id}"
             const val GET_EXPENSE_TYPE = "drivers/uploadable_expenses/expense_types"
+            const val UPLOAD_EXPENSE = "drivers/uploadable_expenses"
 
         }
     }

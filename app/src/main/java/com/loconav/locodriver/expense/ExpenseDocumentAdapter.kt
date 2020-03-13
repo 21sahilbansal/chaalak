@@ -13,8 +13,6 @@ import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.ENABLE_ADD_I
 import com.loconav.locodriver.expense.model.Expense
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_expense_document.view.*
-import okhttp3.internal.notify
-import okhttp3.internal.notifyAll
 import org.greenrobot.eventbus.EventBus
 import org.koin.dsl.module.applicationContext
 import org.koin.standalone.KoinComponent

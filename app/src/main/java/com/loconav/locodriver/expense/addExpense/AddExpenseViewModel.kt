@@ -1,5 +1,6 @@
 package com.loconav.locodriver.expense.addExpense
 
+import android.icu.text.MessagePattern
 import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,8 +16,16 @@ import org.koin.standalone.inject
 import java.util.*
 import kotlin.collections.ArrayList
 import java.text.SimpleDateFormat
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import org.koin.ext.checkedStringValue
+import com.loconav.locodriver.expense.model.AddExpenseRequestBody
+import com.loconav.locodriver.expense.model.UploadExpenseResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import android.net.Uri
+import android.os.Build
+import com.loconav.locodriver.application.LocoDriverApplication
+import com.loconav.locodriver.util.FileUtil
+import okhttp3.MediaType
+import java.io.File
 
 
 class AddExpenseViewModel : ViewModel(), KoinComponent {
@@ -52,13 +61,13 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
 
     }
 
-    fun getTypeOfExpense(typeTemplate:String):String{
+    fun getTypeOfExpense(typeTemplate: String): String {
         val gson = Gson()
         val json = sharedPreferenceUtil.getData("expense_type", "")
         val list = gson.fromJson(json, ExpenseType::class.java)
         list.expenseType?.let {
-            for (entry in it.entries){
-                if(entry.value == typeTemplate){
+            for (entry in it.entries) {
+                if (entry.value == typeTemplate) {
                     return entry.key
                 }
             }
@@ -92,7 +101,7 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     private fun generateMonthList() {
         val monthList = ArrayList<String>()
         monthList.add("Month")
-        for (i in 0 .. currentMonth) {
+        for (i in 0..currentMonth) {
             monthList.add(monthMap[i].monthName)
         }
         monthLiveList.postValue(monthList)
@@ -118,15 +127,46 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         generateDateList(maxDate)
     }
 
-    fun isAmountValid(amount :Editable?):Boolean{
-        return if(amount.isNullOrEmpty()){
+    fun isAmountValid(amount: Editable?): Boolean {
+        return if (amount.isNullOrEmpty()) {
             false
-        }else amount.trim().toString().toInt() !in 100000 downTo -1
+        } else amount.trim().toString().toInt() in 100000 downTo -1
     }
 
-    fun getEpochFromExpenseDate(date:String,month:String,year:String):Long{
-        val strDate = String.format("%s/%s/%s",date,month,year)
+    fun getEpochFromExpenseDate(date: String, month: String, year: String): Long {
+        val strDate = String.format("%s/%s/%s", date, month, year)
         return SimpleDateFormat("dd/MMMM/yyyy").parse(strDate).time
+    }
+
+    fun getMultipartFromUri(listImageUri: List<String>?): List<MultipartBody.Part> {
+        val parts = ArrayList<MultipartBody.Part>()
+        if (!listImageUri.isNullOrEmpty()) {
+            for (item in listImageUri) {
+                val uri = Uri.parse(item)
+                val imageFile =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        FileUtil.getFile(LocoDriverApplication.instance.applicationContext, uri) ?: break
+                    } else {
+                        File(item)
+                    }
+                val extension = imageFile.absolutePath.substring(imageFile.absolutePath.lastIndexOf(".") + 1)
+
+                val mediaType = MediaType.parse("image/${extension}")
+                val requestImageFile = RequestBody.create(mediaType,imageFile)
+                parts.add(
+                    MultipartBody.Part.createFormData(
+                        "uploads_attributes[images][]",
+                        imageFile.name,
+                        requestImageFile
+                    )
+                )
+            }
+        }
+        return parts
+    }
+
+    fun uploadExpence(addExpenseRequestBody: AddExpenseRequestBody): LiveData<DataWrapper<UploadExpenseResponse>>? {
+        return expenseRepo.uploadExpense(addExpenseRequestBody)
     }
 }
 

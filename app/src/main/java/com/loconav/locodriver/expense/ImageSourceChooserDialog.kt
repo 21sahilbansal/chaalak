@@ -39,7 +39,7 @@ class ImageSourceChooserDialog : BaseDialogFragment() {
         view.tv_gallery_selection.setOnClickListener {
             if (!checkPermission(READ_EXTERNAL_STORAGE)) {
                 requestPermssion(
-                    arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE),
+                    arrayOf(READ_EXTERNAL_STORAGE, CAMERA, WRITE_EXTERNAL_STORAGE),
                     GALLERY_REQUEST_CODE
                 )
             } else {

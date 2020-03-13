@@ -89,9 +89,9 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
 
             expense.expenseDate?.let {
                 itemView.trip_expense_date.text = String.format(
-                    "%s,%s",
-                    TimeUtils.getThFormatTime(it),
-                    TimeUtils.getDateTimeFromEpoch(it, TIME_FORMAT_12_HOUR)
+                    "%s",
+                    TimeUtils.getThFormatTime(it)
+//                    TimeUtils.getDateTimeFromEpoch(it, TIME_FORMAT_12_HOUR)
                 )
             } ?: run {
                 itemView.trip_expense_date.text =

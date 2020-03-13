@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,6 +27,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import android.provider.MediaStore
+import okhttp3.MultipartBody
+
 
 class AddExpenseFragment : BaseFragment(), KoinComponent {
 
@@ -85,6 +87,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
             if (addExpenseViewModel?.isAmountValid(amount_edit_tv.text) == false) {
                 error_amount_tv.visibility = View.VISIBLE
                 error_amount_tv.text = getString(R.string.error_amount_text)
+                return@setOnClickListener
             } else {
                 addExpenseRequestBody.amount = amount_edit_tv.text.toString().toInt()
             }
@@ -98,6 +101,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
             } else {
                 error_purpose_tv.visibility = View.VISIBLE
                 error_purpose_tv.text = getString(R.string.error_expense_type_text)
+                return@setOnClickListener
             }
             if (spinner_expense_date.selectedItemPosition != 0
                 && spinner_expense_month.selectedItemPosition != 0
@@ -118,9 +122,29 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
             } else {
                 error_date_tv.visibility = View.VISIBLE
                 error_date_tv.text = getString(R.string.error_date)
+                return@setOnClickListener
+            }
+            imageUriList.let {
+                prepareImageToBeSentToServer(it)
             }
 
+            progress_bar.visibility = View.VISIBLE
+            addExpenseViewModel?.uploadExpence(addExpenseRequestBody)?.observe(this, Observer {
+                it.data?.let {
+                    progress_bar.visibility = View.GONE
+                    activity?.finish()
+                }
+                it.throwable?.let {
+                    progress_bar.visibility = View.GONE
+
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                }
+            })
         }
+    }
+
+    private fun prepareImageToBeSentToServer(list: List<String>) {
+        addExpenseRequestBody.multipartList = addExpenseViewModel?.getMultipartFromUri(list)
     }
 
     private val expenseTypeSpinnerItemSelectListener = object : AdapterView.OnItemSelectedListener {
@@ -266,12 +290,10 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
 
     private fun disableAddImage() {
         add_image_layout.isClickable = false
-
     }
 
     private fun enableAddImage() {
         add_image_layout.isClickable = true
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

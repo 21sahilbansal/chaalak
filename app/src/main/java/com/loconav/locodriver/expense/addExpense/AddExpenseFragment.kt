@@ -51,6 +51,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
         progress_bar.visibility = View.VISIBLE
         addExpenseViewModel?.getExpenseType()?.observe(this, Observer {
             it.data?.let {
+                addExpenseViewModel?.getExpenseTypeList()
                 progress_bar.visibility = View.GONE
             } ?: kotlin.run {
                 progress_bar.visibility = View.GONE

@@ -15,10 +15,11 @@ import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_attendance.*
 
-class AttendanceFragment:BaseFragment() {
-    private var attendanceFragmentViewModel:AttendanceFragmentViewModel?=null
+class AttendanceFragment : BaseFragment() {
+    private var attendanceFragmentViewModel: AttendanceFragmentViewModel? = null
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
-        attendanceFragmentViewModel=ViewModelProviders.of(this).get(AttendanceFragmentViewModel::class.java)
+        attendanceFragmentViewModel =
+            ViewModelProviders.of(this).get(AttendanceFragmentViewModel::class.java)
         setHasOptionsMenu(true)
         val actionBar = (activity as AppCompatActivity).supportActionBar as ActionBar
         actionBar.let {
@@ -27,14 +28,14 @@ class AttendanceFragment:BaseFragment() {
             it.setDisplayShowHomeEnabled(true)
         }
         initRequest()
-        setAttananceAdapter()
+        setAttandanceAdapter()
     }
 
-    private fun initRequest(){
+    private fun initRequest() {
         progressBar.visibility = View.VISIBLE
         attendanceFragmentViewModel?.getUserAttendance()?.observe(this, Observer {
             it.data?.let {
-                attendanceFragmentViewModel?.getStoredAttandance()
+                attendanceFragmentViewModel?.getStoredAttendance()
                 progressBar.visibility = View.GONE
             } ?: kotlin.run {
                 progressBar.visibility = View.GONE
@@ -45,16 +46,17 @@ class AttendanceFragment:BaseFragment() {
         })
     }
 
-    private fun setAttananceAdapter(){
+    private fun setAttandanceAdapter() {
         attendanceFragmentViewModel?.attendanceList?.observe(this, Observer {
             initAttendanceAdapter(it)
         })
-        attendanceFragmentViewModel?.getStoredAttandance()
+        attendanceFragmentViewModel?.getStoredAttendance()
     }
 
-    private fun initAttendanceAdapter(attendanceList:List<Attendance>){
+    private fun initAttendanceAdapter(attendanceList: List<Attendance>) {
         val attendanceListAdapter = AttendanceListAdapter(attendanceList)
-        val layoutManager = LinearLayoutManager(rec_attendance.context, LinearLayoutManager.VERTICAL, false)
+        val layoutManager =
+            LinearLayoutManager(rec_attendance.context, LinearLayoutManager.VERTICAL, false)
         rec_attendance.layoutManager = layoutManager
         rec_attendance.adapter = attendanceListAdapter
     }
@@ -64,7 +66,7 @@ class AttendanceFragment:BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId ) {
+        when (item.itemId) {
             android.R.id.home -> {
                 activity?.onBackPressed()
                 return true
@@ -84,8 +86,8 @@ class AttendanceFragment:BaseFragment() {
     }
 
 
-    companion object{
-        fun getinstance():AttendanceFragment{
+    companion object {
+        fun getinstance(): AttendanceFragment {
             return AttendanceFragment()
         }
     }

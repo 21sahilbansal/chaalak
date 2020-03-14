@@ -35,5 +35,5 @@ interface HttpApiService {
     fun getTripListData(@Query("sort_order") string: String, @QueryMap filters: HashMap<String, Any>): Call<TripDataResponse>
 
     @GET(GET_DRIVER_ATTENDANCE)
-    fun getAttendance():Call<AttendanceResponse>
+    fun getAttendance(): Call<AttendanceResponse>
 }

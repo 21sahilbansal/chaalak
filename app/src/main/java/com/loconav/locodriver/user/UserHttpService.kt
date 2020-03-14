@@ -1,6 +1,7 @@
 package com.loconav.locodriver.user
 
 import androidx.lifecycle.MutableLiveData
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.ATTENDANCE_LIST
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.driver.model.Driver
@@ -15,9 +16,9 @@ import retrofit2.Call
 import retrofit2.Response
 
 
-class UserHttpService(val httpService: HttpApiService):KoinComponent {
+class UserHttpService(val httpService: HttpApiService) : KoinComponent {
 
-    private val sharedPreferenceUtil:SharedPreferenceUtil by inject()
+    private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
     fun requestServerForOTP(phoneNumber: String): MutableLiveData<DataWrapper<ResponseBody>> {
         val dataWrapper = DataWrapper<ResponseBody>()
@@ -48,17 +49,17 @@ class UserHttpService(val httpService: HttpApiService):KoinComponent {
     }
 
 
-    fun getAttendance():MutableLiveData<DataWrapper<AttendanceResponse>>?{
+    fun getAttendance(): MutableLiveData<DataWrapper<AttendanceResponse>> {
         val dataWrapper = DataWrapper<AttendanceResponse>()
         val apiResponse = MutableLiveData<DataWrapper<AttendanceResponse>>()
-        httpService.getAttendance().enqueue(object:RetrofitCallback<AttendanceResponse>(){
+        httpService.getAttendance().enqueue(object : RetrofitCallback<AttendanceResponse>() {
             override fun handleSuccess(
                 call: Call<AttendanceResponse>,
                 response: Response<AttendanceResponse>
             ) {
                 response.body()?.let {
                     dataWrapper.data = it
-                    sharedPreferenceUtil.saveData("attendance", it)
+                    sharedPreferenceUtil.saveData(ATTENDANCE_LIST, it)
                     apiResponse.postValue(dataWrapper)
                 }
             }

@@ -48,10 +48,14 @@ class ProfileActivity : BaseFragmentActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoginEventRecieved(event: LoginEvent){
-        when(event.message){
+    fun onLoginEventRecieved(event: LoginEvent) {
+        when (event.message) {
             LoginEvent.OPEN_ATTANDANCE_FRAGMENT -> {
-                inflateReplaceFragment(AttendanceFragment.getinstance(), true, VIEW_PROFILE_FRAGMENT)
+                inflateReplaceFragment(
+                    AttendanceFragment.getinstance(),
+                    true,
+                    ATTENDANCE_FRAGMENT
+                )
             }
         }
     }

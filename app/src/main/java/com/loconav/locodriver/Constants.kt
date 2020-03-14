@@ -32,6 +32,7 @@ class Constants {
             const val DRIVER_CTA_LABEL_DESTINATION_ENTRY = "destination_entry"
             const val DRIVER_CTA_LABEL_DESTINATION_EXIT = "destination_exit"
             const val DRIVER_CTA_CURRENT_STATE_LABEL = "current_label"
+            const val ATTENDANCE_LIST = "attendance"
         }
     }
 
@@ -78,8 +79,8 @@ class Constants {
     interface RegexConstants {
         companion object {
             const val VALID_PHONE_NUMBER_REGEX = "[2-9][0-9]{9}"
-            const val DATE_TIME_FORMAT="dd MMMM yyyy HH:mm:ss"
-            const val DATE_FORMAT="dd/MM/yyyy"
+            const val DATE_TIME_FORMAT = "dd MMMM yyyy HH:mm:ss"
+            const val DATE_FORMAT = "dd/MM/yyyy"
             const val DATE_FORMAT_WITH_FULL_MONTH = "dd MMMM yyyy"
         }
     }

@@ -5,10 +5,12 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.loconav.locodriver.application.LocoDriverApplication
 
-class SharedPreferenceUtil (val fileName : String){
+class SharedPreferenceUtil(val fileName: String) {
 
-    private val sharedPreferences : SharedPreferences = LocoDriverApplication.instance.applicationContext.getSharedPreferences(
-        fileName, Activity.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences =
+        LocoDriverApplication.instance.applicationContext.getSharedPreferences(
+            fileName, Activity.MODE_PRIVATE
+        )
 
 
     private val editor = sharedPreferences.edit()
@@ -54,7 +56,7 @@ class SharedPreferenceUtil (val fileName : String){
     }
 
     fun getData(key: String, defaultValue: String): String {
-        return sharedPreferences.getString(key, defaultValue)?:""
+        return sharedPreferences.getString(key, defaultValue) ?: ""
     }
 
     fun getData(key: String, defaultValue: Boolean): Boolean {

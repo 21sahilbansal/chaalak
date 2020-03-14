@@ -31,9 +31,9 @@ class AttendanceListAdapter(val list: List<Attendance>) :
 
     class AttendanceListAdapterViewHolder(itemView: View) :
         androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-        private val PRESENT = "present"
-        private val ABSENT = "absent"
-        private val OFF = "on_leave"
+        private val PRESENT = "Present"
+        private val ABSENT = "Absent"
+        private val OFF = "On Leave"
         fun setData(attendance: Attendance) {
             attendance.attendanceDate?.let {
                 itemView.attendance_date_tv.text =

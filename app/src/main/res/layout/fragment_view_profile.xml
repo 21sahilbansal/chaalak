@@ -271,22 +271,54 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_doj" />
 
             <TextView
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
                 style="@style/BodyLarge"
                 android:layout_width="0dp"
                 android:gravity="start"
                 android:paddingLeft="30dp"
                 android:paddingStart="30dp"
                 android:paddingRight="30dp"
-                android:paddingBottom="12dp"
+                android:paddingBottom="15dp"
+                android:paddingEnd="30dp"
+                android:id="@+id/tv_attendance"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/next_cheveron"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_below_date_of_joining"
+                android:text="My Attendance" />
+
+            <View
+                android:id="@+id/divider_below_attendance"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@color/border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_attendance" />
+
+            <TextView
+                android:paddingTop="15dp"
+                style="@style/BodyLarge"
+                android:layout_width="0dp"
+                android:gravity="start"
+                android:paddingLeft="30dp"
+                android:paddingStart="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="15dp"
                 android:paddingEnd="30dp"
                 android:id="@+id/tv_change_language"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/next_cheveron"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider_below_date_of_joining"
+                app:layout_constraintTop_toBottomOf="@+id/divider_below_attendance"
                 android:text="@string/change_language_text" />
+
             <View
                 android:id="@+id/divider_below_change_language"
                 android:layout_width="0dp"
@@ -300,6 +332,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_change_language" />
 
+
             <androidx.appcompat.widget.AppCompatButton
                 android:elevation="0dp"
                 android:id="@+id/button_logout"
@@ -307,7 +340,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/bg_edittext_blue_round_corner"

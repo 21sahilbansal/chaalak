@@ -11,6 +11,7 @@ class Constants {
             const val GET_DRIVER = "drivers/{id}"
             const val GET_TRIPS_LIST = "trips"
             const val GET_DRIVER_CTA_TEMPLATE = "trip_events/labels"
+            const val GET_DRIVER_ATTENDANCE = "attendances/current_month"
         }
     }
 
@@ -41,6 +42,7 @@ class Constants {
             const val NUMBER_LOGIN_FRAGMENT = "number_login_fragment"
             const val VIEW_PROFILE_FRAGMENT = "view_profile_fragment"
             const val TRIP_DETAIL_FRAGMENT = "trip_detail_fragment"
+            const val ATTENDANCE_FRAGMENT = "attendance_fragment"
         }
     }
 
@@ -78,6 +80,7 @@ class Constants {
             const val VALID_PHONE_NUMBER_REGEX = "[2-9][0-9]{9}"
             const val DATE_TIME_FORMAT="dd MMMM yyyy HH:mm:ss"
             const val DATE_FORMAT="dd/MM/yyyy"
+            const val DATE_FORMAT_WITH_FULL_MONTH = "dd MMMM yyyy"
         }
     }
 

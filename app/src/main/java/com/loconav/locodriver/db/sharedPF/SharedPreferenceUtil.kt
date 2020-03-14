@@ -2,6 +2,7 @@ package com.loconav.locodriver.db.sharedPF
 
 import android.app.Activity
 import android.content.SharedPreferences
+import com.google.gson.Gson
 import com.loconav.locodriver.application.LocoDriverApplication
 
 class SharedPreferenceUtil (val fileName : String){
@@ -58,6 +59,13 @@ class SharedPreferenceUtil (val fileName : String){
 
     fun getData(key: String, defaultValue: Boolean): Boolean {
         return sharedPreferences.getBoolean(key, defaultValue)
+    }
+
+    fun saveData(key: String, value: Any) {
+        val gson = Gson()
+        val json = gson.toJson(value)
+        editor.putString(key, json)
+        editor.apply()
     }
 
     fun deleteAllData() {

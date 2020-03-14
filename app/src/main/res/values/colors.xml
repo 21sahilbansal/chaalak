@@ -17,5 +17,8 @@
     <color name="error_red">#d06666</color>
     <color name="otp_bg">#f2f2f2</color>
     <color name="landing_background_pale_blue">#0d006db8</color>
-    <color name="active_tag_green">#8029bc4b</color>
+    <color name="active_tag_green">#d4f2db</color>
+    <color name="color_pale_yellow">#f7db80</color>
+    <color name="color_pale_red">#f29b9b</color>
+
 </resources>

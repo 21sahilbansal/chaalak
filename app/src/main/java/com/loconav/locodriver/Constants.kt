@@ -56,7 +56,7 @@ class Constants {
     interface TripConstants {
         companion object {
             const val INTENT_ACTION_DIAL_TEXT = "tel:"
-            const val CONTACT_PHONE_NUMBER = "9650793733"
+            const val CONTACT_PHONE_NUMBER = "01244285166"
             const val SORT_ORDER_ASCENDING = "asc"
             const val FILTER_DRIVER_ID = "filters[driver_id]"
             const val FILTER_STATES = "filter[states]"

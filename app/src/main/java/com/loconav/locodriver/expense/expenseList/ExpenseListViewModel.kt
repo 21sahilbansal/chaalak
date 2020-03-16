@@ -7,12 +7,11 @@ import com.loconav.locodriver.expense.model.Expense
 import com.loconav.locodriver.expenses.ExpenseRepo
 
 class ExpenseListViewModel : ViewModel() {
-    private val expenseRepo = ExpenseRepo()
     fun getExpenseListFromDb(): LiveData<List<Expense>> {
-        return expenseRepo.getExpenseListFromDb()
+        return ExpenseRepo.getExpenseListFromDb()
     }
 
     fun getFetchExpenseList(page: Int): LiveData<DataWrapper<List<Expense>>>? {
-        return expenseRepo.getExpenseList(page)
+        return ExpenseRepo.getExpenseList(page)
     }
 }

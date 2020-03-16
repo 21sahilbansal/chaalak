@@ -29,6 +29,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import android.provider.MediaStore
+import com.loconav.locodriver.expense.ImageUtil
 import okhttp3.MultipartBody
 
 
@@ -131,23 +132,13 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 prepareImageToBeSentToServer(it)
             }
 
-            progress_bar.visibility = View.VISIBLE
-            addExpenseViewModel?.uploadExpence(addExpenseRequestBody)?.observe(this, Observer {
-                it.data?.let {
-                    progress_bar.visibility = View.GONE
-                    activity?.finish()
-                }
-                it.throwable?.let {
-                    progress_bar.visibility = View.GONE
-
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                }
-            })
+            addExpenseViewModel?.uploadExpence(addExpenseRequestBody)
+            activity?.finish()
         }
     }
 
     private fun prepareImageToBeSentToServer(list: ArrayList<String>) {
-        addExpenseRequestBody.multipartList = addExpenseViewModel?.getMultipartFromUri(list)
+        addExpenseRequestBody.multipartList = ImageUtil.getMultipartFromUri(list)
     }
 
     private val expenseTypeSpinnerItemSelectListener = object : AdapterView.OnItemSelectedListener {

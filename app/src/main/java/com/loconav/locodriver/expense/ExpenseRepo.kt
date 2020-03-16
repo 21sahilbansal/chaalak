@@ -2,11 +2,14 @@ package com.loconav.locodriver.expenses
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.loconav.locodriver.R
+import com.loconav.locodriver.application.LocoDriverApplication
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.expense.model.*
 import com.loconav.locodriver.network.HttpApiService
+import com.loconav.locodriver.network.NetworkUtil
 import com.loconav.locodriver.network.RetrofitCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -19,7 +22,7 @@ import org.koin.standalone.inject
 import retrofit2.Call
 import retrofit2.Response
 
-class ExpenseRepo : KoinComponent {
+object ExpenseRepo : KoinComponent {
     private val httpApiService: HttpApiService by inject()
     private val db: AppDatabase by inject()
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
@@ -46,58 +49,54 @@ class ExpenseRepo : KoinComponent {
         return apiResponse
     }
 
-    fun uploadExpense(addExpenseRequestBody: AddExpenseRequestBody): MutableLiveData<DataWrapper<UploadExpenseResponse>>? {
+    fun uploadExpense(addExpenseRequestBody: AddExpenseRequestBody){
         val dataWrapper = DataWrapper<UploadExpenseResponse>()
         val apiResponse = MutableLiveData<DataWrapper<UploadExpenseResponse>>()
-        if (addExpenseRequestBody.expenseType == null && addExpenseRequestBody.amount == null && addExpenseRequestBody.expenseDate == null) return null
-        val expenseType =
-            RequestBody.create(MediaType.parse("text/plain"), addExpenseRequestBody.expenseType!!)
-        val expenseAmount = RequestBody.create(
-            MediaType.parse("text/plain"),
-            addExpenseRequestBody.amount!!.toString()
+        if (addExpenseRequestBody.expenseType == null && addExpenseRequestBody.amount == null && addExpenseRequestBody.expenseDate == null) return
+        val expenseType = setUpMultipartRequest( addExpenseRequestBody.expenseType!!)
+        val expenseAmount = setUpMultipartRequest(addExpenseRequestBody.amount!!.toString())
+        val expenseDate = setUpMultipartRequest(addExpenseRequestBody.expenseDate!!.toString())
+        val expenseDocument = Document(expenseDocList = addExpenseRequestBody.imageList)
+        val expenseFake = Expense(
+            expenseType = addExpenseRequestBody.expenseType,
+            amount = addExpenseRequestBody.amount,
+            expenseDate = addExpenseRequestBody.expenseDate,
+            verificationStatus = LocoDriverApplication.instance.applicationContext.getString(R.string.verification_pending_expense_status),
+            documents = expenseDocument
         )
-        val expenseDate = RequestBody.create(
-            MediaType.parse("text/plain"),
-            addExpenseRequestBody.expenseDate!!.toString()
-        )
-        /**
-         * Uncomment when there is UUID for fake expense to Update
-         */
-//        val expenseDocument=Document(expenseDocList = addExpenseRequestBody.imageList)
-//        val expenseFake=Expense(expenseType = addExpenseRequestBody.expenseType,amount = addExpenseRequestBody.amount,expenseDate = addExpenseRequestBody.expenseDate,documents = expenseDocument)
-//        GlobalScope.launch {
-//            Dispatchers.Default
-//            expenseDao.insertAll(expenseFake)
-//        }
+        GlobalScope.launch {
+            Dispatchers.Default
+            expenseDao.insertAll(expenseFake)
+        }
+        uploadToServer(expenseType,expenseAmount,expenseDate,addExpenseRequestBody.multipartList,expenseFake)
+    }
 
-        httpApiService.uploadExpense(
-            expenseType, expenseAmount, expenseDate,
-            addExpenseRequestBody.multipartList
-        )
-            .enqueue(object : RetrofitCallback<UploadExpenseResponse>() {
-                override fun handleSuccess(
-                    call: Call<UploadExpenseResponse>,
-                    response: Response<UploadExpenseResponse>
-                ) {
-                    response.body()?.let {
-                        dataWrapper.data = it
-                        it.expense?.let {
-                            GlobalScope.launch {
-                                Dispatchers.Default
-//                                expenseDao.updateExpense(it) // Uncomment when there is UUID on fake expense to sync with server
-                                expenseDao.insertAll(it)
-                            }
-                        }
-                    }
-                    apiResponse.postValue(dataWrapper)
-                }
+    fun setUpMultipartRequest(expenseRequestParam:String):RequestBody{
+        return RequestBody.create(MediaType.parse("text/plain"),expenseRequestParam)
+    }
 
-                override fun handleFailure(call: Call<UploadExpenseResponse>, t: Throwable) {
-                    dataWrapper.throwable = t
-                    apiResponse.postValue(dataWrapper)
+    fun uploadToServer(expenseType:RequestBody,expenseAmount:RequestBody,expenseDate:RequestBody,list :List<MultipartBody.Part>?,fakeExpense:Expense){
+        if (NetworkUtil.isUserOnline) {
+            GlobalScope.launch {
+                Dispatchers.Default
+                val expenseObject = httpApiService.uploadExpense(
+                    expenseType, expenseAmount, expenseDate,
+                    list
+                ).execute()
+                expenseObject.body()?.expense?.let {
+                    expenseDao.deleteSingleExpense(fakeExpense.autoId!!)
+                    insertExpense(it)
                 }
-            })
-        return apiResponse
+            }
+
+        }
+    }
+
+    private fun insertExpense(expense: Expense) {
+        GlobalScope.launch {
+            Dispatchers.Default
+            expenseDao.insertAll(expense)
+        }
     }
 
     fun getExpenseList(page: Int): MutableLiveData<DataWrapper<List<Expense>>>? {
@@ -112,6 +111,7 @@ class ExpenseRepo : KoinComponent {
                     response.body()?.let {
                         dataWrapper.data = response.body()
                         for (item in dataWrapper.data!!) {
+                            item.isUpdated = true
                             GlobalScope.launch {
                                 Dispatchers.Default
                                 expenseDao.insertAll(item)
@@ -139,9 +139,10 @@ class ExpenseRepo : KoinComponent {
                 ) {
                     response.body()?.let {
                         dataWrapper.data = it
+                        it.isUpdated = true
                         GlobalScope.launch {
                             Dispatchers.Default
-                            expenseDao.updateExpense(dataWrapper.data!!)
+                            expenseDao.updateExpense(it)
                         }
                     }
 
@@ -156,12 +157,38 @@ class ExpenseRepo : KoinComponent {
         return apiResponse
     }
 
+    fun getunSyncedExpenseListFromDb():List<Expense>{
+        var list = listOf<Expense>()
+        GlobalScope.launch {
+            Dispatchers.Default
+            list =expenseDao.findUnsyncedExpenseList()
+        }
+        return list
+    }
 
     fun getExpenseListFromDb(): LiveData<List<Expense>> {
         return expenseDao.getAllExpense()
     }
 
-    fun getExpenseFromDb(expenseId: Long): LiveData<Expense> {
-        return expenseDao.findByExpenseId(expenseId)
+    fun getExpenseFromDb(expenseAutoId: Long): LiveData<Expense> {
+        return expenseDao.findByExpenseId(expenseAutoId)
+    }
+
+    fun getExpenseId(autoId:Long):Long?{
+        var expenseId :Long ?= null
+        GlobalScope.launch {
+            Dispatchers.Default
+             expenseId = expenseDao.getExpenseIDFromAutoId(autoId)
+        }
+        return expenseId
+    }
+
+    fun updateExpenseFromNotification(expense:Expense){
+        val expenseList = expenseDao.getExpenses()
+        if(!expenseList.isNullOrEmpty() && expenseList.contains(expense)){
+            expenseDao.updateExpense(expense)
+        }else{
+            expenseDao.insertAll(expense)
+        }
     }
 }

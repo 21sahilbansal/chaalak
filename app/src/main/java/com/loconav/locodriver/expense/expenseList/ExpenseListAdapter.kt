@@ -53,7 +53,7 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
                 bundle.putString("source",SOURCE_EXPENSE)
                 bundle.putString("expense_title",expense.expenseType)
                 intent.putExtras(bundle)
-                intent.data = Uri.parse(expense.expenseId.toString())
+                intent.data = Uri.parse(expense.autoId.toString())
                 itemView.context.startActivity(intent)
             }
 

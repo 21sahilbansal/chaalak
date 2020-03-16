@@ -44,13 +44,16 @@ class ExpenseDetailFragment : BaseFragment() {
 
     }
 
-    private fun initRequest(expenseId: Long) {
-        expenseDetailViewModel?.getIndividualExpense(expenseId)?.observe(this, Observer {
-            it.throwable?.let { error ->
-                progressBar.visibility = View.GONE
-                Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-            }
-        })
+    private fun initRequest(expenseAutoId: Long) {
+        val expenseId = expenseDetailViewModel?.getExpenseIdFromAutoId(expenseAutoId)
+        expenseId?.let {
+            expenseDetailViewModel?.getIndividualExpense(expenseId)?.observe(this, Observer {
+                it.throwable?.let { error ->
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
     override fun onResume() {

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.loconav.locodriver.application.LocoDriverApplication
-import com.google.gson.Gson
 import java.util.*
 
 

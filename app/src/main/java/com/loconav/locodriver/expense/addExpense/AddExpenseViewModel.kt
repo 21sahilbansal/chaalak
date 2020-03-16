@@ -29,7 +29,6 @@ import java.io.File
 
 class AddExpenseViewModel : ViewModel(), KoinComponent {
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
-    private val expenseRepo = ExpenseRepo()
     val date = Calendar.getInstance()
     private val currentDate = date.get(Calendar.DATE)
     private val currentMonth = date.get(Calendar.MONTH)
@@ -40,7 +39,7 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     var yearLiveList: MutableLiveData<List<String>> = MutableLiveData()
 
     fun getExpenseType(): LiveData<DataWrapper<ExpenseType>>? {
-        return expenseRepo.getExpenseType()
+        return ExpenseRepo.getExpenseType()
     }
 
     fun getExpenseTypeList() {
@@ -137,35 +136,8 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         return SimpleDateFormat("dd/MMMM/yyyy").parse(strDate).time
     }
 
-    fun getMultipartFromUri(listImageUri: List<String>?): List<MultipartBody.Part> {
-        val parts = ArrayList<MultipartBody.Part>()
-        if (!listImageUri.isNullOrEmpty()) {
-            for (item in listImageUri) {
-                val uri = Uri.parse(item)
-                val imageFile =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        FileUtil.getFile(LocoDriverApplication.instance.applicationContext, uri) ?: break
-                    } else {
-                        File(item)
-                    }
-                val extension = imageFile.absolutePath.substring(imageFile.absolutePath.lastIndexOf(".") + 1)
-
-                val mediaType = MediaType.parse("image/${extension}")
-                val requestImageFile = RequestBody.create(mediaType,imageFile)
-                parts.add(
-                    MultipartBody.Part.createFormData(
-                        "uploads_attributes[images][]",
-                        imageFile.name,
-                        requestImageFile
-                    )
-                )
-            }
-        }
-        return parts
-    }
-
-    fun uploadExpence(addExpenseRequestBody: AddExpenseRequestBody): LiveData<DataWrapper<UploadExpenseResponse>>? {
-        return expenseRepo.uploadExpense(addExpenseRequestBody)
+    fun uploadExpence(addExpenseRequestBody: AddExpenseRequestBody) {
+        return ExpenseRepo.uploadExpense(addExpenseRequestBody)
     }
 }
 

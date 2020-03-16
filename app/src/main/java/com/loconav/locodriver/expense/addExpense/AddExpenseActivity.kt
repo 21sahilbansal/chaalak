@@ -46,7 +46,7 @@ class AddExpenseActivity : BaseFragmentActivity() {
                 CAMERA_REQUEST_CODE -> {
 
                     val bitmap = intent?.extras?.get("data") as Bitmap
-                    val uri = ImageUtil().getImageUri(applicationContext, bitmap)
+                    val uri = ImageUtil.getImageUri(applicationContext, bitmap)
                     EventBus.getDefault().post(
                         ImageSelectionEvent(
                             ImageSelectionEvent.IMAGE_SELECTED,

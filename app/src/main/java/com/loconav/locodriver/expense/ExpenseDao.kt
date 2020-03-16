@@ -10,14 +10,20 @@ interface ExpenseDao {
     @Query("SELECT * FROM expense")
     fun getAllExpense(): LiveData<List<Expense>>
 
-    @Query("SELECT * FROM expense WHERE expense_Id = :expenseId")
+    @Query("SELECT * FROM expense")
+    fun getExpenses(): List<Expense>
+
+    @Query("SELECT * FROM expense WHERE auto_id = :expenseId")
     fun findByExpenseId(expenseId: Long): LiveData<Expense>
+
+    @Query("SELECT expense_Id FROM expense WHERE auto_id = :autoId")
+    fun getExpenseIDFromAutoId(autoId:Long):Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg expense: Expense)
 
-    @Query("DELETE FROM expense WHERE expense_Id = :expenseId")
-    fun deleteSingleExpense(expenseId: Long)
+    @Query("DELETE FROM expense WHERE auto_id = :expenseAutoId")
+    fun deleteSingleExpense(expenseAutoId: Long)
 
     @Delete
     fun deleteExpense(expense: Expense)
@@ -27,5 +33,8 @@ interface ExpenseDao {
 
     @Update
     fun updateExpense(vararg expense: Expense)
+
+    @Query("SELECT * FROM expense WHERE expense_Id = null")
+    fun findUnsyncedExpenseList(): List<Expense>
 
 }

@@ -7,12 +7,15 @@ import com.loconav.locodriver.expense.model.Expense
 import com.loconav.locodriver.expenses.ExpenseRepo
 
 class ExpenseDetailViewModel:ViewModel() {
-    val expenseRepo=ExpenseRepo()
     fun getIndividualExpense(expenseId:Long):LiveData<DataWrapper<Expense>>{
-        return expenseRepo.getExpense(expenseId)
+        return ExpenseRepo.getExpense(expenseId)
     }
 
-    fun getIndividualExpenseFromDb(expenseId: Long):LiveData<Expense>{
-        return expenseRepo.getExpenseFromDb(expenseId)
+    fun getIndividualExpenseFromDb(expenseautoId: Long):LiveData<Expense>{
+        return ExpenseRepo.getExpenseFromDb(expenseautoId)
+    }
+
+    fun getExpenseIdFromAutoId(autoId:Long):Long?{
+        return ExpenseRepo.getExpenseId(autoId)
     }
 }

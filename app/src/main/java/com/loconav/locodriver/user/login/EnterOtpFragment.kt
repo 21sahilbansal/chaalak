@@ -9,14 +9,9 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import com.loconav.locodriver.Constants
-import com.loconav.locodriver.Constants.SharedPreferences.Companion.IS_LOGGED_IN
-import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 import com.loconav.locodriver.R
 import com.loconav.locodriver.SmsRetrieverEvent
 import com.loconav.locodriver.base.BaseFragment
@@ -48,10 +43,10 @@ class EnterOtpFragment : BaseFragment() {
             EventBus.getDefault().post(LoginEvent(OPEN_NUMBER_LOGIN_FRAGMENT))
         }
 
-        otp_first_number.addTextChangedListener(otpTextWatcher)
-        otp_second_number.addTextChangedListener(otpTextWatcher)
-        otp_third_number.addTextChangedListener(otpTextWatcher)
-        otp_forth_number.addTextChangedListener(otpTextWatcher)
+        et_otp_first_number.addTextChangedListener(otpTextWatcher)
+        et_otp_second_number.addTextChangedListener(otpTextWatcher)
+        et_otp_third_number.addTextChangedListener(otpTextWatcher)
+        et_otp_forth_number.addTextChangedListener(otpTextWatcher)
 
         tv_phone_number_title.text = String.format(
             getString(R.string.otp_sent_number_text),
@@ -77,24 +72,24 @@ class EnterOtpFragment : BaseFragment() {
     private val otpTextWatcher: TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable) {
             if (s.isNotEmpty()) {
-                if (otp_first_number.text.isNotEmpty()) {
-                    otp_second_number.requestFocus()
+                if (et_otp_first_number.text.isNotEmpty()) {
+                    et_otp_second_number.requestFocus()
                 }
-                if (otp_second_number.text.isNotEmpty()) {
-                    otp_third_number.requestFocus()
+                if (et_otp_second_number.text.isNotEmpty()) {
+                    et_otp_third_number.requestFocus()
                 }
-                if (otp_third_number.text.isNotEmpty()) {
-                    otp_forth_number.requestFocus()
+                if (et_otp_third_number.text.isNotEmpty()) {
+                    et_otp_forth_number.requestFocus()
                 }
             } else {
-                if (otp_forth_number.text.isEmpty()) {
-                    otp_third_number.requestFocus()
+                if (et_otp_forth_number.text.isEmpty()) {
+                    et_otp_third_number.requestFocus()
                 }
-                if (otp_third_number.text.isEmpty()) {
-                    otp_second_number.requestFocus()
+                if (et_otp_third_number.text.isEmpty()) {
+                    et_otp_second_number.requestFocus()
                 }
-                if (otp_second_number.text.isEmpty()) {
-                    otp_first_number.requestFocus()
+                if (et_otp_second_number.text.isEmpty()) {
+                    et_otp_first_number.requestFocus()
                 }
             }
         }
@@ -126,10 +121,10 @@ class EnterOtpFragment : BaseFragment() {
     }
 
     private fun otpEntered():Boolean{
-        return otp_first_number.length() == 1
-                && otp_second_number.length() == 1
-                && otp_third_number.length() == 1
-                && otp_forth_number.length() == 1
+        return et_otp_first_number.length() == 1
+                && et_otp_second_number.length() == 1
+                && et_otp_third_number.length() == 1
+                && et_otp_forth_number.length() == 1
     }
 
     override fun getLayoutId(): Int {
@@ -200,10 +195,10 @@ class EnterOtpFragment : BaseFragment() {
             SmsRetrieverEvent.READ_OTP -> {
                 val otp = event.`object` as String
                 val otpArray=otp.toCharArray()
-                otp_first_number.setText(otpArray[0].toString(), TextView.BufferType.EDITABLE)
-                otp_second_number.setText(otpArray[1].toString(), TextView.BufferType.EDITABLE)
-                otp_third_number.setText(otpArray[2].toString(), TextView.BufferType.EDITABLE)
-                otp_forth_number.setText(otpArray[3].toString(), TextView.BufferType.EDITABLE)
+                et_otp_first_number.setText(otpArray[0].toString(), TextView.BufferType.EDITABLE)
+                et_otp_second_number.setText(otpArray[1].toString(), TextView.BufferType.EDITABLE)
+                et_otp_third_number.setText(otpArray[2].toString(), TextView.BufferType.EDITABLE)
+                et_otp_forth_number.setText(otpArray[3].toString(), TextView.BufferType.EDITABLE)
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.loconav.locodriver.user.profile
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -19,7 +18,6 @@ import com.loconav.locodriver.base.BaseFragment
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.language.LanguageDialogFragment
-import com.loconav.locodriver.user.attendence.AttendanceFragment
 import com.loconav.locodriver.user.login.LoginEvent
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_ATTANDANCE_FRAGMENT
 import com.loconav.locodriver.util.AddressUtil
@@ -69,17 +67,7 @@ class ViewProfileFragment : BaseFragment() {
         viewProfileViewModel?.getDriverData(sharedPreferenceUtil.getData(DRIVER_ID, 0L))
             ?.observe(this, Observer { dataWrapper ->
                 dataWrapper.data?.let { userDataResponse ->
-                    sharedPreferenceUtil.saveData(
-                        Constants.SharedPreferences.AUTH_TOKEN,
-                        userDataResponse.authenticationToken ?: ""
-                    )
-                    sharedPreferenceUtil.saveData(DRIVER_ID, userDataResponse.id ?: 0L)
-                    if (!userDataResponse.pictures?.profilePicture.isNullOrEmpty()) {
-                        sharedPreferenceUtil.saveData(
-                            Constants.SharedPreferences.PHOTO_LINK,
-                            userDataResponse.pictures?.profilePicture!![0]
-                        )
-                    }
+                    viewProfileViewModel?.saveuserData(userDataResponse)
                     setData(userDataResponse)
                     progressBar.visibility = GONE
                 } ?: run {

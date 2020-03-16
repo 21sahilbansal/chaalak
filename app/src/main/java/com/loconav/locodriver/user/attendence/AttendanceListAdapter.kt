@@ -1,7 +1,5 @@
 package com.loconav.locodriver.user.attendence
 
-import android.os.Build
-import android.util.TimeUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +33,27 @@ class AttendanceListAdapter(val list: List<Attendance>) :
         private val ABSENT = "Absent"
         private val OFF = "On Leave"
         fun setData(attendance: Attendance) {
-            attendance.attendanceDate?.let {
+            setAttendanceDate(attendance.attendanceDate)
+            setAttendanceStatus(attendance.attendanceStatus)
+            setAttendanceReason(attendance.attendanceReason)
+        }
+
+        private fun setAttendanceStatusBackground(drawable: Int) {
+            itemView.attendance_status_tv.background =
+                ContextCompat.getDrawable(itemView.context, drawable)
+        }
+
+        private fun setAttendanceReason(attendanceReason: String?) {
+            attendanceReason?.let {
+                itemView.attendance_reason.visibility = View.VISIBLE
+                itemView.attendance_reason.text = it
+            } ?: kotlin.run {
+                itemView.attendance_reason.visibility = View.GONE
+            }
+        }
+
+        private fun setAttendanceDate(attendanceDate: Long?) {
+            attendanceDate?.let {
                 itemView.attendance_date_tv.text =
                     com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(
                         it,
@@ -44,38 +62,28 @@ class AttendanceListAdapter(val list: List<Attendance>) :
             } ?: kotlin.run {
                 itemView.attendance_date_tv.text = itemView.context.getString(R.string.unknown_Date)
             }
+        }
 
-            attendance.attendanceStatus?.let {
+        private fun setAttendanceStatus(attendanceStatus: String?) {
+            attendanceStatus?.let {
                 itemView.attendance_status_tv.text = it
                 when (it) {
                     PRESENT -> {
                         setAttendanceStatusBackground(R.drawable.bg_active_trip_tag)
                     }
                     ABSENT -> {
-                        setAttendanceStatusBackground(R.drawable.bg_attendance_status_absent)
-
+                        setAttendanceStatusBackground(R.drawable.bg_pale_red_round_4dp)
                     }
                     OFF -> {
-                        setAttendanceStatusBackground(R.drawable.bg_attendance_status_off)
+                        setAttendanceStatusBackground(R.drawable.bg_pale_yellow_round_4dp)
                     }
                 }
             } ?: run {
                 itemView.attendance_status_tv.text =
                     itemView.context.getString(R.string.attendance_not_updated)
             }
-
-            attendance.attendanceReason?.let {
-                itemView.attendance_reason.visibility = View.VISIBLE
-                itemView.attendance_reason.text = it
-            } ?: kotlin.run {
-                itemView.attendance_reason.visibility = View.GONE
-            }
-        }
-
-        private fun setAttendanceStatusBackground(drawable: Int) {
-            itemView.attendance_status_tv.background =
-                ContextCompat.getDrawable(itemView.context, drawable)
         }
     }
+    // Todo : Make a BaseRecylerViewHolder
 
 }

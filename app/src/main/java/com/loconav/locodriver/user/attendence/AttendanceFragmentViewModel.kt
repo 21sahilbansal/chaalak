@@ -13,6 +13,7 @@ import org.koin.standalone.inject
 
 class AttendanceFragmentViewModel : ViewModel(), KoinComponent {
     private val userHttpService: UserHttpService by inject()
+    private val gson:Gson by inject()
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     var attendanceList = MutableLiveData<List<Attendance>>()
 
@@ -21,7 +22,6 @@ class AttendanceFragmentViewModel : ViewModel(), KoinComponent {
     }
 
     fun getStoredAttendance() {
-        val gson = Gson()
         val expenseList = ArrayList<Attendance>()
         val json = sharedPreferenceUtil.getData(ATTENDANCE_LIST, "")
         val attendance = gson.fromJson(json, AttendanceResponse::class.java)

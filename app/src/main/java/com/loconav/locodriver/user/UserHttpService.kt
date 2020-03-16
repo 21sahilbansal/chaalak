@@ -1,5 +1,6 @@
 package com.loconav.locodriver.user
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.ATTENDANCE_LIST
 import com.loconav.locodriver.base.DataWrapper
@@ -20,7 +21,7 @@ class UserHttpService(val httpService: HttpApiService) : KoinComponent {
 
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
-    fun requestServerForOTP(phoneNumber: String): MutableLiveData<DataWrapper<ResponseBody>> {
+    fun requestServerForOTP(phoneNumber: String): LiveData<DataWrapper<ResponseBody>> {
         val dataWrapper = DataWrapper<ResponseBody>()
         val apiResponse = MutableLiveData<DataWrapper<ResponseBody>>()
         if (phoneNumber.isEmpty()) {
@@ -49,7 +50,7 @@ class UserHttpService(val httpService: HttpApiService) : KoinComponent {
     }
 
 
-    fun getAttendance(): MutableLiveData<DataWrapper<AttendanceResponse>> {
+    fun getAttendance(): LiveData<DataWrapper<AttendanceResponse>> {
         val dataWrapper = DataWrapper<AttendanceResponse>()
         val apiResponse = MutableLiveData<DataWrapper<AttendanceResponse>>()
         httpService.getAttendance().enqueue(object : RetrofitCallback<AttendanceResponse>() {
@@ -75,7 +76,7 @@ class UserHttpService(val httpService: HttpApiService) : KoinComponent {
     fun validateOTPFromServer(
         phoneNumber: String,
         otp: String
-    ): MutableLiveData<DataWrapper<EnterOTPResponse>> {
+    ): LiveData<DataWrapper<EnterOTPResponse>> {
         val dataWrapper = DataWrapper<EnterOTPResponse>()
         val apiResponse = MutableLiveData<DataWrapper<EnterOTPResponse>>()
 
@@ -99,7 +100,7 @@ class UserHttpService(val httpService: HttpApiService) : KoinComponent {
     }
 
 
-    fun getDriverData(driverId: Long): MutableLiveData<DataWrapper<Driver>> {
+    fun getDriverData(driverId: Long): LiveData<DataWrapper<Driver>> {
         val dataWrapper = DataWrapper<Driver>()
         val apiResponse = MutableLiveData<DataWrapper<Driver>>()
 

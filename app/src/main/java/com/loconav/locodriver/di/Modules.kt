@@ -92,7 +92,7 @@ val networkModule = module {
     /**
      * {usage}: val gson : Gson by inject()
      */
-    single{ Gson() }
+    single { Gson() }
 }
 
 

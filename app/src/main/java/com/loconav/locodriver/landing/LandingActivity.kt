@@ -66,7 +66,10 @@ class LandingActivity : AppCompatActivity() {
         if (sharedPreferenceUtil.getData(PHOTO_LINK, "").isEmpty()) {
             iv_profile.setImageResource(R.drawable.ic_user_placeholder)
         } else {
-            iv_profile.loadImage(R.drawable.ic_user_placeholder,sharedPreferenceUtil.getData(PHOTO_LINK, ""))
+            iv_profile.loadImage(
+                R.drawable.ic_user_placeholder,
+                sharedPreferenceUtil.getData(PHOTO_LINK, "")
+            )
         }
         profileImageView.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)

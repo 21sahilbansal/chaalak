@@ -1,8 +1,12 @@
 package com.loconav.locodriver.Trips
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.google.gson.GsonBuilder
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
+import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.Trips.model.TripRequestBody
 import com.loconav.locodriver.base.DataWrapper
@@ -14,11 +18,16 @@ import org.koin.standalone.inject
 import retrofit2.Call
 import retrofit2.Response
 
-class TripsRepo : KoinComponent {
+object TripsRepo : KoinComponent {
     private val httpApiService: HttpApiService by inject()
     private val sharedPreferenceUtil : SharedPreferenceUtil by inject()
     val apiResponse = MutableLiveData<DataWrapper<TripDataResponse>>()
     val dataWrapper = DataWrapper<TripDataResponse>()
+
+    var filterState: HashMap<String, Any> = HashMap()
+
+    var response: MutableLiveData<DataWrapper<TripDataResponse>>? = null
+    private val driverId = sharedPreferenceUtil.getData(Constants.SharedPreferences.DRIVER_ID, 0L)
 
 
     fun getTripListData(tripRequestBody: TripRequestBody): MutableLiveData<DataWrapper<TripDataResponse>>? {
@@ -49,6 +58,7 @@ class TripsRepo : KoinComponent {
                 }
             })
         dataWrapper.data = getTripResponse(TRIP_RESPONSE_SHARED_PF_KEY)
+        apiResponse.value = dataWrapper
         return apiResponse
     }
 
@@ -99,7 +109,15 @@ class TripsRepo : KoinComponent {
 
 
 
-    companion object {
-        const val TRIP_RESPONSE_SHARED_PF_KEY =  "trip_response_shared_pf_key"
+    fun getFetchTripRequestBody(): TripRequestBody {
+        filterState[Constants.TripConstants.FILTER_STATES] = Constants.TripConstants.tripStateArray
+        filterState[Constants.TripConstants.FILTER_DRIVER_ID] = driverId
+        return TripRequestBody(
+            sortOrder = Constants.TripConstants.SORT_ORDER_ASCENDING,
+            filter = filterState
+        )
     }
+
+
+    const val TRIP_RESPONSE_SHARED_PF_KEY =  "trip_response_shared_pf_key"
 }

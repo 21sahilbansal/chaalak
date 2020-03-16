@@ -1,12 +1,9 @@
 package com.loconav.locodriver.Trips
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.google.gson.GsonBuilder
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
-import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.Trips.model.TripRequestBody
 import com.loconav.locodriver.base.DataWrapper

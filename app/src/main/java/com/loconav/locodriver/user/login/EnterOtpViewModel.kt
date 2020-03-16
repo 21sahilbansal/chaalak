@@ -10,13 +10,16 @@ import com.google.android.gms.auth.api.phone.SmsRetrieverClient
 import com.google.android.gms.tasks.Task
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.base.DataWrapper
+import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.user.UserHttpService
 import okhttp3.ResponseBody
+import org.greenrobot.eventbus.EventBus
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 class EnterOtpViewModel : ViewModel(), KoinComponent {
 
+    val sharedPreferenceUtil:SharedPreferenceUtil by inject()
     val userHttpService: UserHttpService by inject()
     val animator = ValueAnimator.ofFloat(Constants.AnimationConstants.VALUEANIMATOR_START_ANIMATION_VALUE,Constants.AnimationConstants.VALUEANIMATOR_END_ANIMATION_VALUE)
 
@@ -56,6 +59,29 @@ class EnterOtpViewModel : ViewModel(), KoinComponent {
             it.printStackTrace()
             Log.i("SmsReceiver", "error")
         }
+    }
+
+    fun saveUserDataToShareDPref(userResponse:EnterOTPResponse){
+        sharedPreferenceUtil.saveData(
+            Constants.SharedPreferences.AUTH_TOKEN,
+            userResponse.driver?.authenticationToken ?: ""
+        )
+        sharedPreferenceUtil.saveData(
+            Constants.SharedPreferences.DRIVER_ID,
+            userResponse.driver?.id ?: 0L
+        )
+        if (!userResponse.driver?.pictures?.profilePicture.isNullOrEmpty()) {
+            sharedPreferenceUtil.saveData(
+                Constants.SharedPreferences.PHOTO_LINK,
+                userResponse.driver?.pictures?.profilePicture!![0]
+            )
+        }
+        sharedPreferenceUtil.saveData(Constants.SharedPreferences.IS_LOGGED_IN, true)
+    }
+
+    fun postOpenLandingActivityEvent(){
+        EventBus.getDefault()
+            .post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
     }
 
 

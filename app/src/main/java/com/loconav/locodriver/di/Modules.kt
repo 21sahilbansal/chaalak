@@ -1,6 +1,7 @@
 package com.loconav.locodriver.di
 
 import android.location.Geocoder
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.loconav.locodriver.BuildConfig
 import com.loconav.locodriver.Constants
@@ -87,6 +88,11 @@ val networkModule = module {
     }
 
     single<UserHttpService> { UserHttpService(get()) }
+
+    /**
+     * {usage}: val gson : Gson by inject()
+     */
+    single { Gson() }
 }
 
 

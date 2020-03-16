@@ -50,5 +50,8 @@
     <string name="no_trips_has_been_added">No Trips has been added</string>
     <string name="active_tag">Active</string>
     <string name="upcoming_trip_tag">Upcoming Trip</string>
+    <string name="attendance_title">My Attendance</string>
+    <string name="unknown_Date">Unknown Date</string>
+    <string name="attendance_not_updated">Attendance not updated</string>
 
 </resources>

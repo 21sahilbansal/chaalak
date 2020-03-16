@@ -89,11 +89,8 @@ val networkModule = module {
     single<UserHttpService> { UserHttpService(get()) }
 
     /**
-<<<<<<< HEAD
      * provides Gson for converting Notification data
-=======
      * {usage}: val gson : Gson by inject()
->>>>>>> 2f6a096905490ffee6dafd5cd514ecd7d3e14f67
      */
     single { Gson() }
 }

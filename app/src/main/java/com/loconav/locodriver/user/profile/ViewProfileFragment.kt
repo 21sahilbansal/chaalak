@@ -68,21 +68,11 @@ class ViewProfileFragment : BaseFragment() {
             EventBus.getDefault().post(LoginEvent(OPEN_ATTANDANCE_FRAGMENT))
         }
 
+        progressBar.visibility = VISIBLE
         viewProfileViewModel?.getDriverData(sharedPreferenceUtil.getData(DRIVER_ID, 0L))
             ?.observe(this, Observer { dataWrapper ->
                 dataWrapper.data?.let { userDataResponse ->
-                    sharedPreferenceUtil.saveData(
-                        Constants.SharedPreferences.AUTH_TOKEN,
-                        userDataResponse.authenticationToken ?: ""
-                    )
-                    sharedPreferenceUtil.saveData(DRIVER_ID, userDataResponse.id ?: 0L)
-                    if (!userDataResponse.pictures?.profilePicture.isNullOrEmpty()) {
-                        sharedPreferenceUtil.saveData(
-                            Constants.SharedPreferences.PHOTO_LINK,
-                            userDataResponse.pictures?.profilePicture!![0]
-                        )
-                    }
-
+                    viewProfileViewModel?.saveuserData(userDataResponse)
                     setData(userDataResponse)
                     progressBar.visibility = GONE
                 } ?: run {

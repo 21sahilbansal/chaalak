@@ -106,8 +106,7 @@ class EnterOtpFragment : BaseFragment() {
                         ?.observe(this@EnterOtpFragment, Observer { dataWrapper ->
                             dataWrapper.data?.let { userDataResponse ->
                                 enterOtpViewModel?.saveUserDataToShareDPref(userDataResponse)
-                                EventBus.getDefault()
-                                    .post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
+                                enterOtpViewModel?.postOpenLandingActivityEvent()
                             } ?: run {
                                 progressBar.visibility = GONE
                                 error_message.visibility = View.VISIBLE

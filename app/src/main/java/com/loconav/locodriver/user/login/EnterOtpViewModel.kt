@@ -13,6 +13,7 @@ import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.user.UserHttpService
 import okhttp3.ResponseBody
+import org.greenrobot.eventbus.EventBus
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -76,6 +77,11 @@ class EnterOtpViewModel : ViewModel(), KoinComponent {
             )
         }
         sharedPreferenceUtil.saveData(Constants.SharedPreferences.IS_LOGGED_IN, true)
+    }
+
+    fun postOpenLandingActivityEvent(){
+        EventBus.getDefault()
+            .post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
     }
 
 

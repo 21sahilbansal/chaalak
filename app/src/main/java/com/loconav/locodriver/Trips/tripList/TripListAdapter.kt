@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
-import com.loconav.locodriver.Trips.TripStateGeneratorUtil
-import com.loconav.locodriver.Trips.tripDetail.DetailActivity
 import com.loconav.locodriver.Trips.model.TripData
+import com.loconav.locodriver.Trips.tripDetail.DetailActivity
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.item_trips_card.view.*
 import org.koin.standalone.KoinComponent

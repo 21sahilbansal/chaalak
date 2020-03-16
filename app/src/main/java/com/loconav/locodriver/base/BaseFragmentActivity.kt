@@ -1,9 +1,7 @@
 package com.loconav.locodriver.base
 
-import android.content.Context
 import androidx.fragment.app.FragmentTransaction
 import com.loconav.locodriver.R
-import com.loconav.locodriver.util.LocaleHelper
 
 abstract class BaseFragmentActivity : BaseActivity() {
 

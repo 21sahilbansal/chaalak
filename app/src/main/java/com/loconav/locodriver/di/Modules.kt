@@ -1,22 +1,22 @@
 package com.loconav.locodriver.di
 
 import android.location.Geocoder
-import com.google.gson.GsonBuilder
+import com.google.gson.Gson
 import com.loconav.locodriver.BuildConfig
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.LanguageProperty.Companion.languageArray
 import com.loconav.locodriver.Trips.TripDataManager
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.network.HeaderInterceptor
 import com.loconav.locodriver.network.HttpApiService
+import com.loconav.locodriver.notification.htttpService.FCMHttpApiService
 import com.loconav.locodriver.user.UserHttpService
 import com.squareup.picasso.Picasso
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.OkHttpClient
 import java.util.*
 
 
@@ -87,6 +87,11 @@ val networkModule = module {
     }
 
     single<UserHttpService> { UserHttpService(get()) }
+
+    /**
+     * provides Gson for converting Notification data
+     */
+    single { Gson() }
 }
 
 
@@ -111,6 +116,11 @@ val appModule = module {
      * {usage}: val picasso : Picasso by inject()
      */
     single { Geocoder(androidContext(), Locale.getDefault()) }
+
+    /**
+     * {usage}: val fcmHttpService : FCMHttpService by inject(
+     * */
+    single { FCMHttpApiService() }
 
 
 }

@@ -11,6 +11,9 @@ class Constants {
             const val GET_DRIVER = "drivers/{id}"
             const val GET_TRIPS_LIST = "trips"
             const val GET_DRIVER_CTA_TEMPLATE = "trip_events/labels"
+            const val NOTIFICATON_SEND_DEVICE_ID_TOKEN = "fcm_devices"
+            const val NOTIFICATON_DELETE_DEVICE_ID_TOKEN = "fcm_device/{id}"
+
         }
     }
 
@@ -31,6 +34,11 @@ class Constants {
             const val DRIVER_CTA_LABEL_DESTINATION_ENTRY = "destination_entry"
             const val DRIVER_CTA_LABEL_DESTINATION_EXIT = "destination_exit"
             const val DRIVER_CTA_CURRENT_STATE_LABEL = "current_label"
+            const val FCM_TOKEN = "fcm_token"
+            const val FCM_TOKEN_REGISTERED = "fcm_token_registered"
+            const val LAST_SAVED_APP_VERSION = "last_saved_app_version"
+            const val DEVICE_ID = "device_id"
+
         }
     }
 
@@ -89,4 +97,15 @@ class Constants {
             )
         }
     }
+
+    interface NotificationConstants{
+        companion object{
+            const val NOTIFICATION_TYPE = "Notification_Type"
+            const val TYPE_ID = "Type_id"
+            const val NOTIFICATION_TYPE_IS_TRIP = "Trip"
+            const val NOTIFICATION_TYPE_IS_EXPENSE = "Expense"
+            const val NOTIFICATION_TYPE_IS_LOCATION = "Location"
+        }
+    }
+
 }

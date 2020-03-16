@@ -2,16 +2,13 @@ package com.loconav.locodriver.user.profile
 
 import android.os.Bundle
 import com.loconav.locodriver.AppUtils
-
+import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.VIEW_PROFILE_FRAGMENT
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragmentActivity
-
+import com.loconav.locodriver.language.LanguageEventBus
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-
-import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.VIEW_PROFILE_FRAGMENT
-import com.loconav.locodriver.language.LanguageEventBus
 
 class ProfileActivity : BaseFragmentActivity() {
 

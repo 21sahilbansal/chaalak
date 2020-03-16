@@ -6,8 +6,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import com.loconav.locodriver.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_number_login.*
 import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -17,13 +15,15 @@ import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.gms.auth.api.credentials.CredentialsOptions
 import com.google.android.gms.auth.api.credentials.HintRequest
-import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_ENTER_OTP_FRAGMENT
-import org.greenrobot.eventbus.EventBus
 import com.loconav.locodriver.R
+import com.loconav.locodriver.base.BaseFragment
 import com.loconav.locodriver.language.LanguageEventBus
 import com.loconav.locodriver.language.LanguageEventBus.Companion.ON_LANGUAGE_CHANGED_FROM_LOGIN
+import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_ENTER_OTP_FRAGMENT
 import com.loconav.locodriver.util.LocaleHelper
 import com.loconav.locodriver.util.PhoneUtil
+import kotlinx.android.synthetic.main.fragment_number_login.*
+import org.greenrobot.eventbus.EventBus
 
 
 class NumberLoginFragment : BaseFragment() {

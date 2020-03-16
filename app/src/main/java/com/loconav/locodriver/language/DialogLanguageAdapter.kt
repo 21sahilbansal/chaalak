@@ -6,10 +6,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.loconav.locodriver.R
-import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.util.LocaleHelper
 import kotlinx.android.synthetic.main.item_language_dialog.view.*
 import org.greenrobot.eventbus.EventBus

@@ -1,6 +1,5 @@
 package com.loconav.locodriver.network
 
-import android.util.Log
 import com.loconav.locodriver.R
 import com.loconav.locodriver.application.LocoDriverApplication
 import org.json.JSONException

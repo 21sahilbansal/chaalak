@@ -2,6 +2,7 @@ package com.loconav.locodriver.network
 
 import com.loconav.locodriver.Constants.HTTP.Companion.DRIVER_OTP_VERIFY
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER
+import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER_ATTENDANCE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER_CTA_TEMPLATE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_TRIPS_LIST
 import com.loconav.locodriver.Constants.HTTP.Companion.NOTIFICATON_DELETE_DEVICE_ID_TOKEN
@@ -11,6 +12,7 @@ import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.notification.model.RegisterFCMDeviceIdConfig
+import com.loconav.locodriver.user.attendence.AttendanceResponse
 import com.loconav.locodriver.user.login.EnterOTPResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -41,4 +43,6 @@ interface HttpApiService {
     @DELETE(NOTIFICATON_DELETE_DEVICE_ID_TOKEN)
     fun deleteFCMToken(@Path("id") deleteFCMId: String?): Call<ResponseBody>
 
+    @GET(GET_DRIVER_ATTENDANCE)
+    fun getAttendance(): Call<AttendanceResponse>
 }

@@ -19,12 +19,16 @@ import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.language.LanguageDialogFragment
 import com.loconav.locodriver.notification.fcmEvent.NotificationEventBus
+import com.loconav.locodriver.user.login.LoginEvent
+import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_ATTANDANCE_FRAGMENT
 import com.loconav.locodriver.util.AddressUtil
 import com.loconav.locodriver.util.TimeUtils
+import com.loconav.locodriver.util.loadImage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.greenrobot.eventbus.EventBus
 import org.koin.android.ext.android.inject
 
 
@@ -35,6 +39,7 @@ class ViewProfileFragment : BaseFragment() {
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
     var viewProfileViewModel: ViewProfileViewModel? = null
+
 
     private val LANGUAGE_DIALOG_TAG = "Language_Dialog"
 
@@ -59,7 +64,9 @@ class ViewProfileFragment : BaseFragment() {
             LanguageDialogFragment().show(childFragmentManager, LANGUAGE_DIALOG_TAG)
         }
 
-        progressBar.visibility = VISIBLE
+        tv_attendance.setOnClickListener {
+            EventBus.getDefault().post(LoginEvent(OPEN_ATTANDANCE_FRAGMENT))
+        }
 
         viewProfileViewModel?.getDriverData(sharedPreferenceUtil.getData(DRIVER_ID, 0L))
             ?.observe(this, Observer { dataWrapper ->
@@ -75,6 +82,7 @@ class ViewProfileFragment : BaseFragment() {
                             userDataResponse.pictures?.profilePicture!![0]
                         )
                     }
+
                     setData(userDataResponse)
                     progressBar.visibility = GONE
                 } ?: run {
@@ -91,6 +99,7 @@ class ViewProfileFragment : BaseFragment() {
         } else {
             picasso.load(sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, ""))
                 .error(R.drawable.ic_user_placeholder).into(iv_profile_picture)
+
         }
         tv_driver_name.text = driver.name
 

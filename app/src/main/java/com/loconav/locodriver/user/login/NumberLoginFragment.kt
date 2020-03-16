@@ -24,6 +24,8 @@ import com.loconav.locodriver.util.LocaleHelper
 import com.loconav.locodriver.util.PhoneUtil
 import kotlinx.android.synthetic.main.fragment_number_login.*
 import org.greenrobot.eventbus.EventBus
+import kotlinx.android.synthetic.main.fragment_number_login.error_message
+import kotlinx.android.synthetic.main.fragment_number_login.tv_change_language
 
 
 class NumberLoginFragment : BaseFragment() {
@@ -50,10 +52,10 @@ class NumberLoginFragment : BaseFragment() {
                     displayNumberErrorMessage(R.string.blank_number_error_message)
                 }
                 PhoneUtil.isPhoneNumberValid(editTextNumber.text.toString()) -> {
-                    error_message.visibility=View.INVISIBLE
+                    error_message.visibility=View.GONE
                     editTextNumber.background=ContextCompat.getDrawable(view.context,R.drawable.bg_edittext)
+                    number_login_progressBar.visibility=View.VISIBLE
                     requestServerForOtp()
-                    EventBus.getDefault().post(LoginEvent(OPEN_ENTER_OTP_FRAGMENT, editTextNumber.text.toString()))
                 }
                 else -> {
                     displayNumberErrorMessage(R.string.invalid_number_error_message)
@@ -86,9 +88,16 @@ class NumberLoginFragment : BaseFragment() {
     private fun requestServerForOtp() {
         numberLoginViewModel?.getOTP(editTextNumber.text.toString())?.observe(this, Observer { dataWrapper ->
             dataWrapper.data?.let {userDataResponse ->
+                number_login_progressBar.visibility=View.GONE
+                EventBus.getDefault().post(LoginEvent(OPEN_ENTER_OTP_FRAGMENT, editTextNumber.text.toString()))
                 Log.e("variable ", userDataResponse.string())
             } ?: run{
-                Toast.makeText(context, dataWrapper.throwable?.message, Toast.LENGTH_LONG).show()
+                number_login_progressBar.visibility=View.GONE
+                error_message.visibility=View.VISIBLE
+                editTextNumber.background= ContextCompat.getDrawable(editTextNumber.context,R.drawable.error_bg_edit_text)
+                val shake = loadAnimation(context, R.anim.shake)
+                editTextNumber.startAnimation(shake)
+                error_message.text=dataWrapper.throwable?.message
             }
         })
     }

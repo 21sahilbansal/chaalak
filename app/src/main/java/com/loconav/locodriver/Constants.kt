@@ -14,6 +14,7 @@ class Constants {
             const val NOTIFICATON_SEND_DEVICE_ID_TOKEN = "fcm_devices"
             const val NOTIFICATON_DELETE_DEVICE_ID_TOKEN = "fcm_device/{id}"
 
+            const val GET_DRIVER_ATTENDANCE = "attendances/current_month"
         }
     }
 
@@ -39,6 +40,7 @@ class Constants {
             const val LAST_SAVED_APP_VERSION = "last_saved_app_version"
             const val DEVICE_ID = "device_id"
 
+            const val ATTENDANCE_LIST = "attendance"
         }
     }
 
@@ -49,6 +51,7 @@ class Constants {
             const val NUMBER_LOGIN_FRAGMENT = "number_login_fragment"
             const val VIEW_PROFILE_FRAGMENT = "view_profile_fragment"
             const val TRIP_DETAIL_FRAGMENT = "trip_detail_fragment"
+            const val ATTENDANCE_FRAGMENT = "attendance_fragment"
         }
     }
 
@@ -64,7 +67,7 @@ class Constants {
     interface TripConstants {
         companion object {
             const val INTENT_ACTION_DIAL_TEXT = "tel:"
-            const val CONTACT_PHONE_NUMBER = "9650793733"
+            const val CONTACT_PHONE_NUMBER = "01244285166"
             const val SORT_ORDER_ASCENDING = "asc"
             const val FILTER_DRIVER_ID = "filters[driver_id]"
             const val FILTER_STATES = "filter[states]"
@@ -84,8 +87,9 @@ class Constants {
     interface RegexConstants {
         companion object {
             const val VALID_PHONE_NUMBER_REGEX = "[2-9][0-9]{9}"
-            const val DATE_TIME_FORMAT="dd MMMM yyyy HH:mm:ss"
-            const val DATE_FORMAT="dd/MM/yyyy"
+            const val DATE_TIME_FORMAT = "dd MMMM yyyy HH:mm:ss"
+            const val DATE_FORMAT = "dd/MM/yyyy"
+            const val DATE_FORMAT_WITH_FULL_MONTH = "dd MMMM yyyy"
         }
     }
 

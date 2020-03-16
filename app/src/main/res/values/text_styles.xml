@@ -135,5 +135,20 @@
         <item name="android:textColor">@color/main</item>
     </style>
 
+    <style name="OtpStyle">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:inputType">number</item>
+        <item name="android:background">@color/otp_bg</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:lineSpacingExtra">9sp</item>
+    </style>
+
 
 </resources>

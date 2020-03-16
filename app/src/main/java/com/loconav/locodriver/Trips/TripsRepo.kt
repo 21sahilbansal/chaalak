@@ -88,9 +88,13 @@ class TripsRepo : KoinComponent {
      *
      * @param key Shared Preference key with which object was saved.
      **/
-     fun getTripResponse(key: String): TripDataResponse{
+     fun getTripResponse(key: String): TripDataResponse?{
         val value = sharedPreferenceUtil.getData(key, "")
-        return GsonBuilder().create().fromJson(value, TripDataResponse::class.java)
+        try {
+            return GsonBuilder().create().fromJson(value, TripDataResponse::class.java)
+        }catch (e : Exception) {
+            return null
+        }
     }
 
 

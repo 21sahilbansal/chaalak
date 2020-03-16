@@ -63,9 +63,9 @@ class SharedPreferenceUtil(val fileName: String) {
         return sharedPreferences.getBoolean(key, defaultValue)
     }
 
-    fun saveData(key: String, value: Any) {
+    fun saveJsonData(key: String, jsonValue: Any) {
         val gson = Gson()
-        val json = gson.toJson(value)
+        val json = gson.toJson(jsonValue)
         editor.putString(key, json)
         editor.apply()
     }

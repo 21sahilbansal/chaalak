@@ -2,7 +2,11 @@ package com.loconav.locodriver.db.sharedPF
 
 import android.app.Activity
 import android.content.SharedPreferences
+import androidx.lifecycle.MutableLiveData
+import com.google.gson.GsonBuilder
+import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.application.LocoDriverApplication
+import com.loconav.locodriver.base.DataWrapper
 
 class SharedPreferenceUtil (val fileName : String){
 

@@ -7,7 +7,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.notification.NotificationManager.LocoNotificationManager
+import com.loconav.locodriver.notification.notificationManager.LocoNotificationManager
 import com.loconav.locodriver.notification.htttpService.FCMHttpApiService
 import com.loconav.locodriver.notification.model.LocoDrivePushNotification
 import org.koin.android.ext.android.inject

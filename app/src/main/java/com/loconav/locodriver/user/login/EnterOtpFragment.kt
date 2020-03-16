@@ -110,21 +110,7 @@ class EnterOtpFragment : BaseFragment() {
                     enterOtpViewModel?.validateOTP(phoneNumber, s.toString())
                         ?.observe(this@EnterOtpFragment, Observer { dataWrapper ->
                             dataWrapper.data?.let { userDataResponse ->
-                                sharedPreferenceUtil.saveData(
-                                    Constants.SharedPreferences.AUTH_TOKEN,
-                                    userDataResponse.driver?.authenticationToken ?: ""
-                                )
-                                sharedPreferenceUtil.saveData(
-                                    Constants.SharedPreferences.DRIVER_ID,
-                                    userDataResponse.driver?.id ?: 0L
-                                )
-                                if (!userDataResponse.driver?.pictures?.profilePicture.isNullOrEmpty()) {
-                                    sharedPreferenceUtil.saveData(
-                                        PHOTO_LINK,
-                                        userDataResponse.driver?.pictures?.profilePicture!![0]
-                                    )
-                                }
-                                sharedPreferenceUtil.saveData(IS_LOGGED_IN, true)
+                                enterOtpViewModel?.saveUserDataToShareDPref(userDataResponse)
                                 EventBus.getDefault()
                                     .post(LoginEvent(LoginEvent.OPEN_LANDING_ACTIVITY))
                             } ?: run {

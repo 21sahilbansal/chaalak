@@ -22,6 +22,7 @@ import com.loconav.locodriver.user.login.LoginEvent
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_ATTANDANCE_FRAGMENT
 import com.loconav.locodriver.util.AddressUtil
 import com.loconav.locodriver.util.TimeUtils
+import com.loconav.locodriver.util.loadImage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.greenrobot.eventbus.EventBus
@@ -30,11 +31,9 @@ import org.koin.android.ext.android.inject
 
 class ViewProfileFragment : BaseFragment() {
 
-    val picasso: Picasso by inject()
-
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
-    var viewProfileViewModel: ViewProfileViewModel? = null
+    private var viewProfileViewModel: ViewProfileViewModel? = null
 
     private val LANGUAGE_DIALOG_TAG = "Language_Dialog"
 
@@ -82,8 +81,7 @@ class ViewProfileFragment : BaseFragment() {
         if (sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, "").isEmpty()) {
             iv_profile_picture.setImageResource(R.drawable.ic_user_placeholder)
         } else {
-            picasso.load(sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, ""))
-                .error(R.drawable.ic_user_placeholder).into(iv_profile_picture)
+            iv_profile_picture.loadImage(R.drawable.ic_user_placeholder,sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, ""))
         }
         tv_driver_name.text = driver.name
 

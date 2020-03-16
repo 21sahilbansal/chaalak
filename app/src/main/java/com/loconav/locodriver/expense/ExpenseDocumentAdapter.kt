@@ -16,7 +16,7 @@ import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.DISABLE_ADD_
 import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.ENABLE_ADD_IMAGE
 import com.loconav.locodriver.expense.addExpense.AddExpenseActivity
 import com.loconav.locodriver.expense.model.Expense
-import com.squareup.picasso.Picasso
+import com.loconav.locodriver.util.loadImage
 import kotlinx.android.synthetic.main.item_expense_document.view.*
 import org.greenrobot.eventbus.EventBus
 import org.koin.dsl.module.applicationContext
@@ -73,13 +73,11 @@ class ExpenseDocumentAdapter(val list: ArrayList<String>, private val editable: 
 
     class ExpenseDocumentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         KoinComponent {
-        private val picasso: Picasso by inject()
         fun setImage(imageUri: String, editable: Boolean) {
             if (editable) {
                 itemView.close_image_ll.visibility = View.VISIBLE
             }
-            picasso.load(Uri.parse(imageUri)).error(R.drawable.ic_user_placeholder).fit()
-                .into(itemView.document_image)
+            itemView.document_image.loadImage(R.drawable.ic_user_placeholder,imageUri)
         }
     }
 }

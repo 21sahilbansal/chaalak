@@ -6,6 +6,7 @@ import android.view.View
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragment
 import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.REMOVE_IMAGE
+import com.loconav.locodriver.util.loadImage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_document_image.*
 import org.greenrobot.eventbus.EventBus
@@ -13,12 +14,11 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 class DocumentImageFragment:BaseFragment(),KoinComponent {
-    private val picasso:Picasso by inject()
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
-        val imageuri=arguments?.get(IMAGE_URI).toString()
+        val imageUri=arguments?.get(IMAGE_URI).toString()
         val editable=arguments?.getBoolean(IMAGE_EDITABLE)
         val position = arguments?.getInt(IMAGE_POSITION)
-        picasso.load(imageuri).error(R.drawable.ic_user_placeholder).into(document_image_iv)
+        document_image_iv.loadImage(R.drawable.ic_user_placeholder,imageUri)
         if(editable==false){
             document_image_delete_iv.visibility = View.GONE
         }

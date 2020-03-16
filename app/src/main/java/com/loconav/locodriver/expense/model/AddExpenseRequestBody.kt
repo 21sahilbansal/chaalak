@@ -12,5 +12,7 @@ data class AddExpenseRequestBody(
     var expenseDate: Long? = null,
     @SerializedName("remarks")
     var remarks: String? = null,
-    var multipartList: List<MultipartBody.Part>? = null
+    var multipartList: List<MultipartBody.Part>? = null,
+
+    var imageList:List<String>? = null
 )

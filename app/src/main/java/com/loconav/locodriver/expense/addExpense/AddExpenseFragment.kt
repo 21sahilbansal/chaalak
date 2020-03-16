@@ -127,6 +127,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 return@setOnClickListener
             }
             expenseDocumentAdapter?.list?.let {
+                addExpenseRequestBody.imageList = it
                 prepareImageToBeSentToServer(it)
             }
 

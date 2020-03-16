@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.expense.model.AddExpenseRequestBody
-import com.loconav.locodriver.expense.model.Expense
-import com.loconav.locodriver.expense.model.ExpenseType
-import com.loconav.locodriver.expense.model.UploadExpenseResponse
+import com.loconav.locodriver.expense.model.*
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.RetrofitCallback
 import kotlinx.coroutines.Dispatchers
@@ -63,6 +60,15 @@ class ExpenseRepo : KoinComponent {
             MediaType.parse("text/plain"),
             addExpenseRequestBody.expenseDate!!.toString()
         )
+        /**
+         * Uncomment when there is UUID for fake expense to Update
+         */
+//        val expenseDocument=Document(expenseDocList = addExpenseRequestBody.imageList)
+//        val expenseFake=Expense(expenseType = addExpenseRequestBody.expenseType,amount = addExpenseRequestBody.amount,expenseDate = addExpenseRequestBody.expenseDate,documents = expenseDocument)
+//        GlobalScope.launch {
+//            Dispatchers.Default
+//            expenseDao.insertAll(expenseFake)
+//        }
 
         httpApiService.uploadExpense(
             expenseType, expenseAmount, expenseDate,
@@ -78,6 +84,7 @@ class ExpenseRepo : KoinComponent {
                         it.expense?.let {
                             GlobalScope.launch {
                                 Dispatchers.Default
+//                                expenseDao.updateExpense(it) // Uncomment when there is UUID on fake expense to sync with server
                                 expenseDao.insertAll(it)
                             }
                         }

@@ -16,7 +16,7 @@ class Constants {
             const val GET_EXPENSE = "drivers/uploadable_expenses/{id}"
             const val GET_EXPENSE_TYPE = "drivers/uploadable_expenses/expense_types"
             const val UPLOAD_EXPENSE = "drivers/uploadable_expenses"
-
+            const val GET_DRIVER_ATTENDANCE = "attendances/current_month"
         }
     }
 
@@ -37,6 +37,7 @@ class Constants {
             const val DRIVER_CTA_LABEL_DESTINATION_ENTRY = "destination_entry"
             const val DRIVER_CTA_LABEL_DESTINATION_EXIT = "destination_exit"
             const val DRIVER_CTA_CURRENT_STATE_LABEL = "current_label"
+            const val ATTENDANCE_LIST = "attendance"
         }
     }
 
@@ -51,6 +52,7 @@ class Constants {
             const val ADD_EXPENSE_FRAGEMENT = "add_expense_fragment"
             const val DOCUMENT_IMAGE_FRAGMENT = "document_image_fragment"
             const val IMAGE_CHOOSER_DIALOG = "image_chooser_dialog"
+            const val ATTENDANCE_FRAGMENT = "attendance_fragment"
         }
     }
 
@@ -67,7 +69,7 @@ class Constants {
         companion object {
             const val SOURCE_TRIP = "trip"
             const val INTENT_ACTION_DIAL_TEXT = "tel:"
-            const val CONTACT_PHONE_NUMBER = "9650793733"
+            const val CONTACT_PHONE_NUMBER = "01244285166"
             const val SORT_ORDER_ASCENDING = "asc"
             const val FILTER_DRIVER_ID = "filters[driver_id]"
             const val FILTER_STATES = "filter[states]"
@@ -120,6 +122,7 @@ class Constants {
             const val DATE_TIME_FORMAT = "dd MMMM yyyy HH:mm:ss"
             const val DATE_FORMAT = "dd/MM/yyyy"
             const val TIME_FORMAT_12_HOUR = "hh:mm a"
+            const val DATE_FORMAT_WITH_FULL_MONTH = "dd MMMM yyyy"
         }
     }
 

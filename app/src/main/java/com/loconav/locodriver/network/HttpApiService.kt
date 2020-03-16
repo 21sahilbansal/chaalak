@@ -2,6 +2,7 @@ package com.loconav.locodriver.network
 
 import com.loconav.locodriver.Constants.HTTP.Companion.DRIVER_OTP_VERIFY
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER
+import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER_ATTENDANCE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER_CTA_TEMPLATE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_EXPENSE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_EXPENSE_LIST
@@ -12,10 +13,14 @@ import com.loconav.locodriver.Constants.HTTP.Companion.UPLOAD_EXPENSE
 import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.driver.model.Driver
+
 import com.loconav.locodriver.expense.model.AddExpenseRequestBody
 import com.loconav.locodriver.expense.model.Expense
 import com.loconav.locodriver.expense.model.ExpenseType
 import com.loconav.locodriver.expense.model.UploadExpenseResponse
+
+import com.loconav.locodriver.user.attendence.AttendanceResponse
+
 import com.loconav.locodriver.user.login.EnterOTPResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -53,8 +58,12 @@ interface HttpApiService {
 
     @Multipart
     @POST(UPLOAD_EXPENSE)
-    fun uploadExpense(@Part("expense_type") expenseType: RequestBody, @Part("amount") amount: RequestBody, @Part(
+    fun uploadExpense(
+        @Part("expense_type") expenseType: RequestBody, @Part("amount") amount: RequestBody, @Part(
             "expense_date"
-        ) date: RequestBody, @Part part: List<MultipartBody.Part>?): Call<UploadExpenseResponse>
+        ) date: RequestBody, @Part part: List<MultipartBody.Part>?
+    ): Call<UploadExpenseResponse>
 
+    @GET(GET_DRIVER_ATTENDANCE)
+    fun getAttendance(): Call<AttendanceResponse>
 }

@@ -70,5 +70,8 @@
     <string name="error_expense_type_text">Enter valid type</string>
     <string name="error_date">Enter valid date</string>
     <string name="upcoming_trips">Upcoming Trips</string>
+    <string name="attendance_title">My Attendance</string>
+    <string name="unknown_Date">Unknown Date</string>
+    <string name="attendance_not_updated">Attendance not updated</string>
 
 </resources>

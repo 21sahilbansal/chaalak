@@ -13,5 +13,6 @@ class LoginEvent : PubSubEvent {
         const val OPEN_LANDING_ACTIVITY = "open_landing_activity"
         const val OPEN_NUMBER_LOGIN_FRAGMENT = "open_number_login_fragment"
         const val OPEN_SPLASH_ACTIVITY = "open_splash_activity"
+        const val OPEN_ATTANDANCE_FRAGMENT = "open_attendance_fragment"
     }
 }

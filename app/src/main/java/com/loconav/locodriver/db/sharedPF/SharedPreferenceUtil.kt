@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.loconav.locodriver.application.LocoDriverApplication
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-
 class SharedPreferenceUtil(val fileName: String) : KoinComponent {
 
     val gson : Gson by inject()
@@ -24,7 +23,6 @@ class SharedPreferenceUtil(val fileName: String) : KoinComponent {
         editor.putString(key, value)
         return editor.apply()
     }
-
 
     fun saveData(key: String, value: Boolean) {
         editor.putBoolean(key, value)

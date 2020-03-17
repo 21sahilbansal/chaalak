@@ -2,12 +2,14 @@ package com.loconav.locodriver.Trips.tripList
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE
+import com.loconav.locodriver.Constants.TripConstants.Companion.SOURCE_TRIP
 import com.loconav.locodriver.R
-import com.loconav.locodriver.Trips.TripStateGeneratorUtil
 import com.loconav.locodriver.Trips.tripDetail.DetailActivity
 import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
@@ -79,7 +81,10 @@ class TripListAdapter(private val tripData: List<TripData>) :
 
             tripData.tripShouldStartTs?.let {
                 itemView.start_time_value_tv.text =
-                    com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(it, Constants.RegexConstants.DATE_TIME_FORMAT)
+                    com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(
+                        it,
+                        Constants.RegexConstants.DATE_TIME_FORMAT
+                    )
             } ?: run {
                 itemView.start_time_value_tv.text =
                     viewContext.getString(R.string.unknown_start_time)
@@ -94,7 +99,10 @@ class TripListAdapter(private val tripData: List<TripData>) :
 
             tripData.tripDestination?.exitEta?.let {
                 itemView.end_time_value_tv.text =
-                    com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(it,Constants.RegexConstants.DATE_TIME_FORMAT)
+                    com.loconav.locodriver.util.TimeUtils.getDateTimeFromEpoch(
+                        it,
+                        Constants.RegexConstants.DATE_TIME_FORMAT
+                    )
             } ?: run {
                 itemView.end_time_value_tv.text =
                     viewContext.getString(R.string.unknown_dest_end_time)
@@ -111,6 +119,9 @@ class TripListAdapter(private val tripData: List<TripData>) :
                     itemView.context,
                     DetailActivity::class.java
                 )
+                val bundle = Bundle()
+                bundle.putString(SOURCE, SOURCE_TRIP)
+                intent.putExtras(bundle)
                 intent.data = Uri.parse(tripData.tripUniqueId)
                 itemView.context.startActivity(intent)
             }

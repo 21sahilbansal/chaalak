@@ -3,14 +3,8 @@ package com.loconav.locodriver.Trips
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
 import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseDialogFragment
-import kotlinx.android.synthetic.main.trip_activity_confirmation_dialog.*
 import kotlinx.android.synthetic.main.trip_activity_confirmation_dialog.view.*
 
 class TripActionConfirmationDialog : BaseDialogFragment() {

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.loconav.locodriver.application.LocoDriverApplication
+import java.util.*
+
 
 class SharedPreferenceUtil(val fileName: String) {
 
@@ -20,7 +22,6 @@ class SharedPreferenceUtil(val fileName: String) {
         editor.putString(key, value)
         return editor.apply()
     }
-
 
     fun saveData(key: String, value: Boolean) {
         editor.putBoolean(key, value)

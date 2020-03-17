@@ -3,7 +3,6 @@ package com.loconav.locodriver.landing
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
@@ -18,7 +17,6 @@ import androidx.core.app.ActivityCompat
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 
 import com.loconav.locodriver.R
@@ -74,18 +72,6 @@ class LandingActivity : AppCompatActivity() {
         profileImageView.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
-        }
-        call_fab.setOnClickListener {
-            val phoneIntent = Intent(
-                Intent.ACTION_DIAL, Uri.parse(
-                    String.format(
-                        "%s%s",
-                        Constants.TripConstants.INTENT_ACTION_DIAL_TEXT,
-                        Constants.TripConstants.CONTACT_PHONE_NUMBER
-                    )
-                )
-            )
-            startActivity(phoneIntent)
         }
     }
 

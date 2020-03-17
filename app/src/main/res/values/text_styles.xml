@@ -135,6 +135,26 @@
         <item name="android:textColor">@color/main</item>
     </style>
 
+    <style name="LightGreySubheading">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/lightgrey</item>
+        <item name="android:lineSpacingExtra">5sp</item>
+    </style>
+    <style name="ExtraSmallLight">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/lightgrey</item>
+        <item name="android:lineSpacingExtra">5sp</item>
+    </style>
+    <style name="TitleBig">
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:lineSpacingExtra">11sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
     <style name="OtpStyle">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">44dp</item>

@@ -14,15 +14,21 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class LanguageDialogFragment : BaseDialogFragment() {
+
     override val layoutId: Int = R.layout.dialog_change_language
 
     override fun getScreenName(): String? {
         return this::class.java.simpleName
     }
+
     lateinit var recyclerView: RecyclerView
     private lateinit var dialogLanguageAdapter: DialogLanguageAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.dialog_change_language, container, false)
         recyclerView = view.findViewById(R.id.rv_language)
         recyclerView.layoutManager = LinearLayoutManager(this.activity)
@@ -51,7 +57,6 @@ class LanguageDialogFragment : BaseDialogFragment() {
             LanguageEventBus.ON_LANGUAGE_CHANGED_FROM_PROFILE -> dismiss()
         }
     }
-
 
 
 }

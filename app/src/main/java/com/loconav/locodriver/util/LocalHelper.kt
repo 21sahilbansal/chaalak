@@ -3,14 +3,11 @@ package com.loconav.locodriver.util
 import android.annotation.TargetApi
 import android.content.Context
 import android.os.Build
-import com.loconav.locodriver.Constants
-import com.loconav.locodriver.R
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.language.LanguageDataClass
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.util.*
-import kotlin.collections.HashMap
 
 object LocaleHelper : KoinComponent {
 

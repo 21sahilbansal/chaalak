@@ -9,6 +9,7 @@ import com.loconav.locodriver.R
 import com.loconav.locodriver.base.BaseFragmentActivity
 import com.loconav.locodriver.landing.LandingActivity
 import com.loconav.locodriver.language.LanguageEventBus
+import com.loconav.locodriver.notification.htttpService.FCMHttpApiService
 import com.loconav.locodriver.splash.SplashActivity
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_ENTER_OTP_FRAGMENT
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_LANDING_ACTIVITY
@@ -17,12 +18,14 @@ import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_SPLASH_ACTIVI
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.koin.android.ext.android.inject
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class LoginActivity : BaseFragmentActivity() {
+    val fcmHttpApiService: FCMHttpApiService by inject()
 
     override val frameId: Int
         get() = R.id.fragment_container
@@ -56,6 +59,7 @@ class LoginActivity : BaseFragmentActivity() {
                 startActivity(intent)
             }
             OPEN_LANDING_ACTIVITY -> {
+                fcmHttpApiService.setupFCMToken()
                 val intent = Intent(this, LandingActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)

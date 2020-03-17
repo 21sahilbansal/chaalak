@@ -1,7 +1,6 @@
 package com.loconav.locodriver.driver.model
 
 import com.google.gson.annotations.SerializedName
-import com.loconav.locodriver.driver.CurrentAddressAttributes
 
 
 data class Driver(

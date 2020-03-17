@@ -3,31 +3,28 @@ package com.loconav.locodriver.landing
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
-
-import com.google.android.material.tabs.TabLayout
-
-import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.viewpager.widget.ViewPager
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.google.android.material.tabs.TabLayout
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
-
 import com.loconav.locodriver.R
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.landing.ui.main.LandingTabPagerAdapter
 import com.loconav.locodriver.user.profile.ProfileActivity
 import com.loconav.locodriver.util.LocationWorkManager
 import com.loconav.locodriver.util.loadImage
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
-import kotlinx.android.synthetic.main.fragment_view_profile.*
+import kotlinx.android.synthetic.main.fragment_trips.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
@@ -38,6 +35,8 @@ class LandingActivity : AppCompatActivity() {
     var workManager: WorkManager = WorkManager.getInstance()
     private val locationGetterTask =
         PeriodicWorkRequestBuilder<LocationWorkManager>(15, TimeUnit.MINUTES)
+    private var viewPager: ViewPager? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +49,10 @@ class LandingActivity : AppCompatActivity() {
             )
         }
         val sectionsPagerAdapter = LandingTabPagerAdapter(this, supportFragmentManager)
-        val viewPager = findViewById<ViewPager>(R.id.view_pager)
-        viewPager.adapter = sectionsPagerAdapter
+        viewPager = findViewById<ViewPager>(R.id.view_pager)
+        viewPager?.adapter = sectionsPagerAdapter
         val tabs = findViewById<TabLayout>(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
-
         val tabCount = tabs.tabCount
         for (tabIndex in 0 until tabCount) {
             tabs.getTabAt(tabIndex)?.customView = sectionsPagerAdapter.getTabView(tabIndex)
@@ -141,6 +139,27 @@ class LandingActivity : AppCompatActivity() {
         })
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.extras?.let {
+            var notificationType: String? =
+                it.getString(Constants.NotificationConstants.NOTIFICATION_TYPE)
+            when (notificationType) {
+                Constants.NotificationConstants.NOTIFICATION_TYPE_IS_EXPENSE -> {
+                    viewPager?.setCurrentItem(1,true)
+                }
+                Constants.NotificationConstants.NOTIFICATION_TYPE_IS_TRIP -> {
+                    viewPager?.setCurrentItem(0,true)
+                }
+                Constants.NotificationConstants.NOTIFICATION_TYPE_IS_LOCATION -> {
+                   //TODO : Add loction update method to send location coordinates to server
+                }
+                else ->{
+                }
+            }
+        }
+
+    }
 
     companion object {
         const val REQUEST_LOCATION_PERMISSION = 1000

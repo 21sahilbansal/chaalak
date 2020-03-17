@@ -1,7 +1,7 @@
 package com.loconav.locodriver
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import timber.log.Timber
 
 

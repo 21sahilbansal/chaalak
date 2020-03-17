@@ -19,17 +19,14 @@ class TripDataManager : KoinComponent {
 
     var response: MutableLiveData<DataWrapper<TripDataResponse>>? = null
 
-    var tripDataList: MutableLiveData<List<TripData>>? = MutableLiveData()
+    var tripDataList: MutableLiveData<List<TripData>> = MutableLiveData()
 
-    var liveTripMap: MutableLiveData<HashMap<String, TripData>>? =
+    var liveTripMap: MutableLiveData<HashMap<String, TripData>> =
         MutableLiveData()
     var filterState: HashMap<String, Any> = HashMap()
 
     private val driverId = sharedPreferenceUtil.getData(Constants.SharedPreferences.DRIVER_ID, 0L)
 
-    fun getTripsList(): LiveData<List<TripData>>? {
-        return tripDataList
-    }
 
     fun getTripDataMap(): LiveData<HashMap<String, TripData>>? {
         return liveTripMap
@@ -40,7 +37,7 @@ class TripDataManager : KoinComponent {
         filterState[FILTER_STATES] = Constants.TripConstants.tripStateArray
         filterState[Constants.TripConstants.FILTER_DRIVER_ID] = driverId
         if (0L != driverId) {
-            response = TripsRepo().getTripListData(
+            response = TripsRepo.getTripListData(
                 TripRequestBody(
                     sortOrder = Constants.TripConstants.SORT_ORDER_ASCENDING,
                     filter = filterState
@@ -49,9 +46,9 @@ class TripDataManager : KoinComponent {
             response?.let {
                 tranformationLiveData = Transformations.map(it) { tripDataResponse ->
                     val tripData = tripDataResponse.data?.tripDataList
-                    tripDataList?.postValue(tripData)
+                    tripDataList.postValue(tripData)
                     val tripMap = initTripData(tripData)
-                    liveTripMap?.postValue(tripMap)
+                    liveTripMap.postValue(tripMap)
                     true
                 }
             }
@@ -65,7 +62,7 @@ class TripDataManager : KoinComponent {
         filterState[Constants.TripConstants.FILTER_DRIVER_ID] = driverId
         filterState[Constants.TripConstants.UNIQUE_ID] = tripId
         if (driverId != 0L) {
-            response = TripsRepo().getTripListData(
+            response = TripsRepo.getTripListData(
                 TripRequestBody(
                     sortOrder = Constants.TripConstants.SORT_ORDER_ASCENDING,
                     filter = filterState

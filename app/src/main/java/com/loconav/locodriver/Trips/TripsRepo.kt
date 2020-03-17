@@ -1,10 +1,13 @@
 package com.loconav.locodriver.Trips
 
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.GsonBuilder
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.Trips.model.TripRequestBody
 import com.loconav.locodriver.base.DataWrapper
+import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.RetrofitCallback
 import org.koin.standalone.KoinComponent
@@ -12,12 +15,25 @@ import org.koin.standalone.inject
 import retrofit2.Call
 import retrofit2.Response
 
-class TripsRepo : KoinComponent {
+object TripsRepo : KoinComponent {
+
+//    move method to sharedpf to save object and get object
+//    global const : key
+
+
+
     private val httpApiService: HttpApiService by inject()
+    private val sharedPreferenceUtil : SharedPreferenceUtil by inject()
+    val apiResponse = MutableLiveData<DataWrapper<TripDataResponse>>()
+    val dataWrapper = DataWrapper<TripDataResponse>()
+
+    var filterState: HashMap<String, Any> = HashMap()
+
+    var response: MutableLiveData<DataWrapper<TripDataResponse>>? = null
+    private val driverId = sharedPreferenceUtil.getData(Constants.SharedPreferences.DRIVER_ID, 0L)
+
 
     fun getTripListData(tripRequestBody: TripRequestBody): MutableLiveData<DataWrapper<TripDataResponse>>? {
-        val dataWrapper = DataWrapper<TripDataResponse>()
-        val apiResponse = MutableLiveData<DataWrapper<TripDataResponse>>()
         if (tripRequestBody.sortOrder == null
             || tripRequestBody.filter == null
         ) {
@@ -32,8 +48,11 @@ class TripsRepo : KoinComponent {
                     call: Call<TripDataResponse>,
                     response: Response<TripDataResponse>
                 ) {
-                    dataWrapper.data = response.body()
-                    apiResponse.postValue(dataWrapper)
+                    response.body()?.let {
+                        sharedPreferenceUtil.put(it, TRIP_RESPONSE_SHARED_PF_KEY)
+                        dataWrapper.data = it
+                        apiResponse.postValue(dataWrapper)
+                    }
                 }
 
                 override fun handleFailure(call: Call<TripDataResponse>, t: Throwable) {
@@ -41,6 +60,8 @@ class TripsRepo : KoinComponent {
                     apiResponse.postValue(dataWrapper)
                 }
             })
+        dataWrapper.data = sharedPreferenceUtil.get(TRIP_RESPONSE_SHARED_PF_KEY)
+        apiResponse.value = dataWrapper
         return apiResponse
     }
 
@@ -62,7 +83,20 @@ class TripsRepo : KoinComponent {
                     apiResponse.postValue(dataWrapper)
                 }
             })
-
         return apiResponse
     }
+
+
+
+    fun getFetchTripRequestBody(): TripRequestBody {
+        filterState[Constants.TripConstants.FILTER_STATES] = Constants.TripConstants.tripStateArray
+        filterState[Constants.TripConstants.FILTER_DRIVER_ID] = driverId
+        return TripRequestBody(
+            sortOrder = Constants.TripConstants.SORT_ORDER_ASCENDING,
+            filter = filterState
+        )
+    }
+
+
+    const val TRIP_RESPONSE_SHARED_PF_KEY =  "trip_response_shared_pf_key"
 }

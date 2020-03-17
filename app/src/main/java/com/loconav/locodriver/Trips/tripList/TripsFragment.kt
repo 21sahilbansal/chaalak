@@ -22,14 +22,15 @@ class TripsFragment : BaseFragment() {
         tripsListViewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)
         progressBar.visibility = View.VISIBLE
         tripsListViewModel?.getTripList()?.observe(viewLifecycleOwner, Observer {
-            if (it.isNullOrEmpty()) {
+            val tripList = it.data?.tripDataList
+            if(tripList.isNullOrEmpty()) {
                 progressBar.visibility = View.GONE
                 no_trip_layout.visibility = View.VISIBLE
                 no_trip_text.visibility = View.VISIBLE
-            } else {
+            }else {
                 no_trip_layout.visibility = View.GONE
                 no_trip_text.visibility = View.GONE
-                initAdapter(list_recycler_view, it)
+                initAdapter(list_recycler_view, tripList)
                 progressBar.visibility = View.GONE
             }
         })

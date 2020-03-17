@@ -1,6 +1,7 @@
 package com.loconav.locodriver.di
 
 import android.location.Geocoder
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.loconav.locodriver.BuildConfig
 import com.loconav.locodriver.Constants.LanguageProperty.Companion.languageArray
@@ -18,6 +19,7 @@ import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 const val defaultSharedPfFile = "locodrive_prefs"
@@ -63,7 +65,10 @@ val networkModule = module {
     single { HeaderInterceptor(SharedPreferenceUtil(defaultSharedPfFile), BuildConfig.haul_secret) }
 
 
-    single<OkHttpClient> { OkHttpClient.Builder().addInterceptor(get<HeaderInterceptor>()).build() }
+    single<OkHttpClient> {
+        OkHttpClient.Builder().addInterceptor(get<HeaderInterceptor>())
+            .build()
+    }
 
 
     /**

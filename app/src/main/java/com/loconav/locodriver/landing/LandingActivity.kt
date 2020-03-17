@@ -23,9 +23,8 @@ import com.loconav.locodriver.landing.ui.main.LandingTabPagerAdapter
 import com.loconav.locodriver.user.profile.ProfileActivity
 import com.loconav.locodriver.util.LocationWorkManager
 import com.loconav.locodriver.util.loadImage
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
-import kotlinx.android.synthetic.main.fragment_view_profile.*
+import kotlinx.android.synthetic.main.fragment_trips.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 

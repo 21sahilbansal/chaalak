@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.loconav.locodriver.Constants
@@ -18,14 +19,19 @@ import com.loconav.locodriver.application.LocoDriverApplication
 import com.loconav.locodriver.landing.LandingActivity
 import com.loconav.locodriver.notification.model.LocoDrivePushNotification
 import com.loconav.locodriver.notification.model.Meta
+import org.koin.android.ext.android.inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import java.util.*
 
 
-object LocoNotificationManager {
+object LocoNotificationManager : KoinComponent {
     var locoDriverApplicationContext: Context = LocoDriverApplication.instance
     const val CHANNEL_ID = "locodrive_notification_channel_id"
     const val CHANNEL_NAME = "locodrive_notification_channel"
     const val CHANNEL_DESCRIPTION = "This channel is used to send locodrive notifications"
+    val GROUPING_NOTIFICATION = "Notification are grouped"
+    val gson: Gson by inject()
 
 
     /**
@@ -36,10 +42,9 @@ object LocoNotificationManager {
     // the NotificationChannel class is new and not in the support library
     // Register the channel with the system; you can't change the importance
     // or other notification behaviors after this
-    val notificationManager: NotificationManager
+    val notificationManager: NotificationManagerCompat
         get() {
-            val mNotificationManager =
-                LocoDriverApplication.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val mNotificationManager :NotificationManagerCompat =NotificationManagerCompat.from(LocoDriverApplication.instance)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val importance = NotificationManager.IMPORTANCE_DEFAULT
                 val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance)
@@ -48,8 +53,6 @@ object LocoNotificationManager {
             }
             return mNotificationManager
         }
-
-
     private fun buildNotification(
         pendingIntent: PendingIntent,
         title: String? = "LocoDrive",
@@ -61,7 +64,9 @@ object LocoNotificationManager {
             locoDriverApplicationContext.resources,
             R.mipmap.ic_launcher_round
         )
+
         val notification = NotificationCompat.Builder(locoDriverApplicationContext, CHANNEL_ID)
+            .setGroup(GROUPING_NOTIFICATION)
             .setLargeIcon(largeIcon)
             .setSmallIcon(notificationIcon)
             .setWhen(Date().time)
@@ -91,14 +96,11 @@ object LocoNotificationManager {
     fun showPushNotification(locoDrivePushNotification: LocoDrivePushNotification) {
         val gson = Gson()
         val metaData: Meta = gson.fromJson(
-            "{" + locoDrivePushNotification.meta?.asString?.substring(
-                1,
-                locoDrivePushNotification.meta?.asString!!.length - 1
-            ) + "}", Meta::class.java
+            "{" + locoDrivePushNotification.meta?.asString?.substring(1, locoDrivePushNotification.meta?.asString!!.length - 1) + "}", Meta::class.java
         )
         val broadcastIntent = Intent(locoDriverApplicationContext, LandingActivity::class.java)
         broadcastIntent.putExtra(Constants.NotificationConstants.NOTIFICATION_TYPE, metaData.type)
-        broadcastIntent.putExtra(Constants.NotificationConstants.TYPE_ID, metaData.trip_id)
+        //broadcastIntent.putExtra(Constants.NotificationConstants.TYPE_ID, metaData.trip_id)
         val uniqueCode = System.currentTimeMillis().toInt()
         val pendingIntent = PendingIntent.getActivity(
             locoDriverApplicationContext, uniqueCode,

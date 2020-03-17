@@ -20,7 +20,7 @@ class LocoFcmListenerService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        if (!fcmHttpApiService.isFCMIDRegistered()) return
+       // if (!fcmHttpApiService.isFCMIDRegistered()) return
         // Check if message contains a data payload.
         if (message.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: " + message.data)

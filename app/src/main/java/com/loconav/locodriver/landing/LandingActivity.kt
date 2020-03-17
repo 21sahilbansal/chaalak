@@ -166,6 +166,7 @@ class LandingActivity : AppCompatActivity() {
                     viewPager?.currentItem = 0
                 }
                 Constants.NotificationConstants.NOTIFICATION_TYPE_IS_LOCATION -> {
+                    // Add loction update method to send location coordinates to server
                 }
             }
         }

@@ -1,7 +1,6 @@
 package com.loconav.locodriver.notification.htttpService
 
 import android.os.Build
-import android.util.Log
 import com.loconav.locodriver.AppUtils
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
@@ -29,6 +28,7 @@ class FCMHttpApiService : KoinComponent {
                 ) {
                     setFCMIDRegistered(true)
                 }
+
                 override fun handleFailure(call: Call<ResponseBody?>, t: Throwable) {
                     setFCMIDRegistered(false)
                 }
@@ -37,12 +37,16 @@ class FCMHttpApiService : KoinComponent {
 
     fun deleteFCMDeviceId() {
         if (!isFCMIDRegistered()) return
-        httpApiService.deleteFCMToken(AppUtils.getDeviceId()).enqueue(object : RetrofitCallback<ResponseBody?>() {
-                override fun handleSuccess(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
+        httpApiService.deleteFCMToken(AppUtils.getDeviceId())
+            .enqueue(object : RetrofitCallback<ResponseBody?>() {
+                override fun handleSuccess(
+                    call: Call<ResponseBody?>,
+                    response: Response<ResponseBody?>
+                ) {
                     setFCMIDRegistered(false)
                     EventBus.getDefault().post(
-                            NotificationEventBus(NotificationEventBus.DELETE_FCM_ID, response.body())
-                        )
+                        NotificationEventBus(NotificationEventBus.DELETE_FCM_ID, response.body())
+                    )
                     clearAllUserData()
                 }
 

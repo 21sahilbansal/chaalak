@@ -160,13 +160,15 @@ class LandingActivity : AppCompatActivity() {
                 it.getString(Constants.NotificationConstants.NOTIFICATION_TYPE)
             when (notificationType) {
                 Constants.NotificationConstants.NOTIFICATION_TYPE_IS_EXPENSE -> {
-                    viewPager?.currentItem = 1
+                    viewPager?.setCurrentItem(1,true)
                 }
                 Constants.NotificationConstants.NOTIFICATION_TYPE_IS_TRIP -> {
-                    viewPager?.currentItem = 0
+                    viewPager?.setCurrentItem(0,true)
                 }
                 Constants.NotificationConstants.NOTIFICATION_TYPE_IS_LOCATION -> {
-                    // Add loction update method to send location coordinates to server
+                   //TODO : Add loction update method to send location coordinates to server
+                }
+                else ->{
                 }
             }
         }

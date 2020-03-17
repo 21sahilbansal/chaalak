@@ -39,7 +39,6 @@ class ExpenseDetailFragment : BaseFragment() {
                 initDocumentImageAdapter(expense_doc_rec, it)
             })
             progressBar.visibility = View.VISIBLE
-            initRequest(it)
         }
 
     }

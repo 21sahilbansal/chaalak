@@ -75,6 +75,8 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         return ""
     }
 
+    //Todo : Use library (Joda date time) instead of logic
+
     fun getDateSpinnerList() {
         val maxDate = 31
         val maxMonthindex = 12

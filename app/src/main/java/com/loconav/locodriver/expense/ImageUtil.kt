@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.IMAGE_QUALITY_CONSTANT
 import com.loconav.locodriver.application.LocoDriverApplication
 import com.loconav.locodriver.util.FileUtil
 import okhttp3.MediaType
@@ -18,7 +19,7 @@ object ImageUtil {
 
     fun getImageUri(context: Context, inImage: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 70, bytes)
+        inImage.compress(Bitmap.CompressFormat.JPEG, IMAGE_QUALITY_CONSTANT, bytes)
         val path =
             MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "Title", null)
         return Uri.parse(path)

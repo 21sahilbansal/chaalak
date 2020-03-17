@@ -114,6 +114,7 @@ class Constants {
             const val MAX_IMAGE_COUNT = 5
             const val EXPENSE_TYPE = "expense_type"
             const val UPLOADABLE_ATTRIBUTES_KEY = "uploads_attributes[images][]"
+            const val IMAGE_QUALITY_CONSTANT = 70
         }
     }
 

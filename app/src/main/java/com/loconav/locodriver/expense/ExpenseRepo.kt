@@ -29,25 +29,29 @@ object ExpenseRepo : KoinComponent {
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     val expenseDao = db.expenseDao()
 
+    val expenseTypeDataWrapper = DataWrapper<ExpenseType>()
+    val expenseTypeApiResponse = MutableLiveData<DataWrapper<ExpenseType>>()
+    val expenseListDataWrapper = DataWrapper<List<Expense>>()
+    val expenseListApiResponse = MutableLiveData<DataWrapper<List<Expense>>>()
+    val expenseDataWrapper = DataWrapper<Expense>()
+    val expenseApiResponse = MutableLiveData<DataWrapper<Expense>>()
 
     fun getExpenseType(): LiveData<DataWrapper<ExpenseType>>? {
-        val dataWrapper = DataWrapper<ExpenseType>()
-        val apiResponse = MutableLiveData<DataWrapper<ExpenseType>>()
         httpApiService.getExpenseType().enqueue(object : RetrofitCallback<ExpenseType>() {
             override fun handleSuccess(call: Call<ExpenseType>, response: Response<ExpenseType>) {
                 response.body()?.let {
-                    dataWrapper.data = it
+                    expenseTypeDataWrapper.data = it
                     sharedPreferenceUtil.saveJsonData(EXPENSE_TYPE, it)
-                    apiResponse.postValue(dataWrapper)
+                    expenseTypeApiResponse.postValue(expenseTypeDataWrapper)
                 }
             }
 
             override fun handleFailure(call: Call<ExpenseType>, t: Throwable) {
-                dataWrapper.throwable = t
-                apiResponse.postValue(dataWrapper)
+                expenseTypeDataWrapper.throwable = t
+                expenseTypeApiResponse.postValue(expenseTypeDataWrapper)
             }
         })
-        return apiResponse
+        return expenseTypeApiResponse
     }
 
     fun uploadExpense(addExpenseRequestBody: AddExpenseRequestBody) {
@@ -111,8 +115,6 @@ object ExpenseRepo : KoinComponent {
     }
 
     fun getExpenseList(page: Int): LiveData<DataWrapper<List<Expense>>>? {
-        val dataWrapper = DataWrapper<List<Expense>>()
-        val apiResponse = MutableLiveData<DataWrapper<List<Expense>>>()
         httpApiService.getExpenseList(page)
             .enqueue(object : RetrofitCallback<List<Expense>>() {
                 override fun handleSuccess(
@@ -120,8 +122,8 @@ object ExpenseRepo : KoinComponent {
                     response: Response<List<Expense>>
                 ) {
                     response.body()?.let {
-                        dataWrapper.data = response.body()
-                        for (item in dataWrapper.data!!) {
+                        expenseListDataWrapper.data = response.body()
+                        for (item in expenseListDataWrapper.data!!) {
                             item.isUpdated = true
                             GlobalScope.launch {
                                 Dispatchers.Default
@@ -129,20 +131,18 @@ object ExpenseRepo : KoinComponent {
                             }
                         }
                     }
-                    apiResponse.postValue(dataWrapper)
+                    expenseListApiResponse.postValue(expenseListDataWrapper)
                 }
 
                 override fun handleFailure(call: Call<List<Expense>>, t: Throwable) {
-                    dataWrapper.throwable = t
-                    apiResponse.postValue(dataWrapper)
+                    expenseListDataWrapper.throwable = t
+                    expenseListApiResponse.postValue(expenseListDataWrapper)
                 }
             })
-        return apiResponse
+        return expenseListApiResponse
     }
 
     fun getExpense(expenseId: Long): LiveData<DataWrapper<Expense>> {
-        val dataWrapper = DataWrapper<Expense>()
-        val apiResponse = MutableLiveData<DataWrapper<Expense>>()
         httpApiService.getExpense(expenseId)
             .enqueue(object : RetrofitCallback<Expense>() {
                 override fun handleSuccess(
@@ -150,7 +150,7 @@ object ExpenseRepo : KoinComponent {
                     response: Response<Expense>
                 ) {
                     response.body()?.let {
-                        dataWrapper.data = it
+                        expenseDataWrapper.data = it
                         it.isUpdated = true
                         GlobalScope.launch {
                             Dispatchers.Default
@@ -160,11 +160,11 @@ object ExpenseRepo : KoinComponent {
                 }
 
                 override fun handleFailure(call: Call<Expense>, t: Throwable) {
-                    dataWrapper.throwable = t
-                    apiResponse.postValue(dataWrapper)
+                    expenseDataWrapper.throwable = t
+                    expenseApiResponse.postValue(expenseDataWrapper)
                 }
             })
-        return apiResponse
+        return expenseApiResponse
     }
 
     fun getunSyncedExpenseListFromDb(): List<Expense> {

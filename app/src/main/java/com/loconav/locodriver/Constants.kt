@@ -59,8 +59,8 @@ class Constants {
     interface AnimationConstants {
         companion object {
             const val ANIMATION_CONSTANT_RESEND_OTP_COUNTER = 30000
-            const val VALUEANIMATOR_START_ANIMATION_VALUE = 00.30f
-            const val VALUEANIMATOR_END_ANIMATION_VALUE = 00.00f
+            const val VALUEANIMATOR_START_ANIMATION_VALUE = 30
+            const val VALUEANIMATOR_END_ANIMATION_VALUE = 0
 
         }
     }

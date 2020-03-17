@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient
 import com.google.android.gms.tasks.Task
 import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.AnimationConstants.Companion.ANIMATION_CONSTANT_RESEND_OTP_COUNTER
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.user.UserHttpService
@@ -21,7 +22,7 @@ class EnterOtpViewModel : ViewModel(), KoinComponent {
 
     val sharedPreferenceUtil:SharedPreferenceUtil by inject()
     val userHttpService: UserHttpService by inject()
-    val animator = ValueAnimator.ofFloat(Constants.AnimationConstants.VALUEANIMATOR_START_ANIMATION_VALUE,Constants.AnimationConstants.VALUEANIMATOR_END_ANIMATION_VALUE)
+    val animator = ValueAnimator.ofInt(Constants.AnimationConstants.VALUEANIMATOR_START_ANIMATION_VALUE,Constants.AnimationConstants.VALUEANIMATOR_END_ANIMATION_VALUE)
 
     fun validateOTP(phoneNumber: String, otp: String): LiveData<DataWrapper<EnterOTPResponse>>? {
         return userHttpService.validateOTPFromServer(phoneNumber, otp)
@@ -36,7 +37,7 @@ class EnterOtpViewModel : ViewModel(), KoinComponent {
         animationListener: Animator.AnimatorListener,
         animatorUpdateListener: ValueAnimator.AnimatorUpdateListener
     ) {
-        animator.duration = Constants.AnimationConstants.ANIMATION_CONSTANT_RESEND_OTP_COUNTER.toLong()
+        animator.duration = ANIMATION_CONSTANT_RESEND_OTP_COUNTER.toLong()
         animator.interpolator = LinearInterpolator()
         animator.addListener(animationListener)
         animator.addUpdateListener(animatorUpdateListener)

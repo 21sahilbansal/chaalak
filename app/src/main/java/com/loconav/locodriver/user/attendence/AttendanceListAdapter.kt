@@ -81,6 +81,7 @@ class AttendanceListAdapter(val list: List<Attendance>) :
             } ?: run {
                 itemView.attendance_status_tv.text =
                     itemView.context.getString(R.string.attendance_not_updated)
+                setAttendanceStatusBackground(android.R.color.transparent)
             }
         }
     }

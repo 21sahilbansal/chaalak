@@ -32,6 +32,8 @@ object LocoNotificationManager : KoinComponent {
     const val CHANNEL_DESCRIPTION = "This channel is used to send locodrive notifications"
     val GROUPING_NOTIFICATION = "Notification are grouped"
     val gson: Gson by inject()
+    const val BUNDLE_MESSAGE_ID = 100
+
 
 
     /**
@@ -53,6 +55,15 @@ object LocoNotificationManager : KoinComponent {
             }
             return mNotificationManager
         }
+    val  summaryNotificationBuilder  = NotificationCompat.Builder(locoDriverApplicationContext,
+        CHANNEL_ID)
+    .setGroup(GROUPING_NOTIFICATION)
+    .setGroupSummary(true)
+    .setContentTitle("Locodrive")
+    .setContentText("You have unread messages")
+    .setSmallIcon(R.mipmap.ic_launcher)
+
+
     private fun buildNotification(
         pendingIntent: PendingIntent,
         title: String? = "LocoDrive",
@@ -85,6 +96,7 @@ object LocoNotificationManager : KoinComponent {
             .setDefaults(Notification.DEFAULT_SOUND)
             .build()
         notificationManager.notify(notificationId, notification)
+        notificationManager.notify(BUNDLE_MESSAGE_ID,summaryNotificationBuilder.build())
     }
 
     private val notificationIcon: Int

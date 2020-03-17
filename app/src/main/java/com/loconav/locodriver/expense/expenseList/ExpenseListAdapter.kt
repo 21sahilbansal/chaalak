@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EXPENSE_TITLE
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.REJECTED
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE_EXPENSE
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.VERIFICATION_PENDING
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.VERIFIED
@@ -43,15 +45,15 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
 
     class ExpenseListAdapterViewHolder(itemView: View) :
         androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-        fun setClickListener(expense: Expense){
+        fun setClickListener(expense: Expense) {
             val holderOnClickListener = View.OnClickListener {
                 val intent = Intent(
                     itemView.context,
                     DetailActivity::class.java
                 )
-                val bundle= Bundle()
-                bundle.putString("source",SOURCE_EXPENSE)
-                bundle.putString("expense_title",expense.expenseType)
+                val bundle = Bundle()
+                bundle.putString(SOURCE, SOURCE_EXPENSE)
+                bundle.putString(EXPENSE_TITLE, expense.expenseType)
                 intent.putExtras(bundle)
                 intent.data = Uri.parse(expense.autoId.toString())
                 itemView.context.startActivity(intent)
@@ -59,21 +61,56 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
 
             itemView.setOnClickListener(holderOnClickListener)
         }
+
         fun setData(expense: Expense) {
-            expense.expenseType?.let {
+            setExpenceType(expense.expenseType)
+            setExpenseTripID(expense.tripUniqueId)
+            setExpenseStatus(expense.verificationStatus)
+            setExpenseDate(expense.expenseDate)
+            setExpenseAmount(expense.amount)
+        }
+
+        private fun setExpenseAmount(amount: Int?) {
+            amount?.let {
+                itemView.trip_expense_amount_tv.text =
+                    String.format(itemView.context.getString(R.string.rupee), it)
+            } ?: run {
+                itemView.trip_expense_amount_tv.text =
+                    itemView.context.getString(R.string.no_amount_present)
+            }
+        }
+
+        private fun setExpenseDate(date: Long?) {
+            date?.let {
+                itemView.trip_expense_date.text = String.format(
+                    "%s",
+                    TimeUtils.getThFormatTime(it)
+                )
+            } ?: run {
+                itemView.trip_expense_date.text =
+                    itemView.context.getString(R.string.unknown_time_text)
+            }
+        }
+
+        private fun setExpenseTripID(tripId: String?) {
+            tripId?.let {
+                itemView.expense_trip_id.text = it
+            } ?: run {
+                itemView.expense_trip_id.text = ""
+            }
+        }
+
+        private fun setExpenceType(expenseType: String?) {
+            expenseType?.let {
                 itemView.trip_expense_type_text.text = it
             } ?: run {
                 itemView.trip_expense_type_text.text =
                     itemView.context.getString(R.string.unknown_expense_type)
             }
+        }
 
-            expense.tripUniqueId?.let {
-                itemView.expense_trip_id.text = it
-            }?:run{
-                itemView.expense_trip_id.text = ""
-            }
-
-            expense.verificationStatus?.let {
+        private fun setExpenseStatus(status: String?) {
+            status?.let {
                 itemView.trip_expense_status_tv.text = it
                 setStatusColor(itemView, it)
             } ?: run {
@@ -85,25 +122,6 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
                         R.color.color_pending_brown
                     )
                 )
-            }
-
-            expense.expenseDate?.let {
-                itemView.trip_expense_date.text = String.format(
-                    "%s",
-                    TimeUtils.getThFormatTime(it)
-//                    TimeUtils.getDateTimeFromEpoch(it, TIME_FORMAT_12_HOUR)
-                )
-            } ?: run {
-                itemView.trip_expense_date.text =
-                    itemView.context.getString(R.string.unknown_time_text)
-            }
-
-            expense.amount?.let {
-                itemView.trip_expense_amount_tv.text =
-                    String.format(itemView.context.getString(R.string.rupee), it)
-            } ?: run {
-                itemView.trip_expense_amount_tv.text =
-                    itemView.context.getString(R.string.no_amount_present)
             }
         }
 

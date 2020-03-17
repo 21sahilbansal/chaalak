@@ -57,9 +57,10 @@
             android:name=".expense.addExpense.AddExpenseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoStatusBar" />
-        <activity android:name=".expense.DocumentImageActivity"
+        <activity
+            android:name=".expense.DocumentImageActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
 
         <receiver
             android:name=".receiver.SmsReceiver"

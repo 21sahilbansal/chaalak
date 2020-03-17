@@ -16,7 +16,7 @@ import com.loconav.locodriver.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_trips.*
 
 class TripsFragment : BaseFragment() {
-    var tripsListViewModel: TripsListViewModel? = null
+    private var tripsListViewModel: TripsListViewModel? = null
 
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
         tripsListViewModel = ViewModelProviders.of(this).get(TripsListViewModel::class.java)

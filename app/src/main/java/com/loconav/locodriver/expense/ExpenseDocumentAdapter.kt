@@ -10,6 +10,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.DOCUMENT_IMAGE
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EDITABLE
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.LIST_POSITION
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.MAX_IMAGE_COUNT
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE
 import com.loconav.locodriver.R
 import com.loconav.locodriver.Trips.tripDetail.DetailActivity
 import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.DISABLE_ADD_IMAGE
@@ -31,7 +36,7 @@ class ExpenseDocumentAdapter(val list: ArrayList<String>, private val editable: 
         viewType: Int
     ): ExpenseDocumentViewHolder {
 
-        if (itemCount > 4) {
+        if (itemCount > MAX_IMAGE_COUNT - 1) {
             EventBus.getDefault().post(ImageSelectionEvent(DISABLE_ADD_IMAGE))
         }
         val view = LayoutInflater.from(parent.context)
@@ -51,20 +56,20 @@ class ExpenseDocumentAdapter(val list: ArrayList<String>, private val editable: 
         holder.itemView.close_image_ll.setOnClickListener {
             list.removeAt(position)
             notifyDataSetChanged()
-            if (itemCount < 5) {
+            if (itemCount < MAX_IMAGE_COUNT) {
                 EventBus.getDefault().post(ImageSelectionEvent(ENABLE_ADD_IMAGE))
             }
         }
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             val intent = Intent(
                 it.context,
                 DocumentImageActivity::class.java
             )
-            val bundle= Bundle()
-            bundle.putString("source", "document_image")
-            bundle.putInt("position",position)
-            bundle.putBoolean("editable",editable)
+            val bundle = Bundle()
+            bundle.putString(SOURCE, DOCUMENT_IMAGE)
+            bundle.putInt(LIST_POSITION, position)
+            bundle.putBoolean(EDITABLE, editable)
             intent.putExtras(bundle)
             intent.data = Uri.parse(list[position])
             it.context.startActivity(intent)
@@ -77,7 +82,7 @@ class ExpenseDocumentAdapter(val list: ArrayList<String>, private val editable: 
             if (editable) {
                 itemView.close_image_ll.visibility = View.VISIBLE
             }
-            itemView.document_image.loadImage(R.drawable.ic_user_placeholder,imageUri)
+            itemView.document_image.loadImage(R.drawable.ic_user_placeholder, imageUri)
         }
     }
 }

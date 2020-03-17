@@ -9,8 +9,8 @@ import com.loconav.locodriver.expense.DocumentTypeConverter
 @Entity(tableName = "expense")
 data class Expense(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="auto_id")
-    var autoId:Long?=null,
+    @ColumnInfo(name = "auto_id")
+    var autoId: Long? = null,
     @SerializedName("id")
     @ColumnInfo(name = "expense_Id")
     var expenseId: Long? = null,
@@ -66,7 +66,7 @@ data class Expense(
     @ColumnInfo(name = "account_type")
     var accountType: String? = null,
     @ColumnInfo(name = "is_Updated")
-    var isUpdated:Boolean = false,
+    var isUpdated: Boolean = false,
     @SerializedName("uploads")
     @Embedded
     var documents: Document? = null

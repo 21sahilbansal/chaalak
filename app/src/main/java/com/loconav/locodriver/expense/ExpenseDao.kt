@@ -17,7 +17,7 @@ interface ExpenseDao {
     fun findByExpenseId(expenseId: Long): LiveData<Expense>
 
     @Query("SELECT expense_Id FROM expense WHERE auto_id = :autoId")
-    fun getExpenseIDFromAutoId(autoId:Long):Long
+    fun getExpenseIDFromAutoId(autoId: Long): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg expense: Expense)

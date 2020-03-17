@@ -22,7 +22,8 @@ class ExpenseTableReadWriteTest {
     fun createDb() {
         val context = InstrumentationRegistry.getInstrumentation().context
         db = Room.inMemoryDatabaseBuilder(
-            context, AppDatabase::class.java).build()
+            context, AppDatabase::class.java
+        ).build()
         expenseDao = db.expenseDao()
     }
 

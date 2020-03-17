@@ -1,6 +1,8 @@
 package com.loconav.locodriver.Trips.tripDetail
 
 import android.os.Bundle
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EXPENSE_TITLE
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE_EXPENSE
 import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.EXPENSE_DETAIL_FRAGMENT
 import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.TRIP_DETAIL_FRAGMENT
@@ -15,7 +17,7 @@ class DetailActivity : BaseFragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         intent.extras?.let {
-            when (it.getString("source")) {
+            when (it.getString(SOURCE)) {
                 SOURCE_TRIP -> {
                     intent?.data?.let {
                         inflateReplaceFragment(
@@ -30,7 +32,7 @@ class DetailActivity : BaseFragmentActivity() {
                         inflateReplaceFragment(
                             ExpenseDetailFragment.getInstance(
                                 it.toString().toLong(),
-                                intent.extras?.getString("expense_title")
+                                intent.extras?.getString(EXPENSE_TITLE)
                             ),
                             false,
                             EXPENSE_DETAIL_FRAGMENT

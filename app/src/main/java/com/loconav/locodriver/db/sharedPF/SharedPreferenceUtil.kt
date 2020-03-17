@@ -23,14 +23,6 @@ class SharedPreferenceUtil(val fileName: String) {
         return editor.apply()
     }
 
-    fun saveData(key: String,value:Any){
-        val gson = Gson()
-        val json = gson.toJson(value)
-        editor.putString(key, json)
-        editor.apply()
-    }
-
-
     fun saveData(key: String, value: Boolean) {
         editor.putBoolean(key, value)
         return editor.apply()

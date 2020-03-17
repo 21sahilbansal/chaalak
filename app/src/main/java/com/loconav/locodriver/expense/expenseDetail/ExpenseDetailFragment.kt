@@ -36,7 +36,7 @@ class ExpenseDetailFragment : BaseFragment() {
             expenseDetailViewModel?.getIndividualExpenseFromDb(it)?.observe(this, Observer {
                 progressBar.visibility = View.GONE
                 setData(it)
-                initDocumentimageAdapter(expense_doc_rec,it)
+                initDocumentImageAdapter(expense_doc_rec, it)
             })
             progressBar.visibility = View.VISIBLE
             initRequest(it)
@@ -64,26 +64,37 @@ class ExpenseDetailFragment : BaseFragment() {
 
     }
 
-    private fun initDocumentimageAdapter(view:RecyclerView,expense: Expense){
-        val documetList= expense.documents?.expenseDocList
-        if(documetList.isNullOrEmpty()){
-            no_doc_title.visibility =View.VISIBLE
-        }else{
-            no_doc_title.visibility =View.GONE
-            val expenseListAdapter = ExpenseDocumentAdapter(documetList as ArrayList<String>,false)
-            val layoutManager = GridLayoutManager(view.context, 3,GridLayoutManager.VERTICAL,false)
+    private fun initDocumentImageAdapter(view: RecyclerView, expense: Expense) {
+        val documentList = expense.documents?.expenseDocList
+        if (documentList.isNullOrEmpty()) {
+            no_doc_title.visibility = View.VISIBLE
+        } else {
+            no_doc_title.visibility = View.GONE
+            val expenseListAdapter =
+                ExpenseDocumentAdapter(documentList as ArrayList<String>, false)
+            val layoutManager =
+                GridLayoutManager(view.context, 3, GridLayoutManager.VERTICAL, false)
             view.layoutManager = layoutManager
             view.adapter = expenseListAdapter
         }
     }
 
     private fun setData(expense: Expense) {
-        expense.amount?.let {
+        setExpenseAmount(expense.amount)
+        setExpenseDate(expense.expenseDate)
+        setExpenseStatus(expense.verificationStatus)
+    }
+
+    private fun setExpenseAmount(amount: Int?) {
+        amount?.let {
             tv_trip_expense_amount.text = String.format(getString(R.string.rupee), it)
         } ?: run {
             tv_trip_expense_amount.text = getString(R.string.no_amount_present)
         }
-        expense.expenseDate?.let {
+    }
+
+    private fun setExpenseDate(expenseDate: Long?) {
+        expenseDate?.let {
             tv_expense_date.text = String.format(
                 "%s,%s",
                 TimeUtils.getThFormatTime(it),
@@ -92,7 +103,10 @@ class ExpenseDetailFragment : BaseFragment() {
         } ?: run {
             tv_expense_date.text = getString(R.string.unknown_time_text)
         }
-        expense.verificationStatus?.let {
+    }
+
+    private fun setExpenseStatus(expenseStatus: String?) {
+        expenseStatus?.let {
             expense_status_tv.text = it
             setColor(expense_status_tv, it)
         } ?: run {
@@ -134,7 +148,6 @@ class ExpenseDetailFragment : BaseFragment() {
             }
         }
     }
-
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_expense_detail

@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName
 
 data class UploadExpenseResponse(
     @SerializedName("success")
-    var success:Boolean?=null,
+    var success: Boolean? = null,
     @SerializedName("message")
-    var successMessage:String?=null,
+    var successMessage: String? = null,
     @SerializedName("obj")
-    var expense:Expense?=null
+    var expense: Expense? = null
 )

@@ -145,7 +145,7 @@ object FileUtil {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private  fun getPath(context: Context, uri: Uri): String? {
+    private fun getPath(context: Context, uri: Uri): String? {
 
         val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
 
@@ -248,6 +248,7 @@ object FileUtil {
     private fun isExternalStorageDocument(uri: Uri): Boolean {
         return "com.android.externalstorage.documents" == uri.authority
     }
+
     private fun isDownloadsDocument(uri: Uri): Boolean {
         return "com.android.providers.downloads.documents" == uri.authority
     }

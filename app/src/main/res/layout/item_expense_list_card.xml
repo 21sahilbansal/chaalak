@@ -1,5 +1,4 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,8 +26,8 @@
 
             <TextView
                 android:id="@+id/expense_trip_id"
-                android:layout_width="wrap_content"
                 style="@style/ExtraSmallLight"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
@@ -64,27 +63,27 @@
             <TextView
                 android:id="@+id/trip_expense_status_tv"
                 style="@style/ActiveTag"
-                android:textColor="@color/color_pending_brown"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
+                android:textColor="@color/color_pending_brown"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/trip_expense_amount_tv"
                 tools:text="Verification Pending" />
 
             <TextView
                 android:id="@+id/trip_expense_date"
+                style="@style/ExtraSmallLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/ExtraSmallLight"
-                android:layout_marginBottom="15dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trip_expense_amount_tv"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
-                tools:text="13th sep 2019 11:10AM"/>
+                android:layout_marginBottom="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trip_expense_amount_tv"
+                tools:text="13th sep 2019 11:10AM" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

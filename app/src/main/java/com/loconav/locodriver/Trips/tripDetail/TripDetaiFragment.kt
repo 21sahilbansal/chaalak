@@ -43,7 +43,7 @@ class TripDetailFragment : BaseFragment() {
 //        }
 
         call_fab.setOnClickListener {
-                        val phoneIntent = Intent(
+            val phoneIntent = Intent(
                 Intent.ACTION_DIAL,
                 Uri.parse(
                     String.format(

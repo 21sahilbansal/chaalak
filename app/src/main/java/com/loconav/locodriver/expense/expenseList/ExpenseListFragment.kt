@@ -16,8 +16,9 @@ import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
 import kotlinx.android.synthetic.main.fragment_expense_list.*
 
 class ExpenseListFragment : BaseFragment() {
-    var expenseListViewModel: ExpenseListViewModel? = null
+    private var expenseListViewModel: ExpenseListViewModel? = null
     var page: Int = 1
+    private var isLastPage: Boolean? = null
 
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
         expenseListViewModel = ViewModelProviders.of(this).get(ExpenseListViewModel::class.java)
@@ -46,6 +47,10 @@ class ExpenseListFragment : BaseFragment() {
 
     private fun initRequest(page: Int) {
         expenseListViewModel?.getFetchExpenseList(page)?.observe(this, Observer {
+            it.data?.let {
+                isLastPage = it.isNullOrEmpty()
+                progressBar.visibility = View.GONE
+            }
             it.throwable?.let { error ->
                 progressBar.visibility = View.GONE
                 Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
@@ -68,7 +73,10 @@ class ExpenseListFragment : BaseFragment() {
     }
 
     private fun loadMoreItems() {
-        initRequest(page++)
+        if (isLastPage == false) {
+            progressBar.visibility = View.VISIBLE
+            initRequest(page++)
+        }
     }
 
     private fun initAdapter(view: RecyclerView, expenseList: List<Expense>) {

@@ -67,7 +67,6 @@ val networkModule = module {
 
     single<OkHttpClient> {
         OkHttpClient.Builder().addInterceptor(get<HeaderInterceptor>())
-            .addNetworkInterceptor(StethoInterceptor())
             .build()
     }
 

@@ -29,6 +29,7 @@ import org.greenrobot.eventbus.ThreadMode
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import android.provider.MediaStore
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.UPLOADABLE_ATTRIBUTES_KEY
 import com.loconav.locodriver.expense.ImageUtil
 import okhttp3.MultipartBody
 
@@ -129,17 +130,14 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
             }
             expenseDocumentAdapter?.list?.let {
                 addExpenseRequestBody.imageList = it
-                prepareImageToBeSentToServer(it)
+                addExpenseRequestBody.multipartList =
+                    addExpenseViewModel?.prepareImageToBeSentToServer(it)
             }
-
             addExpenseViewModel?.uploadExpence(addExpenseRequestBody)
             activity?.finish()
         }
     }
 
-    private fun prepareImageToBeSentToServer(list: ArrayList<String>) {
-        addExpenseRequestBody.multipartList = ImageUtil.getMultipartFromUri(list)
-    }
 
     private val expenseTypeSpinnerItemSelectListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(p0: AdapterView<*>?) {}

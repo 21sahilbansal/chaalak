@@ -106,6 +106,14 @@ class Constants {
             const val VERIFICATION_PENDING = "Verfication Pending"
             const val REJECTED = "Rejected"
             const val VERIFIED = "Verified"
+            const val SOURCE = "source"
+            const val EXPENSE_TITLE = "expense_title"
+            const val DOCUMENT_IMAGE = "document_image"
+            const val LIST_POSITION  = "position"
+            const val EDITABLE = "editable"
+            const val MAX_IMAGE_COUNT = 5
+            const val EXPENSE_TYPE = "expense_type"
+            const val UPLOADABLE_ATTRIBUTES_KEY = "uploads_attributes[images][]"
         }
     }
 

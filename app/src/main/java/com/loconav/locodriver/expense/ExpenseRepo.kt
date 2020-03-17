@@ -2,6 +2,7 @@ package com.loconav.locodriver.expenses
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EXPENSE_TYPE
 import com.loconav.locodriver.R
 import com.loconav.locodriver.application.LocoDriverApplication
 import com.loconav.locodriver.base.DataWrapper
@@ -29,14 +30,14 @@ object ExpenseRepo : KoinComponent {
     val expenseDao = db.expenseDao()
 
 
-    fun getExpenseType(): MutableLiveData<DataWrapper<ExpenseType>>? {
+    fun getExpenseType(): LiveData<DataWrapper<ExpenseType>>? {
         val dataWrapper = DataWrapper<ExpenseType>()
         val apiResponse = MutableLiveData<DataWrapper<ExpenseType>>()
         httpApiService.getExpenseType().enqueue(object : RetrofitCallback<ExpenseType>() {
             override fun handleSuccess(call: Call<ExpenseType>, response: Response<ExpenseType>) {
                 response.body()?.let {
                     dataWrapper.data = it
-                    sharedPreferenceUtil.saveData("expense_type", it)
+                    sharedPreferenceUtil.saveJsonData(EXPENSE_TYPE, it)
                     apiResponse.postValue(dataWrapper)
                 }
             }
@@ -49,11 +50,9 @@ object ExpenseRepo : KoinComponent {
         return apiResponse
     }
 
-    fun uploadExpense(addExpenseRequestBody: AddExpenseRequestBody){
-        val dataWrapper = DataWrapper<UploadExpenseResponse>()
-        val apiResponse = MutableLiveData<DataWrapper<UploadExpenseResponse>>()
+    fun uploadExpense(addExpenseRequestBody: AddExpenseRequestBody) {
         if (addExpenseRequestBody.expenseType == null && addExpenseRequestBody.amount == null && addExpenseRequestBody.expenseDate == null) return
-        val expenseType = setUpMultipartRequest( addExpenseRequestBody.expenseType!!)
+        val expenseType = setUpMultipartRequest(addExpenseRequestBody.expenseType!!)
         val expenseAmount = setUpMultipartRequest(addExpenseRequestBody.amount!!.toString())
         val expenseDate = setUpMultipartRequest(addExpenseRequestBody.expenseDate!!.toString())
         val expenseDocument = Document(expenseDocList = addExpenseRequestBody.imageList)
@@ -68,14 +67,26 @@ object ExpenseRepo : KoinComponent {
             Dispatchers.Default
             expenseDao.insertAll(expenseFake)
         }
-        uploadToServer(expenseType,expenseAmount,expenseDate,addExpenseRequestBody.multipartList,expenseFake)
+        uploadToServer(
+            expenseType,
+            expenseAmount,
+            expenseDate,
+            addExpenseRequestBody.multipartList,
+            expenseFake
+        )
     }
 
-    fun setUpMultipartRequest(expenseRequestParam:String):RequestBody{
-        return RequestBody.create(MediaType.parse("text/plain"),expenseRequestParam)
+    fun setUpMultipartRequest(expenseRequestParam: String): RequestBody {
+        return RequestBody.create(MediaType.parse("text/plain"), expenseRequestParam)
     }
 
-    fun uploadToServer(expenseType:RequestBody,expenseAmount:RequestBody,expenseDate:RequestBody,list :List<MultipartBody.Part>?,fakeExpense:Expense){
+    fun uploadToServer(
+        expenseType: RequestBody,
+        expenseAmount: RequestBody,
+        expenseDate: RequestBody,
+        list: List<MultipartBody.Part>?,
+        fakeExpense: Expense
+    ) {
         if (NetworkUtil.isUserOnline) {
             GlobalScope.launch {
                 Dispatchers.Default
@@ -99,7 +110,7 @@ object ExpenseRepo : KoinComponent {
         }
     }
 
-    fun getExpenseList(page: Int): MutableLiveData<DataWrapper<List<Expense>>>? {
+    fun getExpenseList(page: Int): LiveData<DataWrapper<List<Expense>>>? {
         val dataWrapper = DataWrapper<List<Expense>>()
         val apiResponse = MutableLiveData<DataWrapper<List<Expense>>>()
         httpApiService.getExpenseList(page)
@@ -118,17 +129,18 @@ object ExpenseRepo : KoinComponent {
                             }
                         }
                     }
+                    apiResponse.postValue(dataWrapper)
                 }
 
                 override fun handleFailure(call: Call<List<Expense>>, t: Throwable) {
                     dataWrapper.throwable = t
-//                    apiResponse.postValue(dataWrapper)
+                    apiResponse.postValue(dataWrapper)
                 }
             })
         return apiResponse
     }
 
-    fun getExpense(expenseId: Long): MutableLiveData<DataWrapper<Expense>> {
+    fun getExpense(expenseId: Long): LiveData<DataWrapper<Expense>> {
         val dataWrapper = DataWrapper<Expense>()
         val apiResponse = MutableLiveData<DataWrapper<Expense>>()
         httpApiService.getExpense(expenseId)
@@ -145,8 +157,6 @@ object ExpenseRepo : KoinComponent {
                             expenseDao.updateExpense(it)
                         }
                     }
-
-//                    apiResponse.postValue(dataWrapper)
                 }
 
                 override fun handleFailure(call: Call<Expense>, t: Throwable) {
@@ -157,11 +167,11 @@ object ExpenseRepo : KoinComponent {
         return apiResponse
     }
 
-    fun getunSyncedExpenseListFromDb():List<Expense>{
+    fun getunSyncedExpenseListFromDb(): List<Expense> {
         var list = listOf<Expense>()
         GlobalScope.launch {
             Dispatchers.Default
-            list =expenseDao.findUnsyncedExpenseList()
+            list = expenseDao.findUnsyncedExpenseList()
         }
         return list
     }
@@ -174,20 +184,20 @@ object ExpenseRepo : KoinComponent {
         return expenseDao.findByExpenseId(expenseAutoId)
     }
 
-    fun getExpenseId(autoId:Long):Long?{
-        var expenseId :Long ?= null
+    fun getExpenseId(autoId: Long): Long? {
+        var expenseId: Long? = null
         GlobalScope.launch {
             Dispatchers.Default
-             expenseId = expenseDao.getExpenseIDFromAutoId(autoId)
+            expenseId = expenseDao.getExpenseIDFromAutoId(autoId)
         }
         return expenseId
     }
 
-    fun updateExpenseFromNotification(expense:Expense){
+    fun updateExpenseFromNotification(expense: Expense) {
         val expenseList = expenseDao.getExpenses()
-        if(!expenseList.isNullOrEmpty() && expenseList.contains(expense)){
+        if (!expenseList.isNullOrEmpty() && expenseList.contains(expense)) {
             expenseDao.updateExpense(expense)
-        }else{
+        } else {
             expenseDao.insertAll(expense)
         }
     }

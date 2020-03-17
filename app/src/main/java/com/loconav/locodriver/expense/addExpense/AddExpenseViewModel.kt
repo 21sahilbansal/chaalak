@@ -21,7 +21,10 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import android.net.Uri
 import android.os.Build
+import com.loconav.locodriver.Constants
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EXPENSE_TYPE
 import com.loconav.locodriver.application.LocoDriverApplication
+import com.loconav.locodriver.expense.ImageUtil
 import com.loconav.locodriver.util.FileUtil
 import okhttp3.MediaType
 import java.io.File
@@ -29,6 +32,7 @@ import java.io.File
 
 class AddExpenseViewModel : ViewModel(), KoinComponent {
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
+    val gson: Gson by inject()
     val date = Calendar.getInstance()
     private val currentDate = date.get(Calendar.DATE)
     private val currentMonth = date.get(Calendar.MONTH)
@@ -43,10 +47,9 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     }
 
     fun getExpenseTypeList() {
-        val gson = Gson()
         val expenseList = ArrayList<String>()
         expenseList.add("Please Select")
-        val json = sharedPreferenceUtil.getData("expense_type", "")
+        val json = sharedPreferenceUtil.getData(EXPENSE_TYPE, "")
         val list = gson.fromJson(json, ExpenseType::class.java)
         list?.let {
             if (!it.expenseType.isNullOrEmpty()) {
@@ -60,8 +63,7 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     }
 
     fun getTypeOfExpense(typeTemplate: String): String {
-        val gson = Gson()
-        val json = sharedPreferenceUtil.getData("expense_type", "")
+        val json = sharedPreferenceUtil.getData(EXPENSE_TYPE, "")
         val list = gson.fromJson(json, ExpenseType::class.java)
         list.expenseType?.let {
             for (entry in it.entries) {
@@ -128,7 +130,7 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     fun isAmountValid(amount: Editable?): Boolean {
         return if (amount.isNullOrEmpty()) {
             false
-        } else amount.trim().toString().toInt() in 100000 downTo -1
+        } else amount.trim().toString().toInt() in 100000 downTo -1   //amount to be in range of 0 to 100000
     }
 
     fun getEpochFromExpenseDate(date: String, month: String, year: String): Long {
@@ -138,6 +140,13 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
 
     fun uploadExpence(addExpenseRequestBody: AddExpenseRequestBody) {
         return ExpenseRepo.uploadExpense(addExpenseRequestBody)
+    }
+
+    fun prepareImageToBeSentToServer(list: ArrayList<String>): List<MultipartBody.Part> {
+        return ImageUtil.getMultipartFromUri(
+            Constants.ExpenseConstants.UPLOADABLE_ATTRIBUTES_KEY,
+            list
+        )
     }
 }
 

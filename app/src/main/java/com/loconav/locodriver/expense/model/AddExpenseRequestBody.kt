@@ -13,6 +13,5 @@ data class AddExpenseRequestBody(
     @SerializedName("remarks")
     var remarks: String? = null,
     var multipartList: List<MultipartBody.Part>? = null,
-
-    var imageList:List<String>? = null
+    var imageList: List<String>? = null
 )

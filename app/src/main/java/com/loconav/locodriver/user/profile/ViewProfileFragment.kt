@@ -87,9 +87,7 @@ class ViewProfileFragment : BaseFragment() {
         if (sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, "").isEmpty()) {
             iv_profile_picture.setImageResource(R.drawable.ic_user_placeholder)
         } else {
-            picasso.load(sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, ""))
-                .error(R.drawable.ic_user_placeholder).into(iv_profile_picture)
-
+            iv_profile_picture.loadImage(R.drawable.ic_user_placeholder,sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, ""))
         }
         tv_driver_name.text = driver.name
 

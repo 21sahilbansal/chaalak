@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.IS_LOGGED_IN
 import com.loconav.locodriver.R
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil

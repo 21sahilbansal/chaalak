@@ -41,7 +41,7 @@ object ExpenseRepo : KoinComponent {
             override fun handleSuccess(call: Call<ExpenseType>, response: Response<ExpenseType>) {
                 response.body()?.let {
                     expenseTypeDataWrapper.data = it
-                    sharedPreferenceUtil.saveJsonData(EXPENSE_TYPE, it)
+                    sharedPreferenceUtil.put(it, EXPENSE_TYPE)
                     expenseTypeApiResponse.postValue(expenseTypeDataWrapper)
                 }
             }

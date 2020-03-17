@@ -2,6 +2,8 @@ package com.loconav.locodriver.application
 
 import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
+import com.google.firebase.FirebaseApp
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.loconav.locodriver.BuildConfig
 import com.loconav.locodriver.di.applicationModule
 import org.koin.android.ext.android.startKoin

@@ -8,8 +8,8 @@
     <string name="enter_your_registered_mobile_number">अपना रजिस्टर्ड मोबाइल नंबर दर्ज करें</string>
     <string name="otp_verification">OTP वेरिफिकेशन</string>
     <string name="resend_otp">OTP दोबारा भेजें</string>
-    <string name="tab_text_1">ट्रिप्स</string>
-    <string name="tab_text_2">एक्सपेंसेस</string>
+    <string name="tab_text_trip">ट्रिप्स</string>
+    <string name="tab_text_expense">एक्सपेंसेस</string>
     <string name="cancel">रद्द करें</string>
     <string name="something_went_wrong">कुछ गलत हो गया!!</string>
     <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
@@ -32,4 +32,21 @@
     <string name="change_number_text">नंबर बदलें %s</string>
     <string name="vehicle_number_text">वाहन नंबर </string>
     <string name="profile_title_text">मेरी प्रोफाइल</string>
+    <string name="unknown_source_city">स्रोत शहर उपलब्ध नहीं है </string>
+    <string name="unknown_start_time">आरम्भ समय उपलब्ध नहीं है </string>
+    <string name="unknown_dest_text">गन्तव्य शहर उपलब्ध नहीं है </string>
+    <string name="unknown_dest_end_time">समाप्ति का समय उपलब्ध नहीं है</string>
+    <string name="unknown_vehicle_number">वहां नंबर उपलब्ध नहीं है </string>
+    <string name="eta_text_trip_detail">पहुँचने का अनुमानित समय :</string>
+    <string name="start_time_text_trip_detail">आरम्भ समय :</string>
+    <string name="end_Time_text_trip_details">अंतिम समय :</string>
+    <string name="unknown_time_text">समय उपलब्ध नहीं है </string>
+    <string name="start_location_text">आरम्भ स्थान </string>
+    <string name="end_location_text">गन्तव्य स्थान </string>
+    <string name="checkpoint_position_text">चेकपॉइंट %s</string>
+    <string name="subheading_confirmation_dialog">क्या आप ट्रिप शुरू करने क लिए निश्चित हैं ?</string>
+    <string name="no_trips_has_been_added">ट्रिप उपलब्ध नहीं है </string>
+    <string name="active_tag">सक्रिय </string>
+    <string name="upcoming_trip_tag">आगामी ट्रिप </string>
+
 </resources>

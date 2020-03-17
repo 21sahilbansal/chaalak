@@ -4,8 +4,12 @@ import android.app.Activity
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.loconav.locodriver.application.LocoDriverApplication
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class SharedPreferenceUtil(val fileName: String) {
+class SharedPreferenceUtil(val fileName: String) : KoinComponent {
+
+    val gson : Gson by inject()
 
     private val sharedPreferences: SharedPreferences =
         LocoDriverApplication.instance.applicationContext.getSharedPreferences(
@@ -63,12 +67,34 @@ class SharedPreferenceUtil(val fileName: String) {
         return sharedPreferences.getBoolean(key, defaultValue)
     }
 
-    fun saveJsonData(key: String, jsonValue: Any) {
-        val gson = Gson()
-        val json = gson.toJson(jsonValue)
-        editor.putString(key, json)
-        editor.apply()
+
+    /**
+     * Saves object into the Preferences.
+     *
+     * @param `object` Object of model class (of type [T]) to save
+     * @param key Key with which Shared preferences to
+     **/
+    fun <T> put(`object`: T, key: String) {
+        //Convert object to JSON String.
+        val jsonString = gson.toJson(`object`)
+        //Save that String in SharedPreferences
+        saveData(key, jsonString)
     }
+
+    inline fun <reified T> get(key: String): T? {
+        //We read JSON String which was saved.
+        val value : String = getData(key, "")
+        //JSON String was found which means object can be read.
+        //We convert this JSON String to model object. Parameter "c" (of
+        //type “T” is used to cast.
+        return try {
+            gson.fromJson(value, T::class.java)
+        } catch (exception : Exception) {
+            null
+        }
+    }
+
+
 
     fun deleteAllData() {
         editor.clear()

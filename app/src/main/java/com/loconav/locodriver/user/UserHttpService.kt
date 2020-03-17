@@ -60,7 +60,7 @@ class UserHttpService(val httpService: HttpApiService) : KoinComponent {
             ) {
                 response.body()?.let {
                     dataWrapper.data = it
-                    sharedPreferenceUtil.saveJsonData(ATTENDANCE_LIST, it)
+                    sharedPreferenceUtil.put(it, ATTENDANCE_LIST)
                     apiResponse.postValue(dataWrapper)
                 }
             }

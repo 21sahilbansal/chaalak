@@ -16,6 +16,12 @@ import retrofit2.Call
 import retrofit2.Response
 
 object TripsRepo : KoinComponent {
+
+//    move method to sharedpf to save object and get object
+//    global const : key
+
+
+
     private val httpApiService: HttpApiService by inject()
     private val sharedPreferenceUtil : SharedPreferenceUtil by inject()
     val apiResponse = MutableLiveData<DataWrapper<TripDataResponse>>()
@@ -43,9 +49,9 @@ object TripsRepo : KoinComponent {
                     response: Response<TripDataResponse>
                 ) {
                     response.body()?.let {
+                        sharedPreferenceUtil.put(it, TRIP_RESPONSE_SHARED_PF_KEY)
                         dataWrapper.data = it
                         apiResponse.postValue(dataWrapper)
-                        saveTripResponse(it, TRIP_RESPONSE_SHARED_PF_KEY)
                     }
                 }
 
@@ -54,7 +60,7 @@ object TripsRepo : KoinComponent {
                     apiResponse.postValue(dataWrapper)
                 }
             })
-        dataWrapper.data = getTripResponse(TRIP_RESPONSE_SHARED_PF_KEY)
+        dataWrapper.data = sharedPreferenceUtil.get(TRIP_RESPONSE_SHARED_PF_KEY)
         apiResponse.value = dataWrapper
         return apiResponse
     }
@@ -78,30 +84,6 @@ object TripsRepo : KoinComponent {
                 }
             })
         return apiResponse
-    }
-
-    fun saveTripResponse(`object`: TripDataResponse, key: String) {
-        //Convert object to JSON String.
-        val jsonString = GsonBuilder().create().toJson(`object`)
-        if(!jsonString.isNullOrEmpty()) {
-            sharedPreferenceUtil.saveData(key, jsonString)
-            dataWrapper.data = `object`
-            apiResponse.postValue(dataWrapper)
-        }
-    }
-
-    /**
-     * Used to retrieve object from the Preferences.
-     *
-     * @param key Shared Preference key with which object was saved.
-     **/
-     fun getTripResponse(key: String): TripDataResponse?{
-        val value = sharedPreferenceUtil.getData(key, "")
-        try {
-            return GsonBuilder().create().fromJson(value, TripDataResponse::class.java)
-        }catch (e : Exception) {
-            return null
-        }
     }
 
 

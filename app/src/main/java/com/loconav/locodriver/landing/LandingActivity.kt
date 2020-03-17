@@ -71,19 +71,6 @@ class LandingActivity : AppCompatActivity() {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
-        call_fab.setOnClickListener {
-            val phoneIntent = Intent(
-                Intent.ACTION_DIAL, Uri.parse(
-                    String.format(
-                        "%s%s",
-                        Constants.TripConstants.INTENT_ACTION_DIAL_TEXT,
-                        Constants.TripConstants.CONTACT_PHONE_NUMBER
-                    )
-                )
-            )
-            startActivity(phoneIntent)
-        }
-
     }
 
     override fun onRequestPermissionsResult(

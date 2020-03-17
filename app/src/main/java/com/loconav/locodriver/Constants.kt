@@ -11,7 +11,7 @@ class Constants {
             const val GET_DRIVER = "drivers/{id}"
             const val GET_TRIPS_LIST = "trips"
             const val GET_DRIVER_CTA_TEMPLATE = "trip_events/labels"
-            const val NOTIFICATON_SEND_DEVICE_ID_TOKEN = "fcm_devices"
+            const val NOTIFICATON_SEND_DEVICE_ID_TOKEN = "fcm post"
             const val NOTIFICATON_DELETE_DEVICE_ID_TOKEN = "fcm_device/{id}"
 
             const val GET_DRIVER_ATTENDANCE = "attendances/current_month"

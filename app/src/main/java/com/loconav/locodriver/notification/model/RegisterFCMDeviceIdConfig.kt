@@ -12,9 +12,6 @@ data class RegisterFCMDeviceIdConfig(
     @SerializedName("app_version")
     var androidVersion: String? = null,
 
-    @SerializedName("data")
-    var data: String? = null,
-
     @SerializedName("android_version")
     var osVersion: String? = null
 )

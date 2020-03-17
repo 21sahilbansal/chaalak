@@ -50,5 +50,28 @@
     <string name="no_trips_has_been_added">No Trips has been added</string>
     <string name="active_tag">Active</string>
     <string name="upcoming_trip_tag">Upcoming Trip</string>
+    <string name="no_expense_has_been_added">No Expense has been added</string>
+    <string name="add_expense_by_clicking_button">Add Expense by clicking + button</string>
+    <string name="unknown_expense_type">Unknown expense type</string>
+    <string name="verification_pending_expense_status">Verification Pending</string>
+    <string name="no_amount_present">Amount not added</string>
+    <string name="documents">Documents</string>
+    <string name="expense_amount">Expense Amount</string>
+    <string name="enter_amount_here_hint">Enter Amount Here</string>
+    <string name="purpose_text">Purpose</string>
+    <string name="expense_date_text">Expense Date</string>
+    <string name="add_expense_button_text">Add Expense</string>
+    <string name="click_here_to_add_photo">Click here to add photo</string>
+    <string name="add_expense_toolbar_title">Add Expense</string>
+    <string name="gallery_text">Gallery</string>
+    <string name="camera_text">Camera</string>
+    <string name="choose_photo_heading_text">Choose Photo</string>
+    <string name="error_amount_text">Enter valid amount</string>
+    <string name="error_expense_type_text">Enter valid type</string>
+    <string name="error_date">Enter valid date</string>
+    <string name="upcoming_trips">Upcoming Trips</string>
+    <string name="attendance_title">My Attendance</string>
+    <string name="unknown_Date">Unknown Date</string>
+    <string name="attendance_not_updated">Attendance not updated</string>
 
 </resources>

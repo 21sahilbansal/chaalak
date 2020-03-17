@@ -3,7 +3,6 @@ package com.loconav.locodriver.landing
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
@@ -18,7 +17,6 @@ import androidx.core.app.ActivityCompat
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 
 import com.loconav.locodriver.R
@@ -26,15 +24,16 @@ import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.landing.ui.main.LandingTabPagerAdapter
 import com.loconav.locodriver.user.profile.ProfileActivity
 import com.loconav.locodriver.util.LocationWorkManager
+import com.loconav.locodriver.util.loadImage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_landing.*
+import kotlinx.android.synthetic.main.fragment_view_profile.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
 class LandingActivity : AppCompatActivity() {
 
     private val LOCATION_WORKER_TAG = "location_worker_tag"
-    private val picasso: Picasso by inject()
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     var workManager: WorkManager = WorkManager.getInstance()
     private val locationGetterTask =
@@ -65,24 +64,14 @@ class LandingActivity : AppCompatActivity() {
         if (sharedPreferenceUtil.getData(PHOTO_LINK, "").isEmpty()) {
             iv_profile.setImageResource(R.drawable.ic_user_placeholder)
         } else {
-            picasso.load(sharedPreferenceUtil.getData(PHOTO_LINK, ""))
-                .error(R.drawable.ic_user_placeholder).into(iv_profile)
+            iv_profile.loadImage(
+                R.drawable.ic_user_placeholder,
+                sharedPreferenceUtil.getData(PHOTO_LINK, "")
+            )
         }
         profileImageView.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
-        }
-        call_fab.setOnClickListener {
-            val phoneIntent = Intent(
-                Intent.ACTION_DIAL, Uri.parse(
-                    String.format(
-                        "%s%s",
-                        Constants.TripConstants.INTENT_ACTION_DIAL_TEXT,
-                        Constants.TripConstants.CONTACT_PHONE_NUMBER
-                    )
-                )
-            )
-            startActivity(phoneIntent)
         }
     }
 

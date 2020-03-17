@@ -102,7 +102,6 @@ object AppUtils : KoinComponent {
 
     }
 
-
     fun relaunchApp(){
         val i = Intent(appContext, SplashActivity::class.java)
         i.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION

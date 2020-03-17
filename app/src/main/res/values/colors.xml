@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ffffff</color>
+    <color name="colorTransparent">#00ffffff</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="dark">#de000000</color>
     <color name="primary_text">@color/dark</color>
     <color name="black_overlay">#66000000</color>
     <color name="main">#006db8</color>
-    <color name="main_20">#cc006db8</color>
+    <color name="main_20">#33006db8</color>
     <color name="lightgrey">#8a000000</color>
     <color name="main_30">#4d006db8</color>
     <color name="border">#dddddd</color>
@@ -15,6 +16,14 @@
     <color name="dirty_white">#fcfcfc</color>
     <color name="white">@android:color/white</color>
     <color name="error_red">#d06666</color>
+    <color name="otp_bg">#f2f2f2</color>
     <color name="landing_background_pale_blue">#0d006db8</color>
-    <color name="active_tag_green">#8029bc4b</color>
+    <color name="color_pending_brown">#c98f0d</color>
+    <color name="color_approved_green">#29bc4b</color>
+    <color name="color_rejected_red">#e65718</color>
+    <color name="dark_gray">#888888</color>
+    <color name="active_tag_green">#d4f2db</color>
+    <color name="color_pale_yellow">#f7db80</color>
+    <color name="color_pale_red">#f29b9b</color>
+
 </resources>

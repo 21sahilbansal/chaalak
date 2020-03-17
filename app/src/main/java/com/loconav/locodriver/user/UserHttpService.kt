@@ -1,19 +1,27 @@
 package com.loconav.locodriver.user
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.ATTENDANCE_LIST
 import com.loconav.locodriver.base.DataWrapper
+import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.RetrofitCallback
+import com.loconav.locodriver.user.attendence.AttendanceResponse
 import com.loconav.locodriver.user.login.EnterOTPResponse
 import okhttp3.ResponseBody
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import retrofit2.Call
 import retrofit2.Response
 
 
-class UserHttpService(val httpService: HttpApiService) {
+class UserHttpService(val httpService: HttpApiService) : KoinComponent {
 
-    fun requestServerForOTP(phoneNumber: String): MutableLiveData<DataWrapper<ResponseBody>> {
+    private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
+
+    fun requestServerForOTP(phoneNumber: String): LiveData<DataWrapper<ResponseBody>> {
         val dataWrapper = DataWrapper<ResponseBody>()
         val apiResponse = MutableLiveData<DataWrapper<ResponseBody>>()
         if (phoneNumber.isEmpty()) {
@@ -42,10 +50,33 @@ class UserHttpService(val httpService: HttpApiService) {
     }
 
 
+    fun getAttendance(): LiveData<DataWrapper<AttendanceResponse>> {
+        val dataWrapper = DataWrapper<AttendanceResponse>()
+        val apiResponse = MutableLiveData<DataWrapper<AttendanceResponse>>()
+        httpService.getAttendance().enqueue(object : RetrofitCallback<AttendanceResponse>() {
+            override fun handleSuccess(
+                call: Call<AttendanceResponse>,
+                response: Response<AttendanceResponse>
+            ) {
+                response.body()?.let {
+                    dataWrapper.data = it
+                    sharedPreferenceUtil.put(it, ATTENDANCE_LIST)
+                    apiResponse.postValue(dataWrapper)
+                }
+            }
+
+            override fun handleFailure(call: Call<AttendanceResponse>, t: Throwable) {
+                dataWrapper.throwable = t
+                apiResponse.postValue(dataWrapper)
+            }
+        })
+        return apiResponse
+    }
+
     fun validateOTPFromServer(
         phoneNumber: String,
         otp: String
-    ): MutableLiveData<DataWrapper<EnterOTPResponse>> {
+    ): LiveData<DataWrapper<EnterOTPResponse>> {
         val dataWrapper = DataWrapper<EnterOTPResponse>()
         val apiResponse = MutableLiveData<DataWrapper<EnterOTPResponse>>()
 
@@ -69,7 +100,7 @@ class UserHttpService(val httpService: HttpApiService) {
     }
 
 
-    fun getDriverData(driverId: Long): MutableLiveData<DataWrapper<Driver>> {
+    fun getDriverData(driverId: Long): LiveData<DataWrapper<Driver>> {
         val dataWrapper = DataWrapper<Driver>()
         val apiResponse = MutableLiveData<DataWrapper<Driver>>()
 

@@ -8,6 +8,6 @@ import com.loconav.locodriver.base.DataWrapper
 
 class SplashActivityViewModel : ViewModel() {
     fun getDriverCtatemplates(): LiveData<DataWrapper<DriverCtaTemplateResponse>>? {
-        return TripsRepo().getDriverCtaTemplates()
+        return TripsRepo.getDriverCtaTemplates()
     }
 }

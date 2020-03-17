@@ -14,8 +14,10 @@ import java.io.IOException
 import java.util.*
 
 
-class HeaderInterceptor(val sharedPreferenceUtil: SharedPreferenceUtil,
-                        val haulSecret : String) : Interceptor, KoinComponent {
+class HeaderInterceptor(
+    val sharedPreferenceUtil: SharedPreferenceUtil,
+    val haulSecret: String
+) : Interceptor, KoinComponent {
 
     private val TAG = this.javaClass.simpleName
     private val KEY_AUTHORIZATION = "Authorization"
@@ -28,17 +30,20 @@ class HeaderInterceptor(val sharedPreferenceUtil: SharedPreferenceUtil,
 
         val original = chain.request()
         val requestBuilder: Request.Builder = original.newBuilder()
-            .header(KEY_AUTHORIZATION, sharedPreferenceUtil.getData(Constants.SharedPreferences.AUTH_TOKEN, ""))
+            .header(
+                KEY_AUTHORIZATION,
+                sharedPreferenceUtil.getData(Constants.SharedPreferences.AUTH_TOKEN, "")
+            )
 //            .header("X-Linehaul-V2-Secret", haulSecret)
             .header(KEY_APP_VERSION, AppUtils.getVersionCode())
             .header(KEY_APP_ID, BuildConfig.APPLICATION_ID)
             .header(KEY_USER_AGENT, BuildConfig.user_agent)
             .addHeader(KEY_CACHE_CONTROL, "no-cache")
-            .method(original.method, original.body)
+            .method(original.method(), original.body())
 
         val request = requestBuilder.build()
         val response = chain.proceed(request)
-        if (response.code == 401) {
+        if (response.code() == 401) {
             try {
                 AppUtils.logout()
             } catch (e: Exception) {
@@ -57,24 +62,24 @@ class HeaderInterceptor(val sharedPreferenceUtil: SharedPreferenceUtil,
 
     }
 
-    private fun handleError(e: IOException, response : Response) {
+    private fun handleError(e: IOException, response: Response) {
         Log.d(TAG, e.toString())
 //        Timber.d(TAG, response.code())
-        Log.d(TAG, "endService error " + response.request.body + " : " + Date().time)
+        Log.d(TAG, "endService error " + response.request().body() + " : " + Date().time)
     }
 
     private fun handleSuccess(response: Response) {
-        response.body?.let {
+        response.body()?.let {
             val responseString = it.toString()
             Log.d(
                 "http", "endService "
-                          + response.request.url
+                        + response.request().url()
                         + " : "
                         + Date().time
                         + ":"
                         + responseString
             )
-        }?:kotlin.run {
+        } ?: kotlin.run {
             //            TODO: log server : "sent null response even when response code is [200,300)"
         }
 

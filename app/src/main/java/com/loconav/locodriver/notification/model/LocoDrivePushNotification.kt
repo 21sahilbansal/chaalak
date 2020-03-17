@@ -1,6 +1,7 @@
 package com.loconav.locodriver.notification.model
 
 import com.google.gson.JsonElement
+import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.expense.model.Expense
 
 data class LocoDrivePushNotification(
@@ -16,7 +17,8 @@ data class LocoDrivePushNotification(
 
 data class Meta(
     var expense: Expense?,
-    var type: String?
+    var type: String?,
+    var trip : TripData
 )
 
 data class DynamicLinkParams(

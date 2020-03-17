@@ -15,7 +15,9 @@ import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.R
+import com.loconav.locodriver.Trips.TripsRepo
 import com.loconav.locodriver.application.LocoDriverApplication
+import com.loconav.locodriver.expenses.ExpenseRepo
 import com.loconav.locodriver.landing.LandingActivity
 import com.loconav.locodriver.notification.model.LocoDrivePushNotification
 import com.loconav.locodriver.notification.model.Meta
@@ -110,6 +112,15 @@ object LocoNotificationManager : KoinComponent {
         val metaData: Meta = gson.fromJson(
             "{" + locoDrivePushNotification.meta?.asString?.substring(1, locoDrivePushNotification.meta?.asString!!.length - 1) + "}", Meta::class.java
         )
+        when(metaData.type){
+            Constants.NotificationConstants.NOTIFICATION_TYPE_IS_EXPENSE ->{
+                metaData.expense?.let { it }?.let { ExpenseRepo.updateExpenseFromNotification(it) }
+            }
+            Constants.NotificationConstants.NOTIFICATION_TYPE_IS_TRIP ->{
+            }
+
+
+        }
         val broadcastIntent = Intent(locoDriverApplicationContext, LandingActivity::class.java)
         broadcastIntent.putExtra(Constants.NotificationConstants.NOTIFICATION_TYPE, metaData.type)
         //broadcastIntent.putExtra(Constants.NotificationConstants.TYPE_ID, metaData.trip_id)

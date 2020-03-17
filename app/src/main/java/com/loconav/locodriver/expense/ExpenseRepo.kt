@@ -195,8 +195,12 @@ object ExpenseRepo : KoinComponent {
 
     fun updateExpenseFromNotification(expense: Expense) {
         val expenseList = expenseDao.getExpenses()
-        if (!expenseList.isNullOrEmpty() && expenseList.contains(expense)) {
-            expenseDao.updateExpense(expense)
+        if (!expenseList.isNullOrEmpty()) {
+         for(expenseFromList in expenseList){
+             if (expenseFromList.expenseId == expense.expenseId){
+                 expenseDao.updateExpense(expense)
+             }
+         }
         } else {
             expenseDao.insertAll(expense)
         }

@@ -19,7 +19,6 @@ class SplashActivity : AppCompatActivity() {
 
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     var splashActivityViewModel: SplashActivityViewModel? = null
-    val fcmHttpApiService: FCMHttpApiService by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         var intent: Intent? = null
@@ -30,7 +29,6 @@ class SplashActivity : AppCompatActivity() {
         Log.e("service provider", PhoneUtil.getServiceProviderName(baseContext))
         Log.e("Network Type", PhoneUtil.getNetworkClass(baseContext))
 //        Log.e("Network Type network", NetworkUtil().getNetworkType(null).toString())
-        fcmHttpApiService.setupFCMToken()
         intent = if (sharedPreferenceUtil.getData(IS_LOGGED_IN, false)) {
             //            splashActivityViewModel?.getDriverCtatemplates()?.observe(this, Observer {
             //                it.data?.let { driverCtaLabelTemplate ->

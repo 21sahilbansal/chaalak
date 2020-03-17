@@ -28,7 +28,6 @@ class FCMHttpApiService : KoinComponent {
                 ) {
                     setFCMIDRegistered(true)
                 }
-
                 override fun handleFailure(call: Call<ResponseBody?>, t: Throwable) {
                     setFCMIDRegistered(false)
                 }

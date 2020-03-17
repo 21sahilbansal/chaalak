@@ -65,6 +65,7 @@ object LocoNotificationManager : KoinComponent {
         .setContentTitle("Locodrive")
         .setContentText("You have unread messages")
         .setSmallIcon(R.mipmap.ic_launcher)
+        .setAutoCancel(true)
 
 
     private fun buildNotification(
@@ -114,12 +115,11 @@ object LocoNotificationManager : KoinComponent {
         )
         when(metaData.type){
             Constants.NotificationConstants.NOTIFICATION_TYPE_IS_EXPENSE ->{
-                metaData.expense?.let { it }?.let { ExpenseRepo.updateExpenseFromNotification(it) }
+                metaData.expense?.let {ExpenseRepo.updateExpenseFromNotification(it)}
             }
             Constants.NotificationConstants.NOTIFICATION_TYPE_IS_TRIP ->{
+                metaData.trip?.let {TripsRepo.updateTripFromNotification(it)}
             }
-
-
         }
         val broadcastIntent = Intent(locoDriverApplicationContext, LandingActivity::class.java)
         broadcastIntent.putExtra(Constants.NotificationConstants.NOTIFICATION_TYPE, metaData.type)

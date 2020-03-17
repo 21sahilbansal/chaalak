@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
+import com.loconav.locodriver.Trips.model.TripData
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.Trips.model.TripRequestBody
 import com.loconav.locodriver.base.DataWrapper
@@ -97,6 +98,27 @@ object TripsRepo : KoinComponent {
         )
     }
 
+    fun updateTripFromNotification(tripData:TripData){
+        val tripList = sharedPreferenceUtil.get<TripDataResponse>(TRIP_RESPONSE_SHARED_PF_KEY)
+        var tripIdPresentInList : Boolean = false
+        if(!tripList?.tripDataList.isNullOrEmpty()){
+            val tripArrayList = tripList?.tripDataList as ArrayList<TripData>
+
+            for (item in tripArrayList){
+                if(item.tripId == tripData.tripId){
+                    tripArrayList.remove(item)
+                    tripArrayList.add(tripData)
+                    tripIdPresentInList = true
+                }
+            }
+            if(!tripIdPresentInList){
+                tripArrayList.add(tripData)
+            }
+            sharedPreferenceUtil.put(tripArrayList, TRIP_RESPONSE_SHARED_PF_KEY)
+            dataWrapper.data = sharedPreferenceUtil.get(TRIP_RESPONSE_SHARED_PF_KEY)
+            apiResponse.postValue(dataWrapper)
+        }
+    }
 
     const val TRIP_RESPONSE_SHARED_PF_KEY =  "trip_response_shared_pf_key"
 }

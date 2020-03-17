@@ -18,7 +18,7 @@ data class LocoDrivePushNotification(
 data class Meta(
     var expense: Expense?,
     var type: String?,
-    var trip : TripData
+    var trip : TripData?
 )
 
 data class DynamicLinkParams(

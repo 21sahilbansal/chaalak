@@ -1,11 +1,16 @@
 package com.loconav.locodriver
 
 import androidx.room.Room
+import androidx.sqlite.db.SimpleSQLiteQuery
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.expense.model.Expense
 import com.loconav.locodriver.expense.ExpenseDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -51,5 +56,20 @@ class ExpenseTableReadWriteTest {
             val todoItem = expenseDao.findByExpenseId(it)
 //            ViewMatchers.assertThat(todoItem, CoreMatchers.equalTo(expense))
         }
+    }
+
+    @Test
+    fun deleteExpenseAndReadInList() {
+        val expense = Expense(
+             expenseDate = 12345454555
+            , expenseType = "fooding"
+            , amount = 345.5
+            , verificationStatus = "Verification Pending"
+            , fake_id = "knadknd"
+        )
+
+        expenseDao.insertAll(expense)
+            val numberOfRowsDeleted = expenseDao.delete(expense.fake_id!!)
+            assert(numberOfRowsDeleted == 1)
     }
 }

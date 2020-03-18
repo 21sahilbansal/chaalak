@@ -93,7 +93,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 error_amount_tv.text = getString(R.string.error_amount_text)
                 return@setOnClickListener
             } else {
-                addExpenseRequestBody.amount = amount_edit_tv.text.toString().toInt()
+                addExpenseRequestBody.amount = amount_edit_tv.text.toString().toDouble()
             }
             if (spinner_expense_type.selectedItemPosition != 0) {
                 addExpenseRequestBody.expenseType =

@@ -120,9 +120,10 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     }
 
     fun updateDateList(position: Int) {
+        //TODO need to think better way to handle feb and not refreshing the list
         var maxDate = 31
         if (position == 2) {
-            maxDate = 28
+            maxDate = 29
         } else if (position == currentMonth + 1) {
             maxDate = currentDate
         }

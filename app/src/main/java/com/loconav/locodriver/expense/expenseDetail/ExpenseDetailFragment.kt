@@ -145,6 +145,15 @@ class ExpenseDetailFragment : BaseFragment() {
                     )
                 )
             }
+            else -> {
+                view.setTextColor(
+                    ContextCompat.getColor(
+                        view.context,
+                        R.color.color_pending_brown
+                    )
+                )
+            }
+
         }
     }
 

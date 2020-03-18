@@ -23,6 +23,7 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import retrofit2.Call
 import retrofit2.Response
+import java.util.*
 
 object ExpenseRepo : KoinComponent {
     private val httpApiService: HttpApiService by inject()
@@ -75,12 +76,14 @@ object ExpenseRepo : KoinComponent {
                 }
             }
         }
+        val fakeId = UUID.randomUUID().toString()
         val expenseFake = Expense(
             expenseType = fakeExpenseType,
             amount = addExpenseRequestBody.amount,
             expenseDate = addExpenseRequestBody.expenseDate!!.div(1000),
             verificationStatus = LocoDriverApplication.instance.applicationContext.getString(R.string.verification_pending_expense_status),
-            documents = expenseDocument
+            documents = expenseDocument,
+            fake_id = fakeId
         )
         GlobalScope.launch {
             Dispatchers.Default
@@ -115,7 +118,9 @@ object ExpenseRepo : KoinComponent {
                 ).execute()
                 expenseObject.body()?.expense?.let {
                     insertExpense(it)
-                     expenseDao.delete(fakeExpense.autoId)
+                    fakeExpense.fake_id?.let {
+                        expenseDao.delete(it)
+                    }
                 }
             }
 

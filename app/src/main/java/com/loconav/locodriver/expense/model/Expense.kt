@@ -8,6 +8,8 @@ import com.loconav.locodriver.expense.DocumentTypeConverter
 
 @Entity(tableName = "expense")
 data class Expense(
+    @ColumnInfo(name = "fake_id")
+    var fake_id:String? = null,
     @SerializedName("id")
     @ColumnInfo(name = "expense_Id")
     var expenseId: Long? = null,

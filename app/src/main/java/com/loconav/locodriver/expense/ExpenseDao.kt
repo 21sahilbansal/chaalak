@@ -21,8 +21,8 @@ interface ExpenseDao {
     @Query("SELECT expense_Id FROM expense WHERE auto_id = :autoId")
     fun getExpenseIDFromAutoId(autoId: Long): Long
 
-    @Query("DELETE FROM expense WHERE auto_id = :autoId ")
-    fun delete(autoId:Int):Int
+    @Query("DELETE FROM expense WHERE fake_id = :fakeId ")
+    fun delete(fakeId:String):Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg expense: Expense)

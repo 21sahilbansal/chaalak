@@ -96,9 +96,8 @@ class ExpenseDetailFragment : BaseFragment() {
     private fun setExpenseDate(expenseDate: Long?) {
         expenseDate?.let {
             tv_expense_date.text = String.format(
-                "%s,%s",
-                TimeUtils.getThFormatTime(it),
-                TimeUtils.getDateTimeFromEpoch(it, Constants.RegexConstants.TIME_FORMAT_12_HOUR)
+                "%s",
+                TimeUtils.getThFormatTime(it)
             )
         } ?: run {
             tv_expense_date.text = getString(R.string.unknown_time_text)

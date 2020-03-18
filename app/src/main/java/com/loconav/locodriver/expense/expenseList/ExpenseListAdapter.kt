@@ -152,6 +152,14 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
                         )
                     )
                 }
+                else ->{
+                    view.trip_expense_status_tv.setTextColor(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.color_pending_brown
+                        )
+                    )
+                }
             }
         }
     }

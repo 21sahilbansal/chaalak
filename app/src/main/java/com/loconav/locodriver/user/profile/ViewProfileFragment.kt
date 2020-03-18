@@ -96,7 +96,11 @@ class ViewProfileFragment : BaseFragment() {
         } ?: run { tv_transporter_name.text = getString(R.string.no_transporter_text) }
 
         driver.currentMonthlyIncome?.let {
-            tv_current_salary.text = String.format(getString(R.string.rupee), it)
+            if(it.toInt() == 0){
+                tv_current_salary.text = getString(R.string.no_monthly_income_text)
+            }else{
+                tv_current_salary.text = String.format(getString(R.string.rupee), it)
+            }
         } ?: run { tv_current_salary.text = getString(R.string.no_monthly_income_text) }
 
         driver.currentAddressAttributes?.let {

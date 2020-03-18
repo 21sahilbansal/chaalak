@@ -53,7 +53,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
         progress_bar.visibility = View.VISIBLE
         addExpenseViewModel?.getExpenseType()?.observe(this, Observer {
             it.data?.let {
-                addExpenseViewModel?.getExpenseTypeList()
+                addExpenseViewModel?.getExpenseTypeList(context?.getString(R.string.please_select_expense_type_text))
                 progress_bar.visibility = View.GONE
             } ?: kotlin.run {
                 progress_bar.visibility = View.GONE
@@ -168,7 +168,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 if (position == 0) {
                     setStyleForSpinnerListItem(view)
                 } else {
-                    addExpenseViewModel?.updateDateList(position)
+                    addExpenseViewModel?.updateDateList(position, context?.getString(R.string.date_hint_text))
                 }
             }
         }
@@ -193,13 +193,17 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
         addExpenseViewModel?.expenseTypeList?.observe(this, Observer {
             setAdapterForSpinner(spinner_expense_type, it)
         })
-        addExpenseViewModel?.getExpenseTypeList()
+        addExpenseViewModel?.getExpenseTypeList(context?.getString(R.string.please_select_expense_type_text))
         spinner_expense_type.onItemSelectedListener =
             expenseTypeSpinnerItemSelectListener
     }
 
     private fun setDateSpinner() {
-        addExpenseViewModel?.getDateSpinnerList()
+        addExpenseViewModel?.getDateSpinnerList(
+            context?.getString(R.string.date_hint_text),
+            context?.getString(R.string.month_hint_text),
+            context?.getString(R.string.year_hint_text)
+        )
         setDaySpinner()
         setMonthSpinner()
         setYearSpinner()

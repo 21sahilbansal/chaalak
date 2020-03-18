@@ -73,5 +73,11 @@
     <string name="attendance_title">My Attendance</string>
     <string name="unknown_Date">Unknown Date</string>
     <string name="attendance_not_updated">Attendance not updated</string>
+    <string name="please_select_expense_type_text">Please Select</string>
+    <string name="date_hint_text">Date</string>
+    <string name="month_hint_text">Month</string>
+    <string name="year_hint_text">Year</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="optional">(Optional)</string>
 
 </resources>

@@ -36,7 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="TP19301">
+                tools:text="TP19301">
 
             </TextView>
 
@@ -55,7 +55,7 @@
                 android:paddingBottom="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Active">
+                android:text="@string/active_tag">
 
             </TextView>
 
@@ -71,7 +71,7 @@
                 android:layout_marginRight="25dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/vehicle_number_tv"
-                android:text="Gurugram">
+                tools:text="Gurugram">
 
             </TextView>
 
@@ -85,7 +85,7 @@
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/source_city_tv"
-                android:text="Start Time :">
+                android:text="@string/start_time_text_trip_detail">
 
             </TextView>
 
@@ -99,7 +99,7 @@
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toEndOf="@+id/start_time_tv"
                 app:layout_constraintTop_toBottomOf="@+id/source_city_tv"
-                android:text="8 February 2020 12:30 PM">
+                tools:text="8 February 2020 12:30 PM">
 
             </TextView>
 
@@ -127,7 +127,7 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider_line"
-                android:text="YamunaNagar">
+                tools:text="YamunaNagar">
 
             </TextView>
 
@@ -143,7 +143,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/button_start_trip"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/destination_city_tv"
-                android:text="End Time :">
+                android:text="@string/end_Time_text_trip_details">
 
             </TextView>
 
@@ -193,7 +193,7 @@
                 android:layout_marginTop="5dp"
                 app:layout_constraintTop_toBottomOf="@id/destination_city_tv"
                 app:layout_constraintStart_toEndOf="@+id/end_time_tv"
-                android:text="8 February 2020 12:30 PM">
+                tools:text="8 February 2020 12:30 PM">
 
             </TextView>
 

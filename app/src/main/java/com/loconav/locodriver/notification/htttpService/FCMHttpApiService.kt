@@ -83,20 +83,10 @@ class FCMHttpApiService : KoinComponent {
     }
 
     fun isFCMIDRegistered(): Boolean {
-        return sharedPreferenceUtil.getData(
-            Constants.SharedPreferences.FCM_TOKEN_REGISTERED,
-            false
-        ) && sharedPreferenceUtil.getData(
-            Constants.SharedPreferences.LAST_SAVED_APP_VERSION,
-            0
-        ).equals(AppUtils.getVersionCode())
+        return sharedPreferenceUtil.getData(Constants.SharedPreferences.FCM_TOKEN_REGISTERED, false) && sharedPreferenceUtil.getData(Constants.SharedPreferences.LAST_SAVED_APP_VERSION, "0").equals(AppUtils.getVersionCode())
     }
-
     fun setFCMIDRegistered(register: Boolean) {
-        sharedPreferenceUtil.saveData(
-            Constants.SharedPreferences.FCM_TOKEN_REGISTERED,
-            register
-        )
+        sharedPreferenceUtil.saveData(Constants.SharedPreferences.FCM_TOKEN_REGISTERED, register)
         if (register)
             sharedPreferenceUtil.saveData(
                 Constants.SharedPreferences.LAST_SAVED_APP_VERSION,

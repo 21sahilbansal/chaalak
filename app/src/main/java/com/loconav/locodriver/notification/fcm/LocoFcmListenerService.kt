@@ -47,7 +47,7 @@ class LocoFcmListenerService : FirebaseMessagingService() {
         //resetting flag for every new token generated
         fcmHttpApiService.setFCMIDRegistered(false)
         sharedPreferenceUtil.saveData(Constants.SharedPreferences.FCM_TOKEN, token)
-        fcmHttpApiService.setupFCMToken()
+       // fcmHttpApiService.setupFCMToken()
     }
 
     companion object {

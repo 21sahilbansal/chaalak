@@ -2,16 +2,15 @@ package com.loconav.locodriver.landing.ui.main
 
 import android.content.Context
 import android.os.Build
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-
-import com.loconav.locodriver.Trips.tripList.TripsFragment
-import android.view.LayoutInflater
-import android.widget.TextView
 import com.loconav.locodriver.R
+import com.loconav.locodriver.Trips.tripList.TripsFragment
 import com.loconav.locodriver.expense.expenseList.ExpenseListFragment
 
 

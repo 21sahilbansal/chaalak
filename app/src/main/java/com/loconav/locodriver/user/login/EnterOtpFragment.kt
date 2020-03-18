@@ -20,8 +20,6 @@ import com.loconav.locodriver.language.LanguageEventBus
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_NUMBER_LOGIN_FRAGMENT
 import com.loconav.locodriver.util.LocaleHelper
 import kotlinx.android.synthetic.main.fragment_enter_otp.*
-import kotlinx.android.synthetic.main.fragment_enter_otp.progressBar
-import kotlinx.android.synthetic.main.fragment_enter_otp.tv_change_language
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

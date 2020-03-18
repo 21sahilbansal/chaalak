@@ -18,6 +18,7 @@ import com.loconav.locodriver.base.BaseFragment
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.driver.model.Driver
 import com.loconav.locodriver.language.LanguageDialogFragment
+import com.loconav.locodriver.notification.fcmEvent.NotificationEventBus
 import com.loconav.locodriver.user.login.LoginEvent
 import com.loconav.locodriver.user.login.LoginEvent.Companion.OPEN_ATTANDANCE_FRAGMENT
 import com.loconav.locodriver.util.AddressUtil
@@ -25,15 +26,20 @@ import com.loconav.locodriver.util.TimeUtils
 import com.loconav.locodriver.util.loadImage
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_view_profile.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.EventBus
 import org.koin.android.ext.android.inject
 
 
 class ViewProfileFragment : BaseFragment() {
 
+    val picasso: Picasso by inject()
+
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
-    private var viewProfileViewModel: ViewProfileViewModel? = null
+    var viewProfileViewModel: ViewProfileViewModel? = null
+
 
     private val LANGUAGE_DIALOG_TAG = "Language_Dialog"
 
@@ -81,10 +87,7 @@ class ViewProfileFragment : BaseFragment() {
         if (sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, "").isEmpty()) {
             iv_profile_picture.setImageResource(R.drawable.ic_user_placeholder)
         } else {
-            iv_profile_picture.loadImage(
-                R.drawable.ic_user_placeholder,
-                sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, "")
-            )
+            iv_profile_picture.loadImage(R.drawable.ic_user_placeholder,sharedPreferenceUtil.getData(Constants.SharedPreferences.PHOTO_LINK, ""))
         }
         tv_driver_name.text = driver.name
 
@@ -130,4 +133,24 @@ class ViewProfileFragment : BaseFragment() {
         return false
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun deleteFcmId(event: NotificationEventBus) {
+        when (event.message) {
+            NotificationEventBus.DELETE_FCM_ID -> {
+            }
+            NotificationEventBus.DELETE_FCM_ID_FAILURE -> {
+                AppUtils.logout()
+            }
+        }
+    }
 }

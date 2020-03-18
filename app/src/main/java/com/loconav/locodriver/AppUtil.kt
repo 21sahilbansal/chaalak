@@ -1,24 +1,33 @@
 package com.loconav.locodriver
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.net.wifi.WifiManager
 import android.os.Build
+import android.provider.Settings
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.WindowManager
+import com.loconav.locodriver.Constants.SharedPreferences.Companion.DEVICE_ID
+import com.loconav.locodriver.application.LocoDriverApplication
+import com.loconav.locodriver.db.room.AppDatabase
+import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
+import com.loconav.locodriver.notification.htttpService.FCMHttpApiService
+import com.loconav.locodriver.splash.SplashActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import java.net.NetworkInterface
 import java.util.*
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import com.loconav.locodriver.db.room.AppDatabase
-import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.splash.SplashActivity
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
 
 
 object AppUtils : KoinComponent {
+
+    val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
     val isKitKatOrHigher: Boolean
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
@@ -27,11 +36,10 @@ object AppUtils : KoinComponent {
         get() = BuildConfig.VERSION_CODE
 
 
-    val appContext : Context by inject()
+    val appContext: Context by inject()
+    val fcmHttpApiService : FCMHttpApiService by inject ()
 
-    val sharedPreferenceUtil : SharedPreferenceUtil by inject()
-
-    val db  : AppDatabase by inject()
+    val db: AppDatabase by inject()
 
 
     val macAddr: String
@@ -53,7 +61,8 @@ object AppUtils : KoinComponent {
                     }
                     return macAddress.toString()
                 }
-            } catch (ex: Exception) {}
+            } catch (ex: Exception) {
+            }
 
             return "02:00:00:00:00:00"
         }
@@ -81,7 +90,7 @@ object AppUtils : KoinComponent {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
     }
 
-    fun getVersionCode() : String {
+    fun getVersionCode(): String {
         return BuildConfig.VERSION_CODE.toString()
     }
 
@@ -93,19 +102,42 @@ object AppUtils : KoinComponent {
 
 
     fun logout() {
-        GlobalScope.launch(IO){
+        GlobalScope.launch(IO) {
+            fcmHttpApiService.deleteFCMDeviceId()
             clearAppData()
-            launch(Dispatchers.Main){
+            launch(Dispatchers.Main) {
                 relaunchApp()
             }
         }
 
     }
 
-    fun relaunchApp(){
+
+    fun relaunchApp() {
         val i = Intent(appContext, SplashActivity::class.java)
-        i.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
+        i.flags =
+            FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NO_ANIMATION
         appContext.startActivity(i)
+    }
+
+    fun getDeviceId(): String? {
+        var uuid: String? = sharedPreferenceUtil.getData(DEVICE_ID, "")
+        if (uuid!!.isEmpty()) {
+            uuid = Settings.Secure.getString(
+                LocoDriverApplication.instance.getContentResolver(),
+                Settings.Secure.ANDROID_ID
+            )
+            if (uuid == null) {
+                val wifiManager =
+                    LocoDriverApplication.instance.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                uuid = wifiManager.connectionInfo.macAddress
+            }
+            if (uuid == null) {
+                uuid = UUID.randomUUID().toString()
+            }
+            sharedPreferenceUtil.saveData(DEVICE_ID, uuid)
+        }
+        return uuid
     }
 
 }

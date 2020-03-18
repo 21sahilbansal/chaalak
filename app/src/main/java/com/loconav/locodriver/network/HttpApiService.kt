@@ -8,25 +8,25 @@ import com.loconav.locodriver.Constants.HTTP.Companion.GET_EXPENSE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_EXPENSE_LIST
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_EXPENSE_TYPE
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_TRIPS_LIST
+import com.loconav.locodriver.Constants.HTTP.Companion.NOTIFICATON_DELETE_DEVICE_ID_TOKEN
+import com.loconav.locodriver.Constants.HTTP.Companion.NOTIFICATON_SEND_DEVICE_ID_TOKEN
 import com.loconav.locodriver.Constants.HTTP.Companion.NUMBER_LOGIN
 import com.loconav.locodriver.Constants.HTTP.Companion.UPLOAD_EXPENSE
 import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
 import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.driver.model.Driver
-
-import com.loconav.locodriver.expense.model.AddExpenseRequestBody
 import com.loconav.locodriver.expense.model.Expense
 import com.loconav.locodriver.expense.model.ExpenseType
 import com.loconav.locodriver.expense.model.UploadExpenseResponse
-
+import com.loconav.locodriver.notification.model.RegisterFCMDeviceIdConfig
 import com.loconav.locodriver.user.attendence.AttendanceResponse
-
 import com.loconav.locodriver.user.login.EnterOTPResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
+
 
 interface HttpApiService {
 
@@ -46,6 +46,12 @@ interface HttpApiService {
 
     @GET(GET_TRIPS_LIST)
     fun getTripListData(@Query("sort_order") string: String, @QueryMap filters: HashMap<String, Any>): Call<TripDataResponse>
+
+    @POST(NOTIFICATON_SEND_DEVICE_ID_TOKEN)
+    fun registerDeviceIdToken(@Body registerFCMDeviceIdConfig: RegisterFCMDeviceIdConfig?): Call<ResponseBody>
+
+    @DELETE(NOTIFICATON_DELETE_DEVICE_ID_TOKEN)
+    fun deleteFCMToken(@Path("id") deleteFCMId: String?): Call<ResponseBody>
 
     @GET(GET_EXPENSE_LIST)
     fun getExpenseList(@Query("page") page: Int): Call<List<Expense>>

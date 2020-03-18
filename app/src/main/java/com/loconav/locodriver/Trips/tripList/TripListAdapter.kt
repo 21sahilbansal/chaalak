@@ -10,8 +10,8 @@ import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE
 import com.loconav.locodriver.Constants.TripConstants.Companion.SOURCE_TRIP
 import com.loconav.locodriver.R
-import com.loconav.locodriver.Trips.tripDetail.DetailActivity
 import com.loconav.locodriver.Trips.model.TripData
+import com.loconav.locodriver.Trips.tripDetail.DetailActivity
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import kotlinx.android.synthetic.main.item_trips_card.view.*
 import org.koin.standalone.KoinComponent

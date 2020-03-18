@@ -1,9 +1,9 @@
 package com.loconav.locodriver.util
 
 import android.content.Context
-import android.os.BatteryManager
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.BatteryManager
 import android.telephony.TelephonyManager
 import com.loconav.locodriver.Constants
 import java.util.regex.Pattern

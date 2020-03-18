@@ -2,7 +2,6 @@ package com.loconav.locodriver.util
 
 import android.content.Context
 import android.location.Location
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.UPLOADABLE_ATTRIBUTES_KEY

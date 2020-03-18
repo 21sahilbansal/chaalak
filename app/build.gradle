@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 
@@ -30,7 +31,12 @@ android {
             buildConfigField("String", KEY_BASE_URL, STAGE_BASEURL)
             buildConfigField("String", HAUL_SECRET, STAGE_HAUL_SECRET)
         }
-
+        preProd {
+            applicationIdSuffix '.preProd'
+            initWith debug
+            buildConfigField("String", KEY_BASE_URL, PROD_BASEURL)
+            buildConfigField("String", HAUL_SECRET, PROD_HAUL_SECRET)
+        }
         release {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true
@@ -39,6 +45,7 @@ android {
             buildConfigField("String", KEY_BASE_URL, PROD_BASEURL)
             buildConfigField("String", HAUL_SECRET, PROD_HAUL_SECRET)
         }
+
     }
 }
 
@@ -53,11 +60,16 @@ dependencies {
 
 
 //    for junit test cases
+    implementation 'com.google.firebase:firebase-core:17.2.3'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    implementation 'com.google.firebase:firebase-analytics:17.2.3'
+    implementation 'com.google.firebase:firebase-messaging:20.1.2'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'com.android.support:multidex:1.0.3'
 
     //OkHTTP3
     //implementation "com.squareup.okhttp3:okhttp:4.3.1"
@@ -105,11 +117,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
 
-    implementation 'com.google.android.gms:play-services-auth-api-phone:17.3.0'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:17.4.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
 
-
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.support:support-compat:28.0.0'
 
 //    crashlytics
     dependencies {

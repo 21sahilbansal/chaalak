@@ -62,6 +62,7 @@ class ExpenseListFragment : BaseFragment() {
         list_recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+                showReqFastagFab(recyclerView.canScrollVertically(1))
                 val visibleItemCount = layoutManager.childCount
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
@@ -70,6 +71,14 @@ class ExpenseListFragment : BaseFragment() {
                 }
             }
         })
+    }
+
+    private fun showReqFastagFab(show: Boolean){
+        if(show){
+            add_expense_fab.show()
+        }else{
+            add_expense_fab.hide()
+        }
     }
 
     private fun loadMoreItems() {

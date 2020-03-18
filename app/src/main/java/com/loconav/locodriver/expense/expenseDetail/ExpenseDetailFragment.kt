@@ -84,9 +84,10 @@ class ExpenseDetailFragment : BaseFragment() {
         setExpenseStatus(expense.verificationStatus)
     }
 
-    private fun setExpenseAmount(amount: Int?) {
+    private fun setExpenseAmount(amount: Double?) {
         amount?.let {
-            tv_trip_expense_amount.text = String.format(getString(R.string.rupee), it)
+            val amountRound = amount.toInt()
+            tv_trip_expense_amount.text = String.format(getString(R.string.rupee), amountRound)
         } ?: run {
             tv_trip_expense_amount.text = getString(R.string.no_amount_present)
         }

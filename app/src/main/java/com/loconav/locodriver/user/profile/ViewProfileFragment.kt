@@ -103,8 +103,9 @@ class ViewProfileFragment : BaseFragment() {
             tv_address.text = AddressUtil.getAddress(it)
         } ?: run { tv_address.text = getString(R.string.no_address_present) }
 
+        //TODO : div by 1000 to send this in secs to server (need to change once consistent unit is there)
         tv_doj.text = TimeUtils.getDateTimeFromEpoch(
-            driver.dateOfJoining ?: 0L,
+            driver.dateOfJoining?.div(1000) ?: 0L,
             Constants.RegexConstants.DATE_FORMAT
         )
 

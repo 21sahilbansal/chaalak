@@ -2,6 +2,7 @@ package com.loconav.locodriver.expenses
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EXPENSE_TYPE
 import com.loconav.locodriver.R
 import com.loconav.locodriver.application.LocoDriverApplication
@@ -26,6 +27,7 @@ import retrofit2.Response
 object ExpenseRepo : KoinComponent {
     private val httpApiService: HttpApiService by inject()
     private val db: AppDatabase by inject()
+    private val gson:Gson by inject()
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     val expenseDao = db.expenseDao()
 
@@ -58,12 +60,25 @@ object ExpenseRepo : KoinComponent {
         if (addExpenseRequestBody.expenseType == null && addExpenseRequestBody.amount == null && addExpenseRequestBody.expenseDate == null) return
         val expenseType = setUpMultipartRequest(addExpenseRequestBody.expenseType!!)
         val expenseAmount = setUpMultipartRequest(addExpenseRequestBody.amount!!.toString())
-        val expenseDate = setUpMultipartRequest(addExpenseRequestBody.expenseDate!!.toString())
+        //TODO : div by 1000 to send this in secs to server (need to change once consistent unit is there)
+        val expenseDate = setUpMultipartRequest(addExpenseRequestBody.expenseDate!!.div(1000).toString())
         val expenseDocument = Document(expenseDocList = addExpenseRequestBody.imageList)
+        val json = sharedPreferenceUtil.getData(EXPENSE_TYPE, "")
+        val list = gson.fromJson(json, ExpenseType::class.java)
+        var fakeExpenseType :String?=null
+        list?.let {
+            if (!it.expenseType.isNullOrEmpty()) {
+                for (item in it.expenseType) {
+                    if(item.key == addExpenseRequestBody.expenseType!!){
+                        fakeExpenseType = item.value
+                    }
+                }
+            }
+        }
         val expenseFake = Expense(
-            expenseType = addExpenseRequestBody.expenseType,
+            expenseType = fakeExpenseType,
             amount = addExpenseRequestBody.amount,
-            expenseDate = addExpenseRequestBody.expenseDate,
+            expenseDate = addExpenseRequestBody.expenseDate!!.div(1000),
             verificationStatus = LocoDriverApplication.instance.applicationContext.getString(R.string.verification_pending_expense_status),
             documents = expenseDocument
         )
@@ -99,8 +114,8 @@ object ExpenseRepo : KoinComponent {
                     list
                 ).execute()
                 expenseObject.body()?.expense?.let {
-                    expenseDao.deleteSingleExpense(fakeExpense.autoId!!)
                     insertExpense(it)
+                     expenseDao.delete(fakeExpense.autoId)
                 }
             }
 

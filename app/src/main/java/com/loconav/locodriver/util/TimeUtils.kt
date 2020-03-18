@@ -26,7 +26,7 @@ class TimeUtils {
             finalString = n.toString() + suffix
             val format = SimpleDateFormat(" MMM yyyy")
 
-            finalString += format.format(Date(time))
+            finalString += format.format(Date(time*1000))
             return finalString
         }
 

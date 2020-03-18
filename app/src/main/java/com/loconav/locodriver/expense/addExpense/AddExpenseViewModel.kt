@@ -131,9 +131,13 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     }
 
     fun isAmountValid(amount: Editable?): Boolean {
-        return if (amount.isNullOrEmpty()) {
-            false
-        } else amount.trim().toString().toInt() in 100000 downTo -1   //amount to be in range of 0 to 100000
+
+        return when {
+            amount.isNullOrEmpty() -> false
+            amount.toString().toInt() == 0 -> false
+            amount.trim().toString().toInt() in 100000 downTo -1 -> true
+            else -> true
+        }//amount to be in range of 0 to 100000
     }
 
     fun getEpochFromExpenseDate(date: String, month: String, year: String): Long {

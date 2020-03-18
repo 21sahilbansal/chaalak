@@ -154,7 +154,7 @@ class EnterOtpFragment : BaseFragment() {
             override fun onAnimationRepeat(p0: Animator?) {}
             override fun onAnimationCancel(p0: Animator?) {}
         }, ValueAnimator.AnimatorUpdateListener {
-            val time1 = String.format("%02.02f", it.animatedValue)
+            val time1 = String.format("00:%d", it.animatedValue)
             tv_timer.text = time1
         })
     }

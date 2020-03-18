@@ -65,10 +65,11 @@ class ExpenseTableReadWriteTest {
             , expenseType = "fooding"
             , amount = 345.5
             , verificationStatus = "Verification Pending"
+            , fake_id = "knadknd"
         )
 
         expenseDao.insertAll(expense)
-            val numberOfRowsDeleted = expenseDao.delete(SimpleSQLiteQuery("DELETE FROM expense WHERE auto_id = 1"))
+            val numberOfRowsDeleted = expenseDao.delete(expense.fake_id!!)
             assert(numberOfRowsDeleted == 1)
     }
 }

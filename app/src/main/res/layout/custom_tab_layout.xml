@@ -11,7 +11,7 @@
         tools:text="Expenses"
         style="@style/TopNav"
         android:paddingStart="48dp"
-        android:paddingLeft="480dp"
+        android:paddingLeft="48dp"
         android:layout_gravity="center"
         android:paddingEnd="48dp"
         android:paddingTop="10dp"

@@ -17,6 +17,7 @@ import com.loconav.locodriver.Constants.ExpenseConstants.Companion.MAX_IMAGE_COU
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE
 import com.loconav.locodriver.R
 import com.loconav.locodriver.Trips.tripDetail.DetailActivity
+import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.DELETE_CONFIRMATION_DIALOG
 import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.DISABLE_ADD_IMAGE
 import com.loconav.locodriver.expense.ImageSelectionEvent.Companion.ENABLE_ADD_IMAGE
 import com.loconav.locodriver.expense.addExpense.AddExpenseActivity
@@ -38,6 +39,8 @@ class ExpenseDocumentAdapter(val list: ArrayList<String>, private val editable: 
 
         if (itemCount > MAX_IMAGE_COUNT - 1) {
             EventBus.getDefault().post(ImageSelectionEvent(DISABLE_ADD_IMAGE))
+        } else {
+            EventBus.getDefault().post(ImageSelectionEvent(ENABLE_ADD_IMAGE))
         }
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_expense_document, parent, false)
@@ -54,11 +57,7 @@ class ExpenseDocumentAdapter(val list: ArrayList<String>, private val editable: 
     ) {
         holder.setImage(list[position], editable)
         holder.itemView.close_image_ll.setOnClickListener {
-            list.removeAt(position)
-            notifyDataSetChanged()
-            if (itemCount < MAX_IMAGE_COUNT) {
-                EventBus.getDefault().post(ImageSelectionEvent(ENABLE_ADD_IMAGE))
-            }
+            EventBus.getDefault().post(ImageSelectionEvent(DELETE_CONFIRMATION_DIALOG,position))
         }
 
         holder.itemView.setOnClickListener {

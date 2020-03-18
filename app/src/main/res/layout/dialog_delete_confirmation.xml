@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+
+        style="@style/PageHeading"
+        android:id="@+id/tv_confimation_heading"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:lineSpacingExtra="2sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="85dp"
+        android:text="@string/confirmation_dialog_heading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="visible"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="85dp">
+    </TextView>
+
+    <TextView
+        android:layout_width="0dp"
+        android:id="@+id/tv_confimation_sub_heading"
+        style="@style/BodyLarge"
+        android:layout_height="wrap_content"
+        android:text="@string/confimation_dialog_sub_heading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_confimation_heading"
+        android:layout_marginStart="50dp"
+        android:maxLines="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="18dp"
+        android:visibility="visible"
+        android:layout_marginLeft="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/tv_confimation_decline"
+        style="@style/SecondayTittle"
+        android:layout_height="wrap_content"
+        android:text="@string/no_button_text"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_confimation_sub_heading"
+        android:layout_marginStart="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="50dp"
+        android:gravity="center"
+        android:layout_marginTop="35dp"
+        android:visibility="visible"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp">
+    </TextView>
+
+    <Button
+        android:id="@+id/button_confirmation_yes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/locobutton_background"
+        android:text="@string/yes_button_text"
+        android:textAllCaps="true"
+        android:textAppearance="@style/ButtonTittle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_confimation_decline" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

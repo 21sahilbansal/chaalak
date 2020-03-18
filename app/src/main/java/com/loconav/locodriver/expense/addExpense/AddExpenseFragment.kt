@@ -30,6 +30,7 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import android.provider.MediaStore
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.UPLOADABLE_ATTRIBUTES_KEY
+import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.DELETE_IMAGE_DIALOG
 import com.loconav.locodriver.expense.ImageUtil
 import okhttp3.MultipartBody
 
@@ -285,6 +286,10 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 val position = imageSelectionEvent.`object` as Int
                 expenseDocumentAdapter?.list?.removeAt(position)
                 expenseDocumentAdapter?.notifyDataSetChanged()
+            }
+            ImageSelectionEvent.DELETE_CONFIRMATION_DIALOG ->{
+                val position = imageSelectionEvent.`object` as Int
+                DeleteImageConfirmationDialog(position).show(childFragmentManager,DELETE_IMAGE_DIALOG)
             }
         }
     }

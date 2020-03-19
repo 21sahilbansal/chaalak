@@ -1,22 +1,29 @@
 package com.loconav.locodriver.db.sharedPF
 
 import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.loconav.locodriver.application.LocoDriverApplication
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-class SharedPreferenceUtil(val fileName: String) : KoinComponent {
+import java.util.*
 
+class SharedPreferenceUtil(val fileName: String) : KoinComponent {
     val gson : Gson by inject()
+    val DEFAULT_PREF_NAME_FOR_NON_DELETING_PREFS = "MyPrefsForNonDeletingPrefs"
+
 
     private val sharedPreferences: SharedPreferences =
         LocoDriverApplication.instance.applicationContext.getSharedPreferences(
             fileName, Activity.MODE_PRIVATE
         )
 
+    private var mSharedPreferencesForNonDeletingPref: SharedPreferences  = LocoDriverApplication.instance.applicationContext.getSharedPreferences(DEFAULT_PREF_NAME_FOR_NON_DELETING_PREFS,Activity.MODE_PRIVATE)
 
-    private val editor = sharedPreferences.edit()
+
+    private var editor = sharedPreferences.edit()
+    private var editorForNonDeletingPrefs= mSharedPreferencesForNonDeletingPref.edit()
 
 
     fun saveData(key: String, value: String) {
@@ -98,5 +105,52 @@ class SharedPreferenceUtil(val fileName: String) : KoinComponent {
         editor.clear()
         editor.apply()
     }
+
+    @Synchronized
+    fun getDataForNonDeletingPrefs(
+        key: String,
+        defaultValue: String
+    ): String? {
+        return mSharedPreferencesForNonDeletingPref.getString(key, defaultValue)
+    }
+
+    @Synchronized
+    fun getDataForNonDeletingPrefs(
+        key: String,
+        defaultValue: Boolean
+    ): Boolean {
+        return mSharedPreferencesForNonDeletingPref.getBoolean(key, defaultValue!!)
+    }
+
+    @Synchronized
+    fun getDataForNonDeletingPrefs(key: String, defaultValue: Int): Int {
+        return mSharedPreferencesForNonDeletingPref.getInt(key, defaultValue)
+    }
+
+    @Synchronized
+    fun saveDataForNonDeletingPref(
+        key: String,
+        value: String
+    ): Boolean {
+        editorForNonDeletingPrefs.putString(key, value)
+        return editorForNonDeletingPrefs.commit()
+    }
+
+
+    @Synchronized
+    fun saveDataForNonDeletingPref(key: String, value: Int): Boolean {
+        editorForNonDeletingPrefs.putInt(key, value)
+        return editorForNonDeletingPrefs.commit()
+    }
+
+    @Synchronized
+    fun saveDataForNonDeletingPref(
+        key: String,
+        value: Boolean
+    ): Boolean {
+        editorForNonDeletingPrefs.putBoolean(key, value)
+        return editorForNonDeletingPrefs.commit()
+    }
+
 
 }

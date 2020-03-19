@@ -13,15 +13,15 @@
     <string name="cancel">रद्द करें</string>
     <string name="something_went_wrong">कुछ गलत हो गया!!</string>
     <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
-    <string name="blank_number_error_message">मोबाइल नंबर फ़ील्ड रिक्त नहीं हो सकता</string>
-    <string name="invalid_number_error_message">मोबाइल नंबर मान्य नहीं है</string>
+    <string name="blank_number_error_message">फ़ोन नंबर खाली ना छोड़ें </string>
+    <string name="invalid_number_error_message">फ़ोन नंबर वैलिड नहीं है </string>
     <string name="transporter_name">ट्रांसपोर्टर का नाम</string>
-    <string name="current_salary">वर्तमान का वेतन</string>
+    <string name="current_salary">वर्तमान तनख्वाह</string>
     <string name="address_text">पता</string>
-    <string name="date_of_joining">शामिल होने की तिथि</string>
+    <string name="date_of_joining">जोइनिंग डेट</string>
     <string name="change_language_text">भाषा बदलो</string>
     <string name="choose_language_text">भाषा चुनें</string>
-    <string name="no_monthly_income_text">मासिक आय ज्ञात नहीं है</string>
+    <string name="no_monthly_income_text">मासिक तनख्वाह उपलब्ध नहीं है</string>
     <string name="no_transporter_text">ट्रांसपोर्टर को नहीं सौंपा</string>
     <string name="no_vehicle_assigned_text">वाहन नहीं सौंपा</string>
     <string name="rupee" translatable="false">₹%s</string>
@@ -48,5 +48,34 @@
     <string name="no_trips_has_been_added">ट्रिप उपलब्ध नहीं है </string>
     <string name="active_tag">सक्रिय </string>
     <string name="upcoming_trip_tag">आगामी ट्रिप </string>
+    <string name="no_expense_has_been_added">आपने खर्चा नहीं डाला है </string>
+    <string name="add_expense_by_clicking_button">+ पर क्लिक करके खर्चा डाले </string>
+    <string name="unknown_expense_type">खर्चे का उदेशय सही नहीं है </string>
+    <string name="verification_pending_expense_status">वेरिफिकेशन बाकि है </string>
+    <string name="no_amount_present">धनराशि नहीं डाली गयी है </string>
+    <string name="documents">दस्तावेज </string>
+    <string name="expense_amount">खर्चे की धनराशि \u002A</string>
+    <string name="enter_amount_here_hint">यंहा धनराशि डालें </string>
+    <string name="purpose_text">उद्देश्य \u002A</string>
+    <string name="expense_date_text">खर्चे की तारीख़ \u002A</string>
+    <string name="add_expense_button_text">खर्चा डालें </string>
+    <string name="click_here_to_add_photo">फोटो ऐड करने के लिए यंहा क्लिक करें </string>
+    <string name="add_expense_toolbar_title">खर्चा डालें </string>
+    <string name="gallery_text">गैलरी</string>
+    <string name="camera_text">कैमरा </string>
+    <string name="choose_photo_heading_text">फोटो चुनें </string>
+    <string name="error_amount_text">खर्चे की सही धनराशि डालें </string>
+    <string name="error_expense_type_text">खर्चे का सही उदेश्य डालें</string>
+    <string name="error_date">सही तारीख डालें </string>
+    <string name="upcoming_trips">आगामी ट्रिप </string>
+    <string name="attendance_title">हाजिरी </string>
+    <string name="unknown_Date">अज्ञात तारीख </string>
+    <string name="attendance_not_updated">अपडेट होना बाकि है </string>
+    <string name="please_select_expense_type_text">कृपया चुने</string>
+    <string name="date_hint_text">दिनांक</string>
+    <string name="month_hint_text">महीना</string>
+    <string name="year_hint_text">साल</string>
+    <string name="upload_photo">फोटो अपलोड करे</string>
+    <string name="optional">(वैकल्पिक)</string>
 
 </resources>

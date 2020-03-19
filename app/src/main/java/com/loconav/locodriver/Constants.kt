@@ -151,6 +151,13 @@ class Constants {
         }
     }
 
+    interface RetrofitConstants{
+        companion object{
+            const val NO_INTERNET = "No Internet Connection"
+            const val DEFAULT_ERROR_MESSAGE = "Something Went Wrong"
+        }
+    }
+
     interface NotificationConstants {
         companion object {
             const val NOTIFICATION_TYPE = "Notification_Type"

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -18,6 +19,7 @@ import com.google.android.material.tabs.TabLayout
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.SharedPreferences.Companion.PHOTO_LINK
 import com.loconav.locodriver.R
+import com.loconav.locodriver.base.BaseActivity
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.landing.ui.main.LandingTabPagerAdapter
 import com.loconav.locodriver.user.profile.ProfileActivity
@@ -28,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_trips.*
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit
 
-class LandingActivity : AppCompatActivity() {
+class LandingActivity : BaseActivity() {
 
     private val LOCATION_WORKER_TAG = "location_worker_tag"
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()

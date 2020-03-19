@@ -23,6 +23,7 @@ import android.net.Uri
 import android.os.Build
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EXPENSE_TYPE
+import com.loconav.locodriver.R
 import com.loconav.locodriver.application.LocoDriverApplication
 import com.loconav.locodriver.expense.ImageUtil
 import com.loconav.locodriver.util.FileUtil
@@ -34,6 +35,8 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     val gson: Gson by inject()
     val date = Calendar.getInstance()
+    private val PLEASE_SELECT_TEXT =
+        LocoDriverApplication.instance.applicationContext.getString(R.string.please_select_expense_type_text)
     private val currentDate = date.get(Calendar.DATE)
     private val currentMonth = date.get(Calendar.MONTH)
     private val currentYear = date.get(Calendar.YEAR)
@@ -46,9 +49,10 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         return ExpenseRepo.getExpenseType()
     }
 
-    fun getExpenseTypeList() {
+    fun getExpenseTypeList(titleString:String?) {
         val expenseList = ArrayList<String>()
-        expenseList.add("Please Select")
+        if(titleString==null)return
+        expenseList.add(titleString)
         val json = sharedPreferenceUtil.getData(EXPENSE_TYPE, "")
         val list = gson.fromJson(json, ExpenseType::class.java)
         list?.let {
@@ -77,19 +81,18 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
 
     //Todo : Use library (Joda date time) instead of logic
 
-    fun getDateSpinnerList() {
+    fun getDateSpinnerList(dateString: String?, monthString: String?, yearString: String?) {
         val maxDate = 31
-        val maxMonthindex = 12
         val maxYearIndex = currentYear - 2020
-
-        generateDateList(maxDate)
-        generateMonthList()
-        generateYearList(maxYearIndex)
+        if(dateString == null || monthString == null || yearString == null)return
+        generateDateList(maxDate, dateString)
+        generateMonthList(monthString)
+        generateYearList(maxYearIndex, yearString)
     }
 
-    private fun generateYearList(maxYearIndex: Int) {
+    private fun generateYearList(maxYearIndex: Int, yearString: String) {
         val yearList = ArrayList<String>()
-        yearList.add("Year")
+        yearList.add(yearString)
         if (maxYearIndex == 0) {
             yearList.add(currentYear.toString())
         } else {
@@ -100,9 +103,9 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         yearLiveList.postValue(yearList)
     }
 
-    private fun generateMonthList() {
+    private fun generateMonthList(monthString: String) {
         val monthList = ArrayList<String>()
-        monthList.add("Month")
+        monthList.add(monthString)
         for (i in 0..currentMonth) {
             monthList.add(monthMap[i].monthName)
         }
@@ -110,16 +113,16 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
 
     }
 
-    private fun generateDateList(maxDate: Int) {
+    private fun generateDateList(maxDate: Int, dateString: String) {
         val dateList = ArrayList<String>()
-        dateList.add("Date")
+        dateList.add(dateString)
         for (i in 0 until maxDate) {
             dateList.add((i + 1).toString())
         }
         dateLiveList.postValue(dateList)
     }
 
-    fun updateDateList(position: Int) {
+    fun updateDateList(position: Int,dateString:String?) {
         //TODO need to think better way to handle feb and not refreshing the list
         var maxDate = 31
         if (position == 2) {
@@ -127,7 +130,8 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
         } else if (position == currentMonth + 1) {
             maxDate = currentDate
         }
-        generateDateList(maxDate)
+        if(dateString==null)return
+        generateDateList(maxDate,dateString)
     }
 
     fun isAmountValid(amount: Editable?): Boolean {

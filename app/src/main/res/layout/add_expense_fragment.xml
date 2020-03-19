@@ -275,7 +275,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="Upload Photo"
+            android:text="@string/upload_photo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/error_date_tv" />
 
@@ -286,7 +286,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="17dp"
-            android:text="(Optional)"
+            android:text="@string/optional"
             android:textColor="@color/dark_gray"
             app:layout_constraintStart_toEndOf="@id/expense_upload_heading_tv"
             app:layout_constraintTop_toBottomOf="@id/error_date_tv" />

@@ -39,7 +39,7 @@ interface ExpenseDao {
     @Update
     fun updateExpense(vararg expense: Expense)
 
-    @Query("SELECT * FROM expense WHERE expense_Id = null")
+    @Query("SELECT * FROM expense WHERE fake_id IS NOT NULL")
     fun findUnsyncedExpenseList(): List<Expense>
 
 }

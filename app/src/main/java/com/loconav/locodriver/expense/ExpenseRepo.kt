@@ -188,12 +188,7 @@ object ExpenseRepo : KoinComponent {
     }
 
     fun getunSyncedExpenseListFromDb(): List<Expense> {
-        var list = listOf<Expense>()
-        GlobalScope.launch {
-            Dispatchers.Default
-            list = expenseDao.findUnsyncedExpenseList()
-        }
-        return list
+        return expenseDao.findUnsyncedExpenseList()
     }
 
     fun getExpenseListFromDb(): LiveData<List<Expense>> {

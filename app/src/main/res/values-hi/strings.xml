@@ -77,5 +77,9 @@
     <string name="year_hint_text">साल</string>
     <string name="upload_photo">फोटो अपलोड करे</string>
     <string name="optional">(वैकल्पिक)</string>
+    <string name="confirmation_dialog_heading">पुष्टीकरण</string>
+    <string name="confimation_dialog_sub_heading">क्या आप निश्चित हैं कि आप इस फ़ोटो को हटाना चाहते हैं ?</string>
+    <string name="no_button_text">नहीं</string>
+    <string name="yes_button_text">हाँ</string>
 
 </resources>

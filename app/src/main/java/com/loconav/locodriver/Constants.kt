@@ -60,6 +60,7 @@ class Constants {
             const val DOCUMENT_IMAGE_FRAGMENT = "document_image_fragment"
             const val IMAGE_CHOOSER_DIALOG = "image_chooser_dialog"
             const val ATTENDANCE_FRAGMENT = "attendance_fragment"
+            const val DELETE_IMAGE_DIALOG = "delete_image_dialog"
         }
     }
 

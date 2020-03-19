@@ -106,7 +106,6 @@ class SharedPreferenceUtil(val fileName: String) : KoinComponent {
         editor.apply()
     }
 
-    @Synchronized
     fun getDataForNonDeletingPrefs(
         key: String,
         defaultValue: String
@@ -114,7 +113,6 @@ class SharedPreferenceUtil(val fileName: String) : KoinComponent {
         return mSharedPreferencesForNonDeletingPref.getString(key, defaultValue)
     }
 
-    @Synchronized
     fun getDataForNonDeletingPrefs(
         key: String,
         defaultValue: Boolean
@@ -122,12 +120,10 @@ class SharedPreferenceUtil(val fileName: String) : KoinComponent {
         return mSharedPreferencesForNonDeletingPref.getBoolean(key, defaultValue!!)
     }
 
-    @Synchronized
     fun getDataForNonDeletingPrefs(key: String, defaultValue: Int): Int {
         return mSharedPreferencesForNonDeletingPref.getInt(key, defaultValue)
     }
 
-    @Synchronized
     fun saveDataForNonDeletingPref(
         key: String,
         value: String
@@ -137,13 +133,11 @@ class SharedPreferenceUtil(val fileName: String) : KoinComponent {
     }
 
 
-    @Synchronized
     fun saveDataForNonDeletingPref(key: String, value: Int): Boolean {
         editorForNonDeletingPrefs.putInt(key, value)
         return editorForNonDeletingPrefs.commit()
     }
 
-    @Synchronized
     fun saveDataForNonDeletingPref(
         key: String,
         value: Boolean

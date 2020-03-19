@@ -15,11 +15,14 @@ interface ExpenseDao {
     @Query("SELECT * FROM expense")
     fun getExpenses(): List<Expense>
 
-    @Query("SELECT * FROM expense WHERE auto_id = :expenseId")
-    fun findByExpenseId(expenseId: Long): LiveData<Expense>
+    @Query("SELECT * FROM expense WHERE expense_Id = :expenseId")
+    fun findByExpenseId(expenseId: String): LiveData<Expense>
 
-    @Query("SELECT expense_Id FROM expense WHERE auto_id = :autoId")
-    fun getExpenseIDFromAutoId(autoId: Long): Long
+    @Query("SELECT * FROM expense WHERE fake_id = :expenseId")
+    fun findByFakeExpenseId(expenseId: String): LiveData<Expense>
+
+    @Query("SELECT expense_Id FROM expense WHERE fake_id = :autoId")
+    fun getExpenseIDFromAutoId(autoId: String): Long
 
     @Query("DELETE FROM expense WHERE fake_id = :fakeId ")
     fun delete(fakeId:String):Int

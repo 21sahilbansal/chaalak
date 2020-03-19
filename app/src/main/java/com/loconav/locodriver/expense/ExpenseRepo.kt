@@ -200,15 +200,20 @@ object ExpenseRepo : KoinComponent {
         return expenseDao.getAllExpense()
     }
 
-    fun getExpenseFromDb(expenseAutoId: Long): LiveData<Expense> {
+    fun getExpenseFromDb(expenseAutoId: String): LiveData<Expense> {
         return expenseDao.findByExpenseId(expenseAutoId)
     }
 
-    fun getExpenseId(autoId: Long): Long? {
+    fun getExpenseFromFakeId(fakeId : String):LiveData<Expense>{
+        return expenseDao.findByFakeExpenseId(fakeId)
+
+    }
+
+    fun getExpenseId(fakeID: String): Long? {
         var expenseId: Long? = null
         GlobalScope.launch {
             Dispatchers.Default
-            expenseId = expenseDao.getExpenseIDFromAutoId(autoId)
+            expenseId = expenseDao.getExpenseIDFromAutoId(fakeID)
         }
         return expenseId
     }

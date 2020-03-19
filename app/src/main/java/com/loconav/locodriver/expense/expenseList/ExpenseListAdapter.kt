@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EXPENSE_TITLE
+import com.loconav.locodriver.Constants.ExpenseConstants.Companion.FAKE_EXPENSE
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.REJECTED
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.SOURCE_EXPENSE
@@ -54,8 +55,15 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
                 val bundle = Bundle()
                 bundle.putString(SOURCE, SOURCE_EXPENSE)
                 bundle.putString(EXPENSE_TITLE, expense.expenseType)
+                if(expense.fake_id!=null){
+                    intent.data = Uri.parse(expense.fake_id)
+                    bundle.putBoolean(FAKE_EXPENSE,true)
+                }else{
+                    intent.data = Uri.parse(expense.expenseId.toString())
+                    bundle.putBoolean(FAKE_EXPENSE,false)
+                }
                 intent.putExtras(bundle)
-                intent.data = Uri.parse(expense.autoId.toString())
+
                 itemView.context.startActivity(intent)
             }
 

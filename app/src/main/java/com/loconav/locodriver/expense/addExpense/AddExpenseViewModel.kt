@@ -146,7 +146,7 @@ class AddExpenseViewModel : ViewModel(), KoinComponent {
 
     fun getEpochFromExpenseDate(date: String, month: String, year: String): Long {
         val strDate = String.format("%s/%s/%s", date, month, year)
-        return SimpleDateFormat("dd/MMMM/yyyy").parse(strDate).time
+        return SimpleDateFormat("dd/MMMM/yyyy", Locale.UK).parse(strDate).time
     }
 
     fun uploadExpence(addExpenseRequestBody: AddExpenseRequestBody) {

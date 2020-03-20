@@ -10,6 +10,7 @@ import com.loconav.locodriver.expense.DocumentTypeConverter
 data class Expense(
     @ColumnInfo(name = "fake_id")
     var fake_id:String? = null,
+    @PrimaryKey
     @SerializedName("id")
     @ColumnInfo(name = "expense_Id")
     var expenseId: Long? = null,
@@ -69,11 +70,7 @@ data class Expense(
     @SerializedName("uploads")
     @Embedded
     var documents: Document? = null
-){
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name="auto_id")
-    var autoId:Int = 0
-}
+)
 
 data class Document(
     @SerializedName("expense_document")

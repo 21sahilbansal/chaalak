@@ -32,18 +32,30 @@ class ExpenseDetailFragment : BaseFragment() {
             it.setDisplayShowHomeEnabled(true)
         }
         expenseDetailViewModel = ViewModelProviders.of(this).get(ExpenseDetailViewModel::class.java)
-        arguments?.getLong(EXPENSE_ID)?.let {
-            expenseDetailViewModel?.getIndividualExpenseFromDb(it)?.observe(this, Observer {
-                progressBar.visibility = View.GONE
-                setData(it)
-                initDocumentImageAdapter(expense_doc_rec, it)
-            })
-            progressBar.visibility = View.VISIBLE
-        }
+        progressBar.visibility = View.VISIBLE
 
+        if(arguments?.getBoolean(FAKE_EXPENSE) == false){
+            arguments?.getString(EXPENSE_ID)?.let {
+                expenseDetailViewModel?.getIndividualExpenseFromDb(it)?.observe(this, Observer {
+                    setExpenseDetailData(it)
+                })
+            }
+        } else {
+            arguments?.getString(EXPENSE_ID)?.let {
+                expenseDetailViewModel?.getIndividualExpenseFromFakeExpesne(it)?.observe(this, Observer {
+                    setExpenseDetailData(it)
+                })
+            }
+        }
     }
 
-    private fun initRequest(expenseAutoId: Long) {
+    private fun setExpenseDetailData(expense:Expense){
+        progressBar.visibility = View.GONE
+        setData(expense)
+        initDocumentImageAdapter(expense_doc_rec, expense)
+    }
+
+    private fun initRequest(expenseAutoId: String) {
         val expenseId = expenseDetailViewModel?.getExpenseIdFromAutoId(expenseAutoId)
         expenseId?.let {
             expenseDetailViewModel?.getIndividualExpense(expenseId)?.observe(this, Observer {
@@ -57,7 +69,7 @@ class ExpenseDetailFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        arguments?.getLong(EXPENSE_ID)?.let {
+        arguments?.getString(EXPENSE_ID)?.let {
             initRequest(it)
         }
 
@@ -170,18 +182,22 @@ class ExpenseDetailFragment : BaseFragment() {
     }
 
     companion object {
-        fun getInstance(expenseId: Long, expenseTitle: String?): ExpenseDetailFragment {
+        fun getInstance(expenseId: String, expenseTitle: String?,isFake :Boolean?): ExpenseDetailFragment {
             val expenseDetaiFragment =
                 ExpenseDetailFragment()
             val bundle = Bundle()
-            bundle.putLong(EXPENSE_ID, expenseId)
+            bundle.putString(EXPENSE_ID, expenseId)
             bundle.putString(EXPENSE_TITLE, expenseTitle)
+            isFake?.let {
+                bundle.putBoolean(FAKE_EXPENSE,isFake)
+            }
             expenseDetaiFragment.arguments = bundle
             return expenseDetaiFragment
         }
 
         private const val EXPENSE_ID = "expense_id"
         private const val EXPENSE_TITLE = "expense_title"
+        private const val FAKE_EXPENSE = "fake_expense"
 
 
     }

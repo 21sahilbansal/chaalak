@@ -117,6 +117,7 @@ class Constants {
             const val SOURCE = "source"
             const val EXPENSE_TITLE = "expense_title"
             const val DOCUMENT_IMAGE = "document_image"
+            const val FAKE_EXPENSE = "fake_expense"
             const val LIST_POSITION = "position"
             const val EDITABLE = "editable"
             const val MAX_IMAGE_COUNT = 5

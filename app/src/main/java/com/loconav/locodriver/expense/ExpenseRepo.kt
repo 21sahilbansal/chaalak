@@ -1,5 +1,6 @@
 package com.loconav.locodriver.expenses
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.EXPENSE_TYPE
@@ -199,10 +200,13 @@ object ExpenseRepo : KoinComponent {
          for(expenseFromList in expenseList){
              if (expenseFromList.expenseId == expense.expenseId){
                  expenseDao.updateExpense(expense)
+                 Log.e("expense","newupdatedexpense"+ expense.toString())
+
              }
          }
         } else {
             expenseDao.insertAll(expense)
+            Log.e("expense","newinsertedexpense"+ expense.toString())
         }
     }
 }

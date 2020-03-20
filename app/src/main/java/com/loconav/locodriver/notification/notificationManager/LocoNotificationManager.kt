@@ -134,7 +134,7 @@ object LocoNotificationManager : KoinComponent {
          */
 
         buildNotification(
-            pendingIntent, locoDrivePushNotification.title, locoDrivePushNotification.body,
+            pendingIntent, locoDrivePushNotification.title, locoDrivePushNotification.desc,
             uniqueCode
         )
     }

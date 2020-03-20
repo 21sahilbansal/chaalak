@@ -100,18 +100,22 @@ object TripsRepo : KoinComponent {
 
     fun updateTripFromNotification(tripData:TripData){
         val tripList = sharedPreferenceUtil.get<TripDataResponse>(TRIP_RESPONSE_SHARED_PF_KEY)
-        var tripIdPresentInList : Boolean = false
+        var tripPresentInList : TripData? = null
+
         if(!tripList?.tripDataList.isNullOrEmpty()){
             val tripArrayList = tripList?.tripDataList as ArrayList<TripData>
 
             for (item in tripArrayList){
                 if(item.tripId == tripData.tripId){
-                    tripArrayList.remove(item)
-                    tripArrayList.add(tripData)
-                    tripIdPresentInList = true
+                    tripPresentInList = item
+                    break
                 }
             }
-            if(!tripIdPresentInList){
+            if(tripPresentInList != null){
+                tripArrayList.remove(tripPresentInList)
+                tripArrayList.add(tripData)
+            }
+            else{
                 tripArrayList.add(tripData)
             }
             sharedPreferenceUtil.put(tripArrayList, TRIP_RESPONSE_SHARED_PF_KEY)

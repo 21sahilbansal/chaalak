@@ -23,8 +23,7 @@ class TripDetailFragment : BaseFragment() {
     private var actionBar: ActionBar? = null
 
     override fun onViewInflated(view: View, savedInstanceState: Bundle?) {
-        tripDetailFragmentViewModel =
-            ViewModelProviders.of(this).get(TripDetailFragmentViewModel::class.java)
+        tripDetailFragmentViewModel = ViewModelProviders.of(this).get(TripDetailFragmentViewModel::class.java)
         setHasOptionsMenu(true)
         setActionBar()
         tripDetailFragmentViewModel?.getTrip(arguments?.get(TRIP_ID).toString())?.observe(this,

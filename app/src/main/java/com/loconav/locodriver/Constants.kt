@@ -43,8 +43,8 @@ class Constants {
             const val FCM_TOKEN_REGISTERED = "fcm_token_registered"
             const val LAST_SAVED_APP_VERSION = "last_saved_app_version"
             const val DEVICE_ID = "device_id"
-
             const val ATTENDANCE_LIST = "attendance"
+
         }
     }
 

@@ -123,7 +123,6 @@ object LocoNotificationManager : KoinComponent {
         }
         val broadcastIntent = Intent(locoDriverApplicationContext, LandingActivity::class.java)
         broadcastIntent.putExtra(Constants.NotificationConstants.NOTIFICATION_TYPE, metaData.type)
-        //broadcastIntent.putExtra(Constants.NotificationConstants.TYPE_ID, metaData.trip_id)
         val uniqueCode = System.currentTimeMillis().toInt()
         val pendingIntent = PendingIntent.getActivity(
             locoDriverApplicationContext, uniqueCode,
@@ -134,7 +133,7 @@ object LocoNotificationManager : KoinComponent {
          */
 
         buildNotification(
-            pendingIntent, locoDrivePushNotification.title, locoDrivePushNotification.body,
+            pendingIntent, locoDrivePushNotification.title, locoDrivePushNotification.desc,
             uniqueCode
         )
     }

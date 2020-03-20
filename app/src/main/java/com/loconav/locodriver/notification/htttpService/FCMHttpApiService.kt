@@ -19,6 +19,7 @@ class FCMHttpApiService : KoinComponent {
     val httpApiService: HttpApiService by inject()
     val sharedPreferenceUtil: SharedPreferenceUtil by inject()
 
+
     fun registerFCMDeviceId(registerFCMDeviceIdConfig: RegisterFCMDeviceIdConfig) {
         httpApiService.registerDeviceIdToken(registerFCMDeviceIdConfig)
             .enqueue(object : RetrofitCallback<ResponseBody?>() {
@@ -46,14 +47,12 @@ class FCMHttpApiService : KoinComponent {
                     EventBus.getDefault().post(
                         NotificationEventBus(NotificationEventBus.DELETE_FCM_ID, response.body())
                     )
-                    clearAllUserData()
                 }
 
                 override fun handleFailure(call: Call<ResponseBody?>, t: Throwable) {
                     EventBus.getDefault().post(
                         NotificationEventBus(NotificationEventBus.DELETE_FCM_ID_FAILURE, t.message)
                     )
-                    clearAllUserData()
                 }
             })
 
@@ -63,7 +62,7 @@ class FCMHttpApiService : KoinComponent {
     fun setupFCMToken() {
         if (isFCMIDRegistered())
             return
-        val token = sharedPreferenceUtil.getData(Constants.SharedPreferences.FCM_TOKEN, "")
+        val token = sharedPreferenceUtil.getDataForNonDeletingPrefs(Constants.SharedPreferences.FCM_TOKEN, "")
         if (!token.isNullOrEmpty()) {
             val deviceId = AppUtils.getDeviceId()
             val androidVersion = AppUtils.getVersionCode()
@@ -83,12 +82,12 @@ class FCMHttpApiService : KoinComponent {
     }
 
     fun isFCMIDRegistered(): Boolean {
-        return sharedPreferenceUtil.getData(Constants.SharedPreferences.FCM_TOKEN_REGISTERED, false) && sharedPreferenceUtil.getData(Constants.SharedPreferences.LAST_SAVED_APP_VERSION, "0").equals(AppUtils.getVersionCode())
+        return sharedPreferenceUtil.getDataForNonDeletingPrefs(Constants.SharedPreferences.FCM_TOKEN_REGISTERED, false) && sharedPreferenceUtil.getDataForNonDeletingPrefs(Constants.SharedPreferences.LAST_SAVED_APP_VERSION, "0").equals( AppUtils.getVersionCode())
     }
     fun setFCMIDRegistered(register: Boolean) {
-        sharedPreferenceUtil.saveData(Constants.SharedPreferences.FCM_TOKEN_REGISTERED, register)
+        sharedPreferenceUtil.saveDataForNonDeletingPref(Constants.SharedPreferences.FCM_TOKEN_REGISTERED, register)
         if (register)
-            sharedPreferenceUtil.saveData(
+            sharedPreferenceUtil.saveDataForNonDeletingPref(
                 Constants.SharedPreferences.LAST_SAVED_APP_VERSION,
                 AppUtils.getVersionCode()
             )

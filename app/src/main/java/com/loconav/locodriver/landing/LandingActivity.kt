@@ -60,6 +60,7 @@ class LandingActivity : BaseActivity() {
             tabs.getTabAt(tabIndex)?.customView = sectionsPagerAdapter.getTabView(tabIndex)
         }
         setTabListener(tabs)
+
         val profileImageView = findViewById<CardView>(R.id.card_profile)
         if (sharedPreferenceUtil.getData(PHOTO_LINK, "").isEmpty()) {
             iv_profile.setImageResource(R.drawable.ic_user_placeholder)
@@ -163,6 +164,27 @@ class LandingActivity : BaseActivity() {
 
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        intent?.extras?.let {
+            var notificationType: String? =
+                it.getString(Constants.NotificationConstants.NOTIFICATION_TYPE)
+            when (notificationType) {
+                Constants.NotificationConstants.NOTIFICATION_TYPE_IS_EXPENSE -> {
+                    viewPager?.setCurrentItem(1,true)
+                }
+                Constants.NotificationConstants.NOTIFICATION_TYPE_IS_TRIP -> {
+                    viewPager?.setCurrentItem(0,true)
+                }
+                Constants.NotificationConstants.NOTIFICATION_TYPE_IS_LOCATION -> {
+                    //TODO : Add loction update method to send location coordinates to server
+                }
+                else ->{
+                }
+            }
+        }
+    }
     companion object {
         const val REQUEST_LOCATION_PERMISSION = 1000
     }

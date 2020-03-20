@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.loconav.locodriver.Trips.model.TripDataResponse
 import com.loconav.locodriver.application.LocoDriverApplication
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -93,7 +94,7 @@ class SharedPreferenceUtil(val fileName: String) : KoinComponent {
         //We convert this JSON String to model object. Parameter "c" (of
         //type “T” is used to cast.
         return try {
-            gson.fromJson(value, T::class.java)
+            gson.fromJson(value, T::class.java) as T
         } catch (exception : Exception) {
             null
         }

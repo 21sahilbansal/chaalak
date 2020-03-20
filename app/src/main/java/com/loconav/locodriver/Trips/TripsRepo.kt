@@ -1,7 +1,7 @@
 package com.loconav.locodriver.Trips
 
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Trips.model.DriverCtaTemplateResponse
 import com.loconav.locodriver.Trips.model.TripData
@@ -11,6 +11,7 @@ import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.RetrofitCallback
+import com.loconav.locodriver.notification.notificationManager.LocoNotificationManager.gson
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import retrofit2.Call
@@ -22,9 +23,8 @@ object TripsRepo : KoinComponent {
 //    global const : key
 
 
-
     private val httpApiService: HttpApiService by inject()
-    private val sharedPreferenceUtil : SharedPreferenceUtil by inject()
+    private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     val apiResponse = MutableLiveData<DataWrapper<TripDataResponse>>()
     val dataWrapper = DataWrapper<TripDataResponse>()
 
@@ -61,7 +61,7 @@ object TripsRepo : KoinComponent {
                     apiResponse.postValue(dataWrapper)
                 }
             })
-        dataWrapper.data = sharedPreferenceUtil.get(TRIP_RESPONSE_SHARED_PF_KEY)
+        dataWrapper.data = sharedPreferenceUtil.get<TripDataResponse>(TRIP_RESPONSE_SHARED_PF_KEY)
         apiResponse.postValue(dataWrapper)
         return apiResponse
     }
@@ -88,7 +88,6 @@ object TripsRepo : KoinComponent {
     }
 
 
-
     fun getFetchTripRequestBody(): TripRequestBody {
         filterState[Constants.TripConstants.FILTER_STATES] = Constants.TripConstants.tripStateArray
         filterState[Constants.TripConstants.FILTER_DRIVER_ID] = driverId
@@ -98,31 +97,33 @@ object TripsRepo : KoinComponent {
         )
     }
 
-    fun updateTripFromNotification(tripData:TripData){
+    fun updateTripFromNotification(tripData: TripData) {
         val tripList = sharedPreferenceUtil.get<TripDataResponse>(TRIP_RESPONSE_SHARED_PF_KEY)
-        var tripPresentInList : TripData? = null
+        var tripPresentInList: TripData? = null
 
-        if(!tripList?.tripDataList.isNullOrEmpty()){
+        if (!tripList?.tripDataList.isNullOrEmpty()) {
             val tripArrayList = tripList?.tripDataList as ArrayList<TripData>
 
-            for (item in tripArrayList){
-                if(item.tripId == tripData.tripId){
+            for (item in tripArrayList) {
+                if (item.tripId == tripData.tripId) {
                     tripPresentInList = item
                     break
                 }
             }
-            if(tripPresentInList != null){
+            if (tripPresentInList != null) {
                 tripArrayList.remove(tripPresentInList)
                 tripArrayList.add(tripData)
-            }
-            else{
+            } else {
                 tripArrayList.add(tripData)
             }
-            sharedPreferenceUtil.put(tripArrayList, TRIP_RESPONSE_SHARED_PF_KEY)
-            dataWrapper.data = sharedPreferenceUtil.get(TRIP_RESPONSE_SHARED_PF_KEY)
+            val tripResponse = TripDataResponse(tripArrayList)
+            sharedPreferenceUtil.put(tripResponse, TRIP_RESPONSE_SHARED_PF_KEY)
+            val jsonString: String = sharedPreferenceUtil.getData(TRIP_RESPONSE_SHARED_PF_KEY, "")
+            val collectionType  = object : TypeToken<TripDataResponse>() {}.type
+            dataWrapper.data = gson.fromJson(jsonString, collectionType)
             apiResponse.postValue(dataWrapper)
         }
     }
 
-    const val TRIP_RESPONSE_SHARED_PF_KEY =  "trip_response_shared_pf_key"
+    const val TRIP_RESPONSE_SHARED_PF_KEY = "trip_response_shared_pf_key"
 }

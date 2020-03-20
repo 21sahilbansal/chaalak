@@ -1,6 +1,5 @@
 package com.loconav.locodriver.expenses
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -10,7 +9,10 @@ import com.loconav.locodriver.application.LocoDriverApplication
 import com.loconav.locodriver.base.DataWrapper
 import com.loconav.locodriver.db.room.AppDatabase
 import com.loconav.locodriver.db.sharedPF.SharedPreferenceUtil
-import com.loconav.locodriver.expense.model.*
+import com.loconav.locodriver.expense.model.AddExpenseRequestBody
+import com.loconav.locodriver.expense.model.Document
+import com.loconav.locodriver.expense.model.Expense
+import com.loconav.locodriver.expense.model.ExpenseType
 import com.loconav.locodriver.network.HttpApiService
 import com.loconav.locodriver.network.NetworkUtil
 import com.loconav.locodriver.network.RetrofitCallback
@@ -29,7 +31,7 @@ import java.util.*
 object ExpenseRepo : KoinComponent {
     private val httpApiService: HttpApiService by inject()
     private val db: AppDatabase by inject()
-    private val gson:Gson by inject()
+    private val gson: Gson by inject()
     private val sharedPreferenceUtil: SharedPreferenceUtil by inject()
     val expenseDao = db.expenseDao()
 
@@ -63,15 +65,16 @@ object ExpenseRepo : KoinComponent {
         val expenseType = setUpMultipartRequest(addExpenseRequestBody.expenseType!!)
         val expenseAmount = setUpMultipartRequest(addExpenseRequestBody.amount!!.toString())
         //TODO : div by 1000 to send this in secs to server (need to change once consistent unit is there)
-        val expenseDate = setUpMultipartRequest(addExpenseRequestBody.expenseDate!!.div(1000).toString())
+        val expenseDate =
+            setUpMultipartRequest(addExpenseRequestBody.expenseDate!!.div(1000).toString())
         val expenseDocument = Document(expenseDocList = addExpenseRequestBody.imageList)
         val json = sharedPreferenceUtil.getData(EXPENSE_TYPE, "")
         val list = gson.fromJson(json, ExpenseType::class.java)
-        var fakeExpenseType :String?=null
+        var fakeExpenseType: String? = null
         list?.let {
             if (!it.expenseType.isNullOrEmpty()) {
                 for (item in it.expenseType) {
-                    if(item.key == addExpenseRequestBody.expenseType!!){
+                    if (item.key == addExpenseRequestBody.expenseType!!) {
                         fakeExpenseType = item.value
                     }
                 }
@@ -214,19 +217,10 @@ object ExpenseRepo : KoinComponent {
         return expenseId
     }
 
-    fun updateExpenseFromNotification(expense: Expense) {
-        val expenseList = expenseDao.getExpenses()
-        if (!expenseList.isNullOrEmpty()) {
-         for(expenseFromList in expenseList){
-             if (expenseFromList.expenseId == expense.expenseId){
-                 expenseDao.updateExpense(expense)
-                 Log.e("expense","newupdatedexpense"+ expense.toString())
-
-             }
-         }
-        } else {
-            expenseDao.insertAll(expense)
-            Log.e("expense","newinsertedexpense"+ expense.toString())
+    fun updateExpenseFromNotification(expense: Expense?) {
+        expense?.let {
+            expenseDao.insertAll(it)
         }
     }
+
 }

@@ -121,8 +121,7 @@ object TripsRepo : KoinComponent {
             }
             val tripResponse = TripDataResponse(tripArrayList)
             sharedPreferenceUtil.put(tripResponse, TRIP_RESPONSE_SHARED_PF_KEY)
-            val jsonString: String = sharedPreferenceUtil.getData(TRIP_RESPONSE_SHARED_PF_KEY, "")
-            dataWrapper.data = gson.fromJson(jsonString,TripDataResponse::class.java)
+            dataWrapper.data = sharedPreferenceUtil.get<TripDataResponse>(TRIP_RESPONSE_SHARED_PF_KEY)
             apiResponse.postValue(dataWrapper)
         }
     }

@@ -173,6 +173,7 @@ class LandingActivity : BaseActivity() {
             when (notificationType) {
                 Constants.NotificationConstants.NOTIFICATION_TYPE_IS_EXPENSE -> {
                     viewPager?.setCurrentItem(1,true)
+                    //TODO: Add constants for tab
                 }
                 Constants.NotificationConstants.NOTIFICATION_TYPE_IS_TRIP -> {
                     viewPager?.setCurrentItem(0,true)

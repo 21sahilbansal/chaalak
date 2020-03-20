@@ -120,7 +120,7 @@
             <TextView
                 android:id="@+id/destination_city_tv"
                 style="@style/BodyLarge"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
                 android:layout_marginLeft="45dp"

@@ -1,5 +1,6 @@
 package com.loconav.locodriver.network
 
+import com.loconav.locodriver.Constants
 import com.loconav.locodriver.Constants.HTTP.Companion.DRIVER_OTP_VERIFY
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER
 import com.loconav.locodriver.Constants.HTTP.Companion.GET_DRIVER_ATTENDANCE
@@ -45,7 +46,10 @@ interface HttpApiService {
     fun getDriverCtaTemplate(): Call<DriverCtaTemplateResponse>
 
     @GET(GET_TRIPS_LIST)
-    fun getTripListData(@Query("sort_order") string: String, @QueryMap filters: HashMap<String, Any>): Call<TripDataResponse>
+    fun getTripListData(@Query("sort_order") string: String, @Query(Constants.TripConstants.FILTER_STATES) initialized :String,
+                        @Query(Constants.TripConstants.FILTER_STATES) ongoing :String,
+                        @Query(Constants.TripConstants.FILTER_STATES) delayed :String,
+                        @Query(Constants.TripConstants.FILTER_DRIVER_ID) driverId : Long): Call<TripDataResponse>
 
     @POST(NOTIFICATON_SEND_DEVICE_ID_TOKEN)
     fun registerDeviceIdToken(@Body registerFCMDeviceIdConfig: RegisterFCMDeviceIdConfig?): Call<ResponseBody>

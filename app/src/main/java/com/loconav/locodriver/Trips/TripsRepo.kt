@@ -35,14 +35,17 @@ object TripsRepo : KoinComponent {
 
 
     fun getTripListData(tripRequestBody: TripRequestBody): MutableLiveData<DataWrapper<TripDataResponse>>? {
-        if (tripRequestBody.sortOrder == null
-            || tripRequestBody.filter == null
-        ) {
-            return null
-        }
+//        if (tripRequestBody.sortOrder == null
+//            || tripRequestBody.filter == null
+//        ) {
+//            return null
+//        }
         httpApiService.getTripListData(
             tripRequestBody.sortOrder!!,
-            tripRequestBody.filter!!
+            Constants.TripConstants.tripStateArray[0],
+            Constants.TripConstants.tripStateArray[1],
+            Constants.TripConstants.tripStateArray[2],
+            driverId
         )
             .enqueue(object : RetrofitCallback<TripDataResponse>() {
                 override fun handleSuccess(

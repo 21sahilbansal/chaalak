@@ -70,10 +70,11 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
             setExpenseAmount(expense.amount)
         }
 
-        private fun setExpenseAmount(amount: Int?) {
+        private fun setExpenseAmount(amount: Double?) {
             amount?.let {
+                val amountRound = amount.toInt()
                 itemView.trip_expense_amount_tv.text =
-                    String.format(itemView.context.getString(R.string.rupee), it)
+                    String.format(itemView.context.getString(R.string.rupee), amountRound)
             } ?: run {
                 itemView.trip_expense_amount_tv.text =
                     itemView.context.getString(R.string.no_amount_present)
@@ -148,6 +149,14 @@ class ExpenseListAdapter(private val expenseData: List<Expense>) :
                         ContextCompat.getColor(
                             view.context,
                             R.color.color_rejected_red
+                        )
+                    )
+                }
+                else ->{
+                    view.trip_expense_status_tv.setTextColor(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.color_pending_brown
                         )
                     )
                 }

@@ -60,14 +60,15 @@ class Constants {
             const val DOCUMENT_IMAGE_FRAGMENT = "document_image_fragment"
             const val IMAGE_CHOOSER_DIALOG = "image_chooser_dialog"
             const val ATTENDANCE_FRAGMENT = "attendance_fragment"
+            const val DELETE_IMAGE_DIALOG = "delete_image_dialog"
         }
     }
 
     interface AnimationConstants {
         companion object {
             const val ANIMATION_CONSTANT_RESEND_OTP_COUNTER = 30000
-            const val VALUEANIMATOR_START_ANIMATION_VALUE = 00.30f
-            const val VALUEANIMATOR_END_ANIMATION_VALUE = 00.00f
+            const val VALUEANIMATOR_START_ANIMATION_VALUE = 30
+            const val VALUEANIMATOR_END_ANIMATION_VALUE = 0
 
         }
     }
@@ -148,6 +149,13 @@ class Constants {
                 LanguageDataClass("en", "English"),
                 LanguageDataClass("hi", "Hindi")
             )
+        }
+    }
+
+    interface RetrofitConstants{
+        companion object{
+            const val NO_INTERNET = "No Internet Connection"
+            const val DEFAULT_ERROR_MESSAGE = "Something Went Wrong"
         }
     }
 

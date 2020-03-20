@@ -11,5 +11,6 @@ class ImageSelectionEvent(message: String, `object`: Any? = null) :
         const val DISABLE_ADD_IMAGE = "disable_add_image"
         const val ENABLE_ADD_IMAGE = "enable_add_image"
         const val REMOVE_IMAGE = "remove_image"
+        const val DELETE_CONFIRMATION_DIALOG = "open_confirmation_dialog"
     }
 }

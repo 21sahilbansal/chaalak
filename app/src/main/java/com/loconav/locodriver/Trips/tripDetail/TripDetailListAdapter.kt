@@ -76,16 +76,17 @@ class TripDetailListAdapter(private val checkpointList: List<CheckPointData>) :
                         viewContext.getString(R.string.eta_text_trip_detail)
                     setCheckpointTime(checkpoint.entryEta)
                 }
-                checkpoint.entryTs != null -> {
-                    itemView.start_time_tv.text =
-                        viewContext.getString(R.string.start_time_text_trip_detail)
-                    setCheckpointTime(checkpoint.entryTs)
-                }
                 checkpoint.exitTs != null -> {
                     itemView.start_time_tv.text =
                         viewContext.getString(R.string.end_Time_text_trip_details)
                     setCheckpointTime(checkpoint.exitTs)
                 }
+                checkpoint.entryTs != null -> {
+                    itemView.start_time_tv.text =
+                        viewContext.getString(R.string.start_time_text_trip_detail)
+                    setCheckpointTime(checkpoint.entryTs)
+                }
+
             }
         }
 

@@ -96,15 +96,20 @@ class ViewProfileFragment : BaseFragment() {
         } ?: run { tv_transporter_name.text = getString(R.string.no_transporter_text) }
 
         driver.currentMonthlyIncome?.let {
-            tv_current_salary.text = String.format(getString(R.string.rupee), it)
+            if(it.toInt() == 0){
+                tv_current_salary.text = getString(R.string.no_monthly_income_text)
+            }else{
+                tv_current_salary.text = String.format(getString(R.string.rupee), it)
+            }
         } ?: run { tv_current_salary.text = getString(R.string.no_monthly_income_text) }
 
         driver.currentAddressAttributes?.let {
             tv_address.text = AddressUtil.getAddress(it)
         } ?: run { tv_address.text = getString(R.string.no_address_present) }
 
+        //TODO : div by 1000 to send this in secs to server (need to change once consistent unit is there)
         tv_doj.text = TimeUtils.getDateTimeFromEpoch(
-            driver.dateOfJoining ?: 0L,
+            driver.dateOfJoining?.div(1000) ?: 0L,
             Constants.RegexConstants.DATE_FORMAT
         )
 

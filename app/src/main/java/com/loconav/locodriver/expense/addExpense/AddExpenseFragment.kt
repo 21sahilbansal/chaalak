@@ -30,6 +30,7 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import android.provider.MediaStore
 import com.loconav.locodriver.Constants.ExpenseConstants.Companion.UPLOADABLE_ATTRIBUTES_KEY
+import com.loconav.locodriver.Constants.FRAGMENT_TAG.Companion.DELETE_IMAGE_DIALOG
 import com.loconav.locodriver.expense.ImageUtil
 import okhttp3.MultipartBody
 
@@ -53,7 +54,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
         progress_bar.visibility = View.VISIBLE
         addExpenseViewModel?.getExpenseType()?.observe(this, Observer {
             it.data?.let {
-                addExpenseViewModel?.getExpenseTypeList()
+                addExpenseViewModel?.getExpenseTypeList(context?.getString(R.string.please_select_expense_type_text))
                 progress_bar.visibility = View.GONE
             } ?: kotlin.run {
                 progress_bar.visibility = View.GONE
@@ -93,7 +94,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 error_amount_tv.text = getString(R.string.error_amount_text)
                 return@setOnClickListener
             } else {
-                addExpenseRequestBody.amount = amount_edit_tv.text.toString().toInt()
+                addExpenseRequestBody.amount = amount_edit_tv.text.toString().toDouble()
             }
             if (spinner_expense_type.selectedItemPosition != 0) {
                 addExpenseRequestBody.expenseType =
@@ -168,7 +169,7 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 if (position == 0) {
                     setStyleForSpinnerListItem(view)
                 } else {
-                    addExpenseViewModel?.updateDateList(position)
+                    addExpenseViewModel?.updateDateList(position, context?.getString(R.string.date_hint_text))
                 }
             }
         }
@@ -193,13 +194,17 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
         addExpenseViewModel?.expenseTypeList?.observe(this, Observer {
             setAdapterForSpinner(spinner_expense_type, it)
         })
-        addExpenseViewModel?.getExpenseTypeList()
+        addExpenseViewModel?.getExpenseTypeList(context?.getString(R.string.please_select_expense_type_text))
         spinner_expense_type.onItemSelectedListener =
             expenseTypeSpinnerItemSelectListener
     }
 
     private fun setDateSpinner() {
-        addExpenseViewModel?.getDateSpinnerList()
+        addExpenseViewModel?.getDateSpinnerList(
+            context?.getString(R.string.date_hint_text),
+            context?.getString(R.string.month_hint_text),
+            context?.getString(R.string.year_hint_text)
+        )
         setDaySpinner()
         setMonthSpinner()
         setYearSpinner()
@@ -281,6 +286,10 @@ class AddExpenseFragment : BaseFragment(), KoinComponent {
                 val position = imageSelectionEvent.`object` as Int
                 expenseDocumentAdapter?.list?.removeAt(position)
                 expenseDocumentAdapter?.notifyDataSetChanged()
+            }
+            ImageSelectionEvent.DELETE_CONFIRMATION_DIALOG ->{
+                val position = imageSelectionEvent.`object` as Int
+                DeleteImageConfirmationDialog(position).show(childFragmentManager,DELETE_IMAGE_DIALOG)
             }
         }
     }

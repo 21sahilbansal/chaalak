@@ -84,9 +84,10 @@ class ExpenseDetailFragment : BaseFragment() {
         setExpenseStatus(expense.verificationStatus)
     }
 
-    private fun setExpenseAmount(amount: Int?) {
+    private fun setExpenseAmount(amount: Double?) {
         amount?.let {
-            tv_trip_expense_amount.text = String.format(getString(R.string.rupee), it)
+            val amountRound = amount.toInt()
+            tv_trip_expense_amount.text = String.format(getString(R.string.rupee), amountRound)
         } ?: run {
             tv_trip_expense_amount.text = getString(R.string.no_amount_present)
         }
@@ -95,9 +96,8 @@ class ExpenseDetailFragment : BaseFragment() {
     private fun setExpenseDate(expenseDate: Long?) {
         expenseDate?.let {
             tv_expense_date.text = String.format(
-                "%s,%s",
-                TimeUtils.getThFormatTime(it),
-                TimeUtils.getDateTimeFromEpoch(it, Constants.RegexConstants.TIME_FORMAT_12_HOUR)
+                "%s",
+                TimeUtils.getThFormatTime(it)
             )
         } ?: run {
             tv_expense_date.text = getString(R.string.unknown_time_text)
@@ -145,6 +145,15 @@ class ExpenseDetailFragment : BaseFragment() {
                     )
                 )
             }
+            else -> {
+                view.setTextColor(
+                    ContextCompat.getColor(
+                        view.context,
+                        R.color.color_pending_brown
+                    )
+                )
+            }
+
         }
     }
 

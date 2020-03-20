@@ -8,7 +8,7 @@ class TimeUtils {
     companion object {
         fun getThFormatTime(time: Long): String {
             var finalString: String
-            val date = Date(time)
+            val date = Date(time*1000)
             val n = date.date
             val suffix: String
 
@@ -26,7 +26,7 @@ class TimeUtils {
             finalString = n.toString() + suffix
             val format = SimpleDateFormat(" MMM yyyy")
 
-            finalString += format.format(Date(time))
+            finalString += format.format(Date(time*1000))
             return finalString
         }
 

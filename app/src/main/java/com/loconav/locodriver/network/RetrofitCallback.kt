@@ -1,5 +1,7 @@
 package com.loconav.locodriver.network
 
+import com.loconav.locodriver.Constants.RetrofitConstants.Companion.DEFAULT_ERROR_MESSAGE
+import com.loconav.locodriver.Constants.RetrofitConstants.Companion.NO_INTERNET
 import com.loconav.locodriver.R
 import com.loconav.locodriver.application.LocoDriverApplication
 import org.json.JSONException
@@ -17,8 +19,6 @@ abstract class RetrofitCallback<T> : Callback<T> {
     private val TAG = javaClass.canonicalName
 
     private val appContext = LocoDriverApplication.instance.applicationContext
-    private val DEFAULT_ERROR_MESSAGE = appContext.resources.getString(R.string.something_went_wrong)
-    private val NO_INTERNET = appContext.resources.getString(R.string.no_internet_connection)
 
     override fun onFailure(call: Call<T>, t: Throwable) {
         if (NetworkUtil.isUserOnline)

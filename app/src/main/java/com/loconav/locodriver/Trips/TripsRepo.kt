@@ -62,7 +62,7 @@ object TripsRepo : KoinComponent {
                 }
             })
         dataWrapper.data = sharedPreferenceUtil.get(TRIP_RESPONSE_SHARED_PF_KEY)
-        apiResponse.value = dataWrapper
+        apiResponse.postValue(dataWrapper)
         return apiResponse
     }
 

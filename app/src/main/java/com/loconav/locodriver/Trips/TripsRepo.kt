@@ -122,8 +122,7 @@ object TripsRepo : KoinComponent {
             val tripResponse = TripDataResponse(tripArrayList)
             sharedPreferenceUtil.put(tripResponse, TRIP_RESPONSE_SHARED_PF_KEY)
             val jsonString: String = sharedPreferenceUtil.getData(TRIP_RESPONSE_SHARED_PF_KEY, "")
-            val collectionType  = object : TypeToken<TripDataResponse>() {}.type
-            dataWrapper.data = gson.fromJson(jsonString, collectionType)
+            dataWrapper.data = gson.fromJson(jsonString,TripDataResponse::class.java)
             apiResponse.postValue(dataWrapper)
         }
     }

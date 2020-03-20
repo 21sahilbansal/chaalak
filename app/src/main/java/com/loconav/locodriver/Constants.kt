@@ -80,7 +80,7 @@ class Constants {
             const val CONTACT_PHONE_NUMBER = "01244285166"
             const val SORT_ORDER_ASCENDING = "asc"
             const val FILTER_DRIVER_ID = "filters[driver_id]"
-            const val FILTER_STATES = "filter[states]"
+            const val FILTER_STATES = "filters[states][]"
             const val UNIQUE_ID = "filters[unique_id]"
             const val CHECKPOINT_IDENTIFIER = 1
             const val SOURCE_IDENTIFIER = 0
